@@ -1,0 +1,89 @@
+{
+  "name": "tremdev",
+  "version": "1.0.0",
+  "description": "TremDev helps TREM HQ manage report submissions from all her branches all over the world.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "start:dev": "DEBUG=index nodemon ./server/index.js --exec babel-node",
+    "build": "npm run clean && babel ./server -d ./dist",
+    "migrate": "sequelize db:migrate",
+    "migrate:undo:all": "sequelize db:migrate:undo:all",
+    "migrate:undo": "sequelize db:migrate:undo",
+    "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
+    "clean": "rm -rf dist",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "pretest": "rm -rf ./server/database_test.sqlite3 && NODE_ENV=test npm run refreshdb",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GerrardE/tremdev.git"
+  },
+  "keywords": [
+    "Node",
+    "Postgres",
+    "Express"
+  ],
+  "author": "Gerrard Ezeugwa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GerrardE/tremdev/issues"
+  },
+  "homepage": "https://github.com/GerrardE/tremdev#readme",
+  "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.8.12",
+    "sequelize-cli": "^5.5.0",
+    "sqlite3": "^4.0.9",
+    "swagger-jsdoc": "^3.2.9",
+    "swagger-ui-express": "^4.0.6",
+    "validator": "^11.1.0"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "coveralls": "^3.0.4",
+    "eslint": "^6.0.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-import-resolver-babel-module": "^5.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "server/**"
+    ],
+    "engines": {
+      "node": "10.3.0",
+      "npm": "6.9.0"
+    },
+    "exclude": [
+      "**/tests/**",
+      "server/migrations",
+      "server/config"
+    ]
+  }
+}
