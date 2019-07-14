@@ -23,7 +23,8 @@
   "keywords": [
     "Node",
     "Postgres",
-    "Express"
+    "Express",
+    "TDD"
   ],
   "author": "Gerrard Ezeugwa",
   "license": "MIT",
