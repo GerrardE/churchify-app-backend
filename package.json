@@ -84,6 +84,7 @@
     "exclude": [
       "**/tests/**",
       "server/migrations",
+      "server/models",
       "server/config"
     ]
   }
