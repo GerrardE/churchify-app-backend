@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Download.belongsTo(Category, {
       foreignKey: 'id',
-      as: 'downloads'
+      as: 'download'
     });
 
     Download.belongsTo(User, {
