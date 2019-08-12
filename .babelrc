@@ -19,13 +19,14 @@
           "./server"
         ],
         "alias": {
-          "@tests": "./server/tests",
+          "@config": "./server/config",
           "@controllers": "./server/controllers",
-          "@middlewares": "./server/middlewares",
           "@helpers": "./server/helpers",
+          "@middlewares": "./server/middlewares",
           "@models": "./server/models",
-          "@validations": "./server/validations",
-          "@routes": "./server/routes"
+          "@routes": "./server/routes",
+          "@tests": "./server/tests",
+          "@validations": "./server/validations"
         }
       }
     ]
