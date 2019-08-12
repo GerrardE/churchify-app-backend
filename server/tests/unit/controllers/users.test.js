@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
-import UserController from '@controllers/users';
+import users from '@controllers/users';
 import { createToken, verifyToken } from '@middlewares/Token';
 
 chai.use(chaiHttp);
@@ -24,7 +24,7 @@ describe('USER CONTROLLER TESTS', () => {
       })
     };
 
-    await UserController.signup({}, res);
+    await users.signup({}, res);
     sinon.assert.calledOnce(mock);
   });
 
@@ -72,5 +72,17 @@ describe('USER CONTROLLER TESTS', () => {
 
     await verifyToken(req, res, next);
     sinon.assert.calledOnce(jsonFunc);
+  });
+
+  it('should handle error on LOGIN USER', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await users.signin({}, res);
+    sinon.assert.calledOnce(mock);
   });
 });

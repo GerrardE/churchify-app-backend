@@ -69,42 +69,42 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     User.hasMany(Mit, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'mits'
     });
 
     User.hasMany(Membership, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'memberships'
     });
 
     User.hasMany(Group, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'groups'
     });
 
     User.hasMany(Greport, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'greports'
     });
 
     User.hasMany(Event, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'events'
     });
 
     User.hasMany(Download, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'downloads'
     });
 
     User.belongsTo(Gtwelve, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'g12'
     });
 
     User.belongsTo(Branch, {
-      foreignKey: 'userId',
+      foreignKey: 'id',
       as: 'member'
     });
   };
