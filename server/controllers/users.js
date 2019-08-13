@@ -108,6 +108,7 @@ class UserController {
         lastName: user.lastname,
         phone: user.phone,
         email: user.email,
+        branchId: user.branchId
       };
       const token = await createToken(payload);
       res.status(200).json({
@@ -116,8 +117,7 @@ class UserController {
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Login unsuccessful',
-        err
+        errors: 'Login unsuccessful'
       });
     }
   }

@@ -7,7 +7,7 @@ const validSignup = (data) => {
   data.lastName = !isEmpty(data.lastName) ? data.lastName : '';
   data.phone = !isEmpty(data.phone) ? data.phone : '';
   data.email = !isEmpty(data.email) ? data.email : '';
-  data.branch = !isEmpty(data.branch) ? data.branch : '';
+  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
   data.country = !isEmpty(data.country) ? data.country : '';
   data.password = !isEmpty(data.password) ? data.password : '';
 
@@ -48,8 +48,8 @@ const validSignup = (data) => {
   }
 
   // branch validation
-  if (validator.isEmpty(data.branch)) {
-    errors.branch = 'branch field is required';
+  if (validator.isEmpty(data.branchId)) {
+    errors.branchId = 'branch field is required';
   }
 
   // Country validation
