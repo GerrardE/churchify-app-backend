@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    branchId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
     country: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     }

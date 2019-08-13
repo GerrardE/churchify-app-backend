@@ -104,10 +104,10 @@ class UserController {
 
       const payload = {
         id: user.id,
-        firstName: user.firstname,
-        lastName: user.lastname,
+        firstName: user.firstName,
+        lastName: user.lastName,
         phone: user.phone,
-        email: user.email,
+        email: user.email
       };
       const token = await createToken(payload);
       res.status(200).json({
