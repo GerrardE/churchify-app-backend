@@ -99,9 +99,7 @@ class EventController {
       const { event } = req;
       const { userId, id } = event;
 
-      await Event.update(
-        req.body, { returning: true, where: { id, userId } }
-      );
+      await Event.update(req.body, { returning: true, where: { id, userId } });
 
       const payload = await Event.findAll();
       res.status(200).json({
