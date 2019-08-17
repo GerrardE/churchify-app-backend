@@ -3,6 +3,7 @@ import userRouter from './users';
 import zoneRouter from './zones';
 import branchRouter from './branches';
 import gtwelveRouter from './gtwelves';
+import eventRouter from './events';
 
 const apiRouter = express.Router();
 
@@ -12,5 +13,6 @@ apiRouter.use('/', userRouter);
 apiRouter.use('/zones', zoneRouter);
 apiRouter.use('/branches', branchRouter);
 apiRouter.use('/gtwelves', gtwelveRouter);
+apiRouter.use('/events', eventRouter);
 
 export default apiRouter;
