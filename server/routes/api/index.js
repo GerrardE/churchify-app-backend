@@ -4,6 +4,8 @@ import zoneRouter from './zones';
 import branchRouter from './branches';
 import gtwelveRouter from './gtwelves';
 import eventRouter from './events';
+import downloadRouter from './downloads';
+import categoryRouter from './categories';
 
 const apiRouter = express.Router();
 
@@ -14,5 +16,7 @@ apiRouter.use('/zones', zoneRouter);
 apiRouter.use('/branches', branchRouter);
 apiRouter.use('/gtwelves', gtwelveRouter);
 apiRouter.use('/events', eventRouter);
+apiRouter.use('/downloads', downloadRouter);
+apiRouter.use('/categories', categoryRouter);
 
 export default apiRouter;
