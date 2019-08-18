@@ -7,7 +7,22 @@ module.exports = {
       type: Sequelize.INTEGER
     },
 
+    userId: {
+      type: Sequelize.UUID,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+
     name: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false
+    },
+
+    description: {
       type: Sequelize.STRING,
       allowNull: false
     },
