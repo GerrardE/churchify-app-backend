@@ -1,4 +1,3 @@
-import validationResponse from '@validations/validationResponse';
 import validPreacher from '@validations/preacher';
 import models from '@models';
 
