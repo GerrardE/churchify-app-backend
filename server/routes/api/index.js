@@ -6,6 +6,7 @@ import gtwelveRouter from './gtwelves';
 import eventRouter from './events';
 import categoryRouter from './categories';
 import downloadRouter from './downloads';
+import preacherRouter from './preachers';
 
 const apiRouter = express.Router();
 
@@ -18,5 +19,6 @@ apiRouter.use('/gtwelves', gtwelveRouter);
 apiRouter.use('/events', eventRouter);
 apiRouter.use('/categories', categoryRouter);
 apiRouter.use('/downloads', downloadRouter);
+apiRouter.use('/preachers', preacherRouter);
 
 export default apiRouter;
