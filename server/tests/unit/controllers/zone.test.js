@@ -25,4 +25,28 @@ describe('ZONE CONTROLLER TESTS', () => {
     await zones.create({}, res);
     sinon.assert.calledOnce(mock);
   });
+
+  it('should handle error on UPDATE ZONE', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await zones.update({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it('should handle error on DELETE ZONE', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await zones.delete({}, res);
+    sinon.assert.calledOnce(mock);
+  });
 });

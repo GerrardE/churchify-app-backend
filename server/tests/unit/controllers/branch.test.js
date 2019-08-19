@@ -25,4 +25,28 @@ describe('BRANCH CONTROLLER TESTS', () => {
     await branches.create({}, res);
     sinon.assert.calledOnce(mock);
   });
+
+  it('should handle error on UPDATE BRANCH', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await branches.update({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it('should handle error on DELETE BRANCH', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await branches.delete({}, res);
+    sinon.assert.calledOnce(mock);
+  });
 });

@@ -2,7 +2,7 @@ import express from 'express';
 import categories from '@controllers/categories';
 import trim from '@middlewares/trim';
 import { verifyToken } from '@middlewares/Token';
-import { categoryFinder, categoryPermission } from '../../middlewares/categoryFinder';
+import { categoryFinder, categoryPermission } from '@middlewares/categoryFinder';
 
 const categoryRouter = express.Router();
 

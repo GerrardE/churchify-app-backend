@@ -25,4 +25,28 @@ describe('GTWELVE CONTROLLER TESTS', () => {
     await gtwelves.create({}, res);
     sinon.assert.calledOnce(mock);
   });
+
+  it('should handle error on UPDATE GTWELVE', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await gtwelves.update({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it('should handle error on DELETE GTWELVE', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await gtwelves.delete({}, res);
+    sinon.assert.calledOnce(mock);
+  });
 });
