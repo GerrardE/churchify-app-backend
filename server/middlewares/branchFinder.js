@@ -9,7 +9,7 @@ const branchFinder = async (req, res, next) => {
   if (!branch) {
     return res.status(400).json({
       status: 404,
-      errors: 'branch does not exist'
+      errors: 'Branch does not exist'
     });
   }
   req.branch = branch;
