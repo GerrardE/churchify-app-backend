@@ -2,7 +2,7 @@ import express from 'express';
 import downloads from '@controllers/downloads';
 import trim from '@middlewares/trim';
 import { verifyToken } from '@middlewares/Token';
-import { downloadFinder, downloadPermission } from '../../middlewares/downloadFinder';
+import { downloadFinder, downloadPermission } from '@middlewares/downloadFinder';
 
 const downloadRouter = express.Router();
 

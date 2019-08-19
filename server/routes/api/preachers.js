@@ -2,7 +2,7 @@ import express from 'express';
 import preachers from '@controllers/preachers';
 import trim from '@middlewares/trim';
 import { verifyToken } from '@middlewares/Token';
-import { preacherFinder, preacherPermission } from '../../middlewares/preacherFinder';
+import { preacherFinder, preacherPermission } from '@middlewares/preacherFinder';
 
 const preacherRouter = express.Router();
 

@@ -91,4 +91,89 @@ describe('BRANCH TESTS', () => {
       throw err.message;
     }
   });
+
+  it('should return success on GET ALL BRANCHES', (done) => {
+    try {
+      chai.request(index)
+        .get('/api/v1/branches')
+        .set({ Authorization: userToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('payload');
+          expect(res.body.message).to.eql('Branches retrieved successfully');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
+
+  it('should return success on UPDATE A BRANCH', (done) => {
+    try {
+      chai.request(index)
+        .put(`/api/v1/branches/${1}`)
+        .set({ Authorization: userToken })
+        .send({
+          name: 'Akoka',
+          country: 'Nigeria',
+          state: 'Lagos',
+          address: 'Afolabi brown street',
+          city: 'Somolu',
+          zoneId: testZone.id.toString(),
+          description: 'Trem Akoka'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('payload');
+          expect(res.body.message).to.eql('Branch updated successfully');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
+  it('should handle VALIDATION error', (done) => {
+    try {
+      chai.request(index)
+        .put(`/api/v1/branches/${1}`)
+        .set({ Authorization: userToken })
+        .send({
+          name: 'A',
+          country: 'Nigeria',
+          state: 'Lagos',
+          address: 'Afolabi brown street',
+          city: 'Somolu',
+          zoneId: testZone.id.toString(),
+          description: 'Trem Akoka'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('errors');
+          expect(res.body.errors.name).to.eql('name must be between 2 and 20 characters');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
+
+  it('should return success on DELETE A BRANCH', (done) => {
+    try {
+      chai.request(index)
+        .delete(`/api/v1/branches/${1}`)
+        .set({ Authorization: userToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('payload');
+          expect(res.body.message).to.eql('Branch deleted successfully');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
 });
