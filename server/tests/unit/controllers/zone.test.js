@@ -66,8 +66,7 @@ describe('ZONE CONTROLLER TESTS', () => {
       })
     };
 
-    const payload = await zoneFinder(req, res, next);
-    console.log(payload);
+    await zoneFinder(req, res, next);
     sinon.assert.calledOnce(mock);
   });
 
