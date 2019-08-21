@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
     name: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
 
@@ -31,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     country: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },

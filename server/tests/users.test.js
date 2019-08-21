@@ -15,7 +15,7 @@ describe('TESTS TO SIGNUP ', () => {
           lastName: 'User',
           phone: '08086814343',
           email: 'test@gmail.com',
-          branch: 'HQ',
+          branchId: '1',
           country: 'Nigeria',
           password: 'testpass'
         })
@@ -40,7 +40,7 @@ describe('TESTS TO SIGNUP ', () => {
           lastName: 'User',
           phone: '08086814343',
           email: 'test@gmail',
-          branch: 'HQ',
+          branchId: '1',
           country: 'Nigeria',
           password: 'testpass'
         })
@@ -64,7 +64,7 @@ describe('TESTS TO SIGNUP ', () => {
           lastName: 'User',
           phone: '08086814343',
           email: 'test@gmail.com',
-          branch: 'HQ',
+          branchId: '1',
           country: 'Nigeria',
           password: 'testpass'
         })

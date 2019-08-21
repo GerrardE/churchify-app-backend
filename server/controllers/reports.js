@@ -28,22 +28,17 @@ class ReportController {
         });
       }
 
-      const { id: userId, branchId } = req.decoded;
-      const {
-        adults, children, tithers, newMembers, notes
-      } = req.body;
+      const { id: userId } = req.decoded;
 
-      const payload = await Membership.create({
-        userId, branchId, adults, children, tithers, newMembers, notes
-      });
+      const payload = await Membership.create({ userId, ...req.body });
 
       res.status(200).json({
-        status: 200, message: 'Membership report posted successfully', payload
+        status: 200, message: 'Membership report submitted successfully', payload
       });
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Membership report not posted',
+        errors: 'Membership report submission failed',
         err
       });
     }

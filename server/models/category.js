@@ -5,12 +5,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    downloadId: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
 
-    name: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },
