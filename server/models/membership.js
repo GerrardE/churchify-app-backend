@@ -28,6 +28,11 @@ module.exports = (sequelize, DataTypes) => {
     newMembers: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+
+    notes: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {});
 

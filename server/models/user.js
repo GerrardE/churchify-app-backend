@@ -42,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
 
-    branch: {
-      type: DataTypes.STRING,
+    branchId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 

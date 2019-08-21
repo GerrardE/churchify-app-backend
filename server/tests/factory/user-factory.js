@@ -10,7 +10,7 @@ const generateToken = async (userDetails) => {
 };
 
 const createTestUser = async ({
-  firstName, lastName, phone, email, branch, country, password
+  firstName, lastName, phone, email, branchId, country, password
 }) => {
   const newUser = await User.create({
     id: faker.random.uuid(),
@@ -18,7 +18,7 @@ const createTestUser = async ({
     lastName: lastName || faker.random.alphaNumeric(6),
     phone: phone || faker.random.number(),
     email: email || faker.internet.email(),
-    branch: branch || faker.random.word(),
+    branchId: branchId || faker.random.word(),
     country: country || faker.address.country(),
     password: password || faker.internet.password()
   });

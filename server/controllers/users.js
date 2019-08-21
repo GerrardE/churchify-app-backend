@@ -116,8 +116,7 @@ class UserController {
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Login unsuccessful',
-        err
+        errors: 'Login unsuccessful'
       });
     }
   }

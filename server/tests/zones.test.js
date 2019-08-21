@@ -8,7 +8,7 @@ const { expect } = chai;
 
 let userToken, testUser;
 
-describe('TESTS TO CREATE A ZONE', () => {
+describe('ZONE TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
@@ -97,7 +97,7 @@ describe('TESTS TO CREATE A ZONE', () => {
   it('should return success on UPDATE A ZONE', (done) => {
     try {
       chai.request(index)
-        .put(`/api/v1/zones/${5}`)
+        .put(`/api/v1/zones/${6}`)
         .set({ Authorization: userToken })
         .send({
           name: 'Lagos Quarters',
@@ -118,7 +118,7 @@ describe('TESTS TO CREATE A ZONE', () => {
   it('should handle VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .put(`/api/v1/zones/${5}`)
+        .put(`/api/v1/zones/${6}`)
         .set({ Authorization: userToken })
         .send({
           name: 'H',
@@ -140,7 +140,7 @@ describe('TESTS TO CREATE A ZONE', () => {
   it('should return success on DELETE A ZONE', (done) => {
     try {
       chai.request(index)
-        .delete(`/api/v1/zones/${5}`)
+        .delete(`/api/v1/zones/${6}`)
         .set({ Authorization: userToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);

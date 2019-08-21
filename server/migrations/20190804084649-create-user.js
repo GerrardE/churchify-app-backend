@@ -33,9 +33,9 @@ module.exports = {
       allowNull: false
     },
 
-    branch: {
-      type: Sequelize.CITEXT,
-      allowNull: true
+    branchId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
     },
 
     country: {

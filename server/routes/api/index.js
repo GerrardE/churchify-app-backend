@@ -7,6 +7,7 @@ import eventRouter from './events';
 import categoryRouter from './categories';
 import downloadRouter from './downloads';
 import preacherRouter from './preachers';
+import reportRouter from './reports';
 
 const apiRouter = express.Router();
 
@@ -20,5 +21,6 @@ apiRouter.use('/events', eventRouter);
 apiRouter.use('/categories', categoryRouter);
 apiRouter.use('/downloads', downloadRouter);
 apiRouter.use('/preachers', preacherRouter);
+apiRouter.use('/reports', reportRouter);
 
 export default apiRouter;
