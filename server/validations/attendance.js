@@ -10,7 +10,7 @@ const validAttendance = (data) => {
   data.preacherId = !isEmpty(data.preacherId) ? data.preacherId : '';
   data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
-  
+
   // children validations
   if (validator.isEmpty(data.children)) {
     errors.children = 'children field is required';
