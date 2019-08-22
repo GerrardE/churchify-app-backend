@@ -25,4 +25,16 @@ describe('REPORT CONTROLLER TESTS', () => {
     await reports.membership({}, res);
     sinon.assert.calledOnce(mock);
   });
+
+  it('should handle error on SUBMIT ATTENDANCE', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await reports.attendance({}, res);
+    sinon.assert.calledOnce(mock);
+  });
 });

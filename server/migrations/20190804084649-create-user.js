@@ -13,12 +13,12 @@ module.exports = {
     },
 
     firstName: {
-      type: Sequelize.CITEXT,
+      type: Sequelize.STRING,
       allowNull: false
     },
 
     lastName: {
-      type: Sequelize.CITEXT,
+      type: Sequelize.STRING,
       allowNull: false
     },
 
@@ -39,7 +39,7 @@ module.exports = {
     },
 
     country: {
-      type: Sequelize.CITEXT,
+      type: Sequelize.STRING,
       allowNull: false
     },
 
