@@ -49,4 +49,16 @@ describe('REPORT CONTROLLER TESTS', () => {
     await reports.mit({}, res);
     sinon.assert.calledOnce(mock);
   });
+
+  it('should handle error on SUBMIT ACTIVITY REPORT', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await reports.activity({}, res);
+    sinon.assert.calledOnce(mock);
+  });
 });

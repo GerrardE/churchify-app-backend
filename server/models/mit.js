@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     trainees: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+
+    notes: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {});
 

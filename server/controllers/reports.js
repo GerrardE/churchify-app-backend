@@ -1,9 +1,12 @@
 import validMembership from '@validations/membership';
 import validAttendance from '@validations/attendance';
 import validMit from '@validations/mit';
+import validActivity from '@validations/activity';
 import models from '@models';
 
-const { Membership, Attendance, Mit } = models;
+const {
+  Membership, Attendance, Mit, Activity
+} = models;
 
 /**
  * Report Controller
@@ -109,6 +112,40 @@ class ReportController {
       return res.status(400).json({
         status: 400,
         errors: 'MIT report submission failed'
+      });
+    }
+  }
+
+  /**
+  * @static
+  * @param {*} req - Request object
+  * @param {*} res - Response object
+  * @param {*} next - The next middleware
+  * @return {json} Returns json object
+  * @memberof ReportController
+  */
+  static async activity(req, res) {
+    try {
+      const { errors, isValid } = await validActivity(req.body);
+      // Check Validation
+      if (!isValid) {
+        return res.status(400).json({
+          status: 400,
+          errors
+        });
+      }
+
+      const { id: userId } = req.decoded;
+
+      const payload = await Activity.create({ userId, ...req.body });
+
+      res.status(200).json({
+        status: 200, message: 'Activity report submitted successfully', payload
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Activity report submission failed'
       });
     }
   }

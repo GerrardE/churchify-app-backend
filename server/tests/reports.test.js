@@ -168,4 +168,51 @@ describe('REPORT TESTS', () => {
       throw err.message;
     }
   });
+
+  it('should return success on SUBMIT AN ACTIVITY REPORT', (done) => {
+    try {
+      chai.request(index)
+        .post('/api/v1/reports/activity')
+        .set({ Authorization: userToken })
+        .send({
+          council: '2',
+          special: '4',
+          project: '2',
+          notes: 'God report',
+          branchId: testBranch.id.toString()
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('payload');
+          expect(res.body.message).to.eql('Activity report submitted successfully');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
+  it('should return VALIDATION ERROR on SUBMIT AN ACTIVITY REPORT', (done) => {
+    try {
+      chai.request(index)
+        .post('/api/v1/reports/activity')
+        .set({ Authorization: userToken })
+        .send({
+          council: '2',
+          special: '4',
+          project: '2',
+          notes: '',
+          branchId: testBranch.id.toString()
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('errors');
+          expect(res.body.errors.notes).to.eql('notes field is required');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
 });
