@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+
+    notes: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {});
 
   Attendance.associate = (models) => {

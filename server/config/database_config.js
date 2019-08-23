@@ -1,4 +1,3 @@
-import path from 'path';
 import { config } from 'dotenv';
 
 config();
@@ -12,9 +11,11 @@ export const development = {
 };
 
 export const test = {
-  dialect: 'sqlite',
-  storage: path.join(__dirname, '..', 'database_test.sqlite3'),
-  logging: false
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_TESTDATABASE,
+  host: process.env.DB_HOST,
+  dialect: 'postgres'
 };
 
 export const production = {

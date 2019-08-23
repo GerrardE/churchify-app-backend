@@ -6,5 +6,6 @@ import { verifyToken } from '@middlewares/Token';
 const reportRouter = express.Router();
 
 reportRouter.post('/membership', verifyToken, trim, reports.membership);
+reportRouter.post('/attendance', verifyToken, trim, reports.attendance);
 
 export default reportRouter;

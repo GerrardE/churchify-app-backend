@@ -78,7 +78,7 @@ describe('EVENT CONTROLLER TESTS', () => {
         id: 1
       },
       decoded: {
-        id: 1
+        id: '4ccefe52-303f-49e1-af34-cc9975a5c57f'
       }
     };
 

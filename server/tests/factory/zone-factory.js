@@ -8,9 +8,9 @@ const createTestZone = async ({
 }) => {
   const newZone = await Zone.create({
     userId: userId || faker.random.uuid(),
-    name: name || faker.random.alphaNumeric(6),
-    country: country || faker.random.alphaNumeric(6),
-    description: description || faker.random.alphaNumeric(6)
+    name: name || faker.random.word(6),
+    country: country || faker.random.word(6),
+    description: description || faker.random.word(6)
   });
 
   return (newZone);
