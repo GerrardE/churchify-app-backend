@@ -3,10 +3,11 @@ import validAttendance from '@validations/attendance';
 import validMit from '@validations/mit';
 import validActivity from '@validations/activity';
 import validGroup from '@validations/group';
+import validGreport from '@validations/greport';
 import models from '@models';
 
 const {
-  Membership, Attendance, Mit, Activity, Group
+  Membership, Attendance, Mit, Activity, Group, Greport
 } = models;
 
 /**
@@ -181,6 +182,40 @@ class ReportController {
       return res.status(400).json({
         status: 400,
         errors: 'Group report submission failed'
+      });
+    }
+  }
+
+  /**
+  * @static
+  * @param {*} req - Request object
+  * @param {*} res - Response object
+  * @param {*} next - The next middleware
+  * @return {json} Returns json object
+  * @memberof ReportController
+  */
+  static async greport(req, res) {
+    try {
+      const { errors, isValid } = await validGreport(req.body);
+      // Check Validation
+      if (!isValid) {
+        return res.status(400).json({
+          status: 400,
+          errors
+        });
+      }
+
+      const { id: userId } = req.decoded;
+
+      const payload = await Greport.create({ userId, ...req.body });
+
+      res.status(200).json({
+        status: 200, message: 'Gtwelve report submitted successfully', payload
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Gtwelve report submission failed'
       });
     }
   }

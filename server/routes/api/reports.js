@@ -10,5 +10,6 @@ reportRouter.post('/attendance', verifyToken, trim, reports.attendance);
 reportRouter.post('/mit', verifyToken, trim, reports.mit);
 reportRouter.post('/activity', verifyToken, trim, reports.activity);
 reportRouter.post('/group', verifyToken, trim, reports.group);
+reportRouter.post('/greport', verifyToken, trim, reports.greport);
 
 export default reportRouter;
