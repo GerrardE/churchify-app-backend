@@ -30,13 +30,8 @@ class GtwelveController {
       }
 
       const { id: userId } = req.decoded;
-      const {
-        name, country, description, branchId, city, address, state
-      } = req.body;
 
-      const payload = await Gtwelve.create({
-        userId, name, description, branchId, city, address, state, country
-      });
+      const payload = await Gtwelve.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,

@@ -29,13 +29,8 @@ class PreacherController {
       }
 
       const { id: userId } = req.decoded;
-      const {
-        branchId, firstname, lastname, address, city, state, country, description
-      } = req.body;
 
-      const payload = await Preacher.create({
-        userId, branchId, firstname, lastname, address, city, state, country, description
-      });
+      const payload = await Preacher.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,

@@ -30,13 +30,8 @@ class BranchController {
       }
 
       const { id: userId } = req.decoded;
-      const {
-        zoneId, name, country, address, city, state, description
-      } = req.body;
 
-      const payload = await Branch.create({
-        userId, zoneId, name, country, address, city, state, description
-      });
+      const payload = await Branch.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,
