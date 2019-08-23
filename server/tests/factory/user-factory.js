@@ -18,7 +18,7 @@ const createTestUser = async ({
     lastName: lastName || faker.random.alphaNumeric(6),
     phone: phone || faker.random.number(),
     email: email || faker.internet.email(),
-    branchId: branchId || faker.random.word(),
+    branchId: branchId || faker.random.number(),
     country: country || faker.address.country(),
     password: password || faker.internet.password()
   });

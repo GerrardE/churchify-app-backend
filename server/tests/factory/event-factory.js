@@ -10,8 +10,8 @@ const createTestEvent = async ({
     userId: userId || faker.random.uuid(),
     branchId: branchId || faker.random.number(),
     name: name || faker.random.alphaNumeric(6),
-    month: month || faker.random.alphaNumeric(6),
-    year: year || faker.random.alphaNumeric(6),
+    month: month || faker.random.word(),
+    year: year || faker.random.number(4),
     description: description || faker.random.alphaNumeric(6)
   });
 
