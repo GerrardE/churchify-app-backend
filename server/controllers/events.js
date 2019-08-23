@@ -30,13 +30,8 @@ class EventController {
       }
 
       const { id: userId } = req.decoded;
-      const {
-        branchId, name, month, year, description
-      } = req.body;
 
-      const payload = await Event.create({
-        userId, branchId, name, month, year, description
-      });
+      const payload = await Event.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,

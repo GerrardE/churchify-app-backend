@@ -7,5 +7,6 @@ const reportRouter = express.Router();
 
 reportRouter.post('/membership', verifyToken, trim, reports.membership);
 reportRouter.post('/attendance', verifyToken, trim, reports.attendance);
+reportRouter.post('/mit', verifyToken, trim, reports.mit);
 
 export default reportRouter;

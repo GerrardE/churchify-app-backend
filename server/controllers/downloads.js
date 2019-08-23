@@ -30,13 +30,8 @@ class DownloadController {
       }
 
       const { id: userId } = req.decoded;
-      const {
-        categoryId, month, year, url, name, description
-      } = req.body;
 
-      const payload = await Download.create({
-        userId, categoryId, month, year, url, name, description
-      });
+      const payload = await Download.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,

@@ -30,12 +30,9 @@ class CategoryController {
       }
 
       const { id: userId } = req.decoded;
-      const {
-        name, description
-      } = req.body;
 
       const payload = await Category.create({
-        userId, name, description
+        userId, ...req.body
       });
 
       res.status(201).json({

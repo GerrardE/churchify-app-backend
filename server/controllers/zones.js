@@ -30,11 +30,8 @@ class ZoneController {
       }
 
       const { id: userId } = req.decoded;
-      const { name, country, description } = req.body;
 
-      const payload = await Zone.create({
-        userId, name, country, description
-      });
+      const payload = await Zone.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,
