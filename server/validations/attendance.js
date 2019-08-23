@@ -42,6 +42,10 @@ const validAttendance = (data) => {
   }
 
   // notes validations
+  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
+    errors.notes = 'notes must be between 5 and 200 characters';
+  }
+
   if (validator.isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }

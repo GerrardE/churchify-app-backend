@@ -1,21 +1,27 @@
 import validator from 'validator';
 import isEmpty from '../middlewares/isEmpty';
 
-const validMit = (data) => {
+const validActivity = (data) => {
   const errors = {};
-  data.converts = !isEmpty(data.converts) ? data.converts : '';
-  data.trainees = !isEmpty(data.trainees) ? data.trainees : '';
+  data.council = !isEmpty(data.council) ? data.council : '';
+  data.special = !isEmpty(data.special) ? data.special : '';
+  data.project = !isEmpty(data.project) ? data.project : '';
   data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
-  // trainees validations
-  if (validator.isEmpty(data.trainees)) {
-    errors.trainees = 'trainees field is required';
+  // council validations
+  if (validator.isEmpty(data.council)) {
+    errors.council = 'council field is required';
   }
 
-  // converts validations
-  if (validator.isEmpty(data.converts)) {
-    errors.converts = 'converts field is required';
+  // special validations
+  if (validator.isEmpty(data.special)) {
+    errors.special = 'special field is required';
+  }
+
+  // project validations
+  if (validator.isEmpty(data.project)) {
+    errors.project = 'project field is required';
   }
 
   // branch validations
@@ -38,4 +44,4 @@ const validMit = (data) => {
   };
 };
 
-export default validMit;
+export default validActivity;
