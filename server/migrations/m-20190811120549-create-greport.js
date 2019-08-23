@@ -40,7 +40,7 @@ module.exports = {
       allowNull: false
     },
 
-    note: {
+    notes: {
       type: Sequelize.STRING,
       allowNull: false
     },
