@@ -73,4 +73,16 @@ describe('REPORT CONTROLLER TESTS', () => {
     await reports.group({}, res);
     sinon.assert.calledOnce(mock);
   });
+
+  it('should handle error on SUBMIT GTWELVE REPORT', async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await reports.greport({}, res);
+    sinon.assert.calledOnce(mock);
+  });
 });
