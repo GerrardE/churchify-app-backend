@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+
+    notes: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   }, {});
 
   Activity.associate = (models) => {

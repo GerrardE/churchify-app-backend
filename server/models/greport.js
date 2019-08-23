@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    note: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     }
