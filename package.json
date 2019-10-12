@@ -1,7 +1,7 @@
 {
-  "name": "tremdev",
+  "name": "churchify-app-backend",
   "version": "1.0.0",
-  "description": "TremDev helps TREM HQ manage report submissions from all her branches all over the world.",
+  "description": "Churchify-App is a church management application.",
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.js",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GerrardE/tremdev.git"
+    "url": "git+https://github.com/GerrardE/churchify-app-backend.git"
   },
   "keywords": [
     "Node",
@@ -29,9 +29,9 @@
   "author": "Gerrard Ezeugwa",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GerrardE/tremdev/issues"
+    "url": "https://github.com/GerrardE/churchify-app-backend/issues"
   },
-  "homepage": "https://github.com/GerrardE/tremdev#readme",
+  "homepage": "https://github.com/GerrardE/churchify-app-backend#readme",
   "dependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
