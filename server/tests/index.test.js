@@ -12,7 +12,7 @@ describe('TEST TO CHECK BASE ROUTE ', () => {
         .get('/api/v1/')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.text).to.eql('Welcome to the TremDev API');
+          expect(res.text).to.eql('Welcome to the Churchify-App API');
           done();
         });
     } catch (err) {

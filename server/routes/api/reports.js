@@ -7,9 +7,9 @@ const reportRouter = express.Router();
 
 reportRouter.post('/membership', verifyToken, trim, reports.membership);
 reportRouter.post('/attendance', verifyToken, trim, reports.attendance);
-reportRouter.post('/mit', verifyToken, trim, reports.mit);
+reportRouter.post('/training', verifyToken, trim, reports.training);
 reportRouter.post('/activity', verifyToken, trim, reports.activity);
 reportRouter.post('/group', verifyToken, trim, reports.group);
-reportRouter.post('/greport', verifyToken, trim, reports.greport);
+reportRouter.post('/freport', verifyToken, trim, reports.freport);
 
 export default reportRouter;

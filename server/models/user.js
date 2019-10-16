@@ -1,76 +1,86 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { config } from 'dotenv';
 
 config();
 
 const salt = process.env.SALT || 5;
-// eslint-disable-next-line radix
-const SALT_ROUNDS = parseInt(salt);
+const SALT_ROUNDS = +salt;
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false
-    },
+  const User = sequelize.define(
+    'User',
+    {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false
+      },
 
-    role: {
-      type: DataTypes.STRING,
-      allowNull: true // change to false
-    },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: true // change to false
+      },
 
-    firstName: {
-      type: DataTypes.CITEXT,
-      allowNull: false
-    },
+      firstName: {
+        type: DataTypes.CITEXT,
+        allowNull: false
+      },
 
-    lastName: {
-      type: DataTypes.CITEXT,
-      allowNull: false
-    },
+      lastName: {
+        type: DataTypes.CITEXT,
+        allowNull: false
+      },
 
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
 
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
 
-    branchId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
+      branchId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
 
-    country: {
-      type: DataTypes.CITEXT,
-      allowNull: false
-    },
+      country: {
+        type: DataTypes.CITEXT,
+        allowNull: false
+      },
 
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    },
+    {
+      hooks: {
+        beforeCreate: user => User.hashPassword(user),
+        beforeUpdate: user => User.hashPassword(user)
+      }
     }
-  }, {
-    hooks: {
-      beforeCreate: user => User.hashPassword(user),
-      beforeUpdate: user => User.hashPassword(user)
-    }
-  });
+  );
 
   User.associate = (models) => {
     const {
-      Branch, Gtwelve, Download, Event, Greport, Group, Membership, Mit
+      Branch,
+      Fellowship,
+      Download,
+      Event,
+      Freport,
+      Group,
+      Membership,
+      Training
     } = models;
 
-    User.hasMany(Mit, {
+    User.hasMany(Training, {
       foreignKey: 'id',
-      as: 'mits'
+      as: 'trainings'
     });
 
     User.hasMany(Membership, {
@@ -83,9 +93,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'groups'
     });
 
-    User.hasMany(Greport, {
+    User.hasMany(Freport, {
       foreignKey: 'id',
-      as: 'greports'
+      as: 'freports'
     });
 
     User.hasMany(Event, {
@@ -98,9 +108,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'downloads'
     });
 
-    User.belongsTo(Gtwelve, {
+    User.belongsTo(Fellowship, {
       foreignKey: 'id',
-      as: 'g12'
+      as: 'fellowship'
     });
 
     User.belongsTo(Branch, {

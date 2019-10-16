@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "TremDev helps TREM HQ manage report submissions from all her branches all over the world."
+  description: "Churchify-App is a church management application."
   version: "1.0.0"
-  title: "TremDev"
+  title: "Churchify-App"
   license:
     name: "MIT"
     url: "https://www.apache.org/licenses/LICENSE-2.0.html"

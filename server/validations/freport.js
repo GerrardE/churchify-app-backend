@@ -1,12 +1,12 @@
 import validator from 'validator';
 import isEmpty from '../middlewares/isEmpty';
 
-const validGreport = (data) => {
+const validFreport = (data) => {
   const errors = {};
   data.newcells = !isEmpty(data.newcells) ? data.newcells : '';
   data.totalcells = !isEmpty(data.totalcells) ? data.totalcells : '';
   data.attendance = !isEmpty(data.attendance) ? data.attendance : '';
-  data.gtwelveId = !isEmpty(data.gtwelveId) ? data.gtwelveId : '';
+  data.fellowshipId = !isEmpty(data.fellowshipId) ? data.fellowshipId : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // newcells validations
@@ -24,9 +24,9 @@ const validGreport = (data) => {
     errors.attendance = 'attendance field is required';
   }
 
-  // gtwelve validations
-  if (validator.isEmpty(data.gtwelveId)) {
-    errors.gtwelve = 'gtwelve field is required';
+  // fellowship validations
+  if (validator.isEmpty(data.fellowshipId)) {
+    errors.fellowship = 'fellowship field is required';
   }
 
   // notes validations
@@ -44,4 +44,4 @@ const validGreport = (data) => {
   };
 };
 
-export default validGreport;
+export default validFreport;

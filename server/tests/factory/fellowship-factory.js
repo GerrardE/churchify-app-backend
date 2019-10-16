@@ -1,12 +1,12 @@
 import faker from 'faker';
 import models from '@models';
 
-const { Gtwelve } = models;
+const { Fellowship } = models;
 
-const createTestGtwelve = async ({
+const createTestFellowship = async ({
   userId, branchId, name, address, city, state, country, description
 }) => {
-  const newGtwelve = await Gtwelve.create({
+  const newFellowship = await Fellowship.create({
     userId: userId || faker.random.uuid(),
     branchId: branchId || faker.random.number(),
     name: name || faker.random.alphaNumeric(6),
@@ -17,7 +17,7 @@ const createTestGtwelve = async ({
     description: description || faker.random.alphaNumeric(6)
   });
 
-  return (newGtwelve);
+  return (newFellowship);
 };
 
-export default createTestGtwelve;
+export default createTestFellowship;

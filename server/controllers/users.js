@@ -3,7 +3,7 @@ import { createToken } from '@middlewares/Token';
 import validSignup from '@validations/signup';
 import validSignin from '@validations/signin';
 import validationResponse from '@validations/validationResponse';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import models from '@models';
 
 const { User } = models;
@@ -80,6 +80,7 @@ class UserController {
           errors
         });
       }
+
       const { email, password } = req.body;
       const user = await User.findOne({
         where: {
@@ -95,6 +96,7 @@ class UserController {
       }
 
       const match = await bcrypt.compare(password, user.password);
+
       if (!match) {
         return res.status(400).json({
           status: 400,

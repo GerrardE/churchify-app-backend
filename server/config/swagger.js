@@ -10,9 +10,9 @@ const host = process.env.HOST_NAME || 'localhost:5000';
 // Swagger Definitions
 const swaggerDefinition = {
   info: {
-    title: 'TremDev',
+    title: 'Churchify-App',
     version: '1.0.0',
-    description: 'TremDev helps TREM HQ manage report submissions from all her branches all over the world.',
+    description: 'Churchify-App is a church management application.',
   },
   host,
   basePath: '/api/v1'

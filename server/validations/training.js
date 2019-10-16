@@ -1,7 +1,7 @@
 import validator from 'validator';
 import isEmpty from '../middlewares/isEmpty';
 
-const validMit = (data) => {
+const validTraining = (data) => {
   const errors = {};
   data.converts = !isEmpty(data.converts) ? data.converts : '';
   data.trainees = !isEmpty(data.trainees) ? data.trainees : '';
@@ -38,4 +38,4 @@ const validMit = (data) => {
   };
 };
 
-export default validMit;
+export default validTraining;
