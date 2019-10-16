@@ -1,26 +1,26 @@
 import validationResponse from '@validations/validationResponse';
-import validGtwelve from '@validations/gtwelve';
+import validFellowship from '@validations/fellowship';
 import models from '@models';
 
-const { Gtwelve } = models;
+const { Fellowship } = models;
 
 /**
- * Gtwelve Controller
+ * Fellowship Controller
  * @async
- * @class GtwelveController
+ * @class FellowshipController
  */
-class GtwelveController {
+class FellowshipController {
   /**
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof GtwelveController
+   * @memberof FellowshipController
    */
   static async create(req, res) {
     try {
-      const { errors, isValid } = validGtwelve(req.body);
+      const { errors, isValid } = validFellowship(req.body);
       // Check Validation
       if (!isValid) {
         return res.status(400).json({
@@ -31,11 +31,11 @@ class GtwelveController {
 
       const { id: userId } = req.decoded;
 
-      const payload = await Gtwelve.create({ userId, ...req.body });
+      const payload = await Fellowship.create({ userId, ...req.body });
 
       res.status(201).json({
         status: 201,
-        message: 'Gtwelve created successfully',
+        message: 'Fellowship created successfully',
         payload
       });
     } catch (err) {
@@ -48,42 +48,42 @@ class GtwelveController {
 
       res.status(400).json({
         status: 400,
-        errors: 'Gtwelve creation unsuccessful'
+        errors: 'Fellowship creation unsuccessful'
       });
     }
   }
 
 
   /**
-   * Get all Gtwelves
+   * Get all Fellowships
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
    * @return {json} Returns json object
-   * @memberof GtwelveController
+   * @memberof FellowshipController
    */
   static async getAll(req, res) {
-    const payload = await Gtwelve.findAll();
+    const payload = await Fellowship.findAll();
 
     return res.status(200).json({
       status: 200,
-      message: 'Gtwelves retrieved successfully',
+      message: 'Fellowships retrieved successfully',
       payload
     });
   }
 
   /**
-   * Update a Gtwelve
+   * Update a Fellowship
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof GtwelveController
+   * @memberof FellowshipController
    */
   static async update(req, res) {
     try {
-      const { errors, isValid } = validGtwelve(req.body);
+      const { errors, isValid } = validFellowship(req.body);
       // Check Validation
       if (!isValid) {
         return res.status(400).json({
@@ -92,53 +92,53 @@ class GtwelveController {
         });
       }
 
-      const { gtwelve } = req;
-      const { userId, id } = gtwelve;
+      const { fellowship } = req;
+      const { userId, id } = fellowship;
 
-      await Gtwelve.update(req.body, { returning: true, where: { id, userId } });
+      await fellowship.update(req.body, { returning: true, where: { id, userId } });
 
-      const payload = await Gtwelve.findAll();
+      const payload = await Fellowship.findAll();
       res.status(200).json({
         status: 200,
-        message: 'Gtwelve updated successfully',
+        message: 'Fellowship updated successfully',
         payload
       });
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Gtwelve could not be updated'
+        errors: 'Fellowship could not be updated'
       });
     }
   }
 
   /**
-   * Delete a Gtwelve
+   * Delete a Fellowship
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
    * @param {*} next - The next middleware
    * @return {json} Returns json object
-   * @memberof GtwelveController
+   * @memberof FellowshipController
    */
   static async delete(req, res) {
     try {
-      const { gtwelve } = req;
-      const { id, userId } = gtwelve;
-      await Gtwelve.destroy({ where: { id, userId } });
-      const payload = await Gtwelve.findAll();
+      const { fellowship } = req;
+      const { id, userId } = Fellowship;
+      await fellowship.destroy({ where: { id, userId } });
+      const payload = await Fellowship.findAll();
 
       res.status(200).json({
         status: 200,
-        message: 'Gtwelve deleted successfully',
+        message: 'Fellowship deleted successfully',
         payload
       });
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Gtwelve could not be deleted'
+        errors: 'Fellowship could not be deleted'
       });
     }
   }
 }
 
-export default GtwelveController;
+export default FellowshipController;

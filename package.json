@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.js",
-    "start:dev": "DEBUG=index nodemon ./server/index.js --exec babel-node",
+    "start:dev": "nodemon ./server/index.js --exec babel-node",
     "build": "npm run clean && babel ./server -d ./dist",
+    "heroku-postbuild": "npm run build && npm run migrate && npm run seed",
     "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all",
     "migrate:undo:all": "sequelize db:migrate:undo:all",
     "migrate:undo": "sequelize db:migrate:undo",
     "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "clean": "rm -rf dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "pretest": "rm -rf ./server/database_test.sqlite3 && NODE_ENV=test npm run refreshdb",
+    "pretest": "NODE_ENV=test npm run refreshdb",
+    "check": "npm run refreshdb && nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit",
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
   },
   "repository": {
@@ -42,7 +45,7 @@
     "@babel/register": "^7.4.4",
     "@babel/runtime": "^7.4.5",
     "babel-plugin-module-resolver": "^3.2.0",
-    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
@@ -88,7 +91,8 @@
       "server/migrations",
       "server/validations",
       "server/models",
-      "server/config"
+      "server/config",
+      "server/seeders"
     ]
   }
 }

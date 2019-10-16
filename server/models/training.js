@@ -1,26 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
-  const Greport = sequelize.define('Greport', {
+  const Training = sequelize.define('Training', {
     userId: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    gtwelveId: {
+    branchId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    newcells: {
+    converts: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    totalcells: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-
-    attendance: {
+    trainees: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -31,19 +26,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
 
-  Greport.associate = (models) => {
-    const { Gtwelve, User } = models;
+  Training.associate = (models) => {
+    const { Branch, User } = models;
 
-    Greport.belongsTo(User, {
+    Training.belongsTo(User, {
       foreignKey: 'id',
-      as: 'user_report'
+      as: 'user_trainings'
     });
 
-    Greport.belongsTo(Gtwelve, {
+    Training.belongsTo(Branch, {
       foreignKey: 'id',
-      as: 'reports'
+      as: 'training'
     });
   };
-
-  return Greport;
+  return Training;
 };

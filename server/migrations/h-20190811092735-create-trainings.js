@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Greports', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Trainings', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -16,33 +16,28 @@ module.exports = {
       }
     },
 
-    gtwelveId: {
+    branchId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'Gtwelves',
+        model: 'Branches',
         key: 'id'
       }
     },
 
-    newcells: {
+    converts: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
 
-    totalcells: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
-
-    attendance: {
+    trainees: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
 
     notes: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
 
     createdAt: {
@@ -56,5 +51,5 @@ module.exports = {
     }
   }),
 
-  down: queryInterface => queryInterface.dropTable('Greports')
+  down: queryInterface => queryInterface.dropTable('Trainings')
 };

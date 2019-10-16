@@ -1,13 +1,13 @@
 import validMembership from '@validations/membership';
 import validAttendance from '@validations/attendance';
-import validMit from '@validations/mit';
+import validTraining from '@validations/training';
 import validActivity from '@validations/activity';
 import validGroup from '@validations/group';
-import validGreport from '@validations/greport';
+import validFreport from '@validations/freport';
 import models from '@models';
 
 const {
-  Membership, Attendance, Mit, Activity, Group, Greport
+  Membership, Attendance, Training, Activity, Group, Freport
 } = models;
 
 /**
@@ -92,9 +92,9 @@ class ReportController {
   * @return {json} Returns json object
   * @memberof ReportController
   */
-  static async mit(req, res) {
+  static async training(req, res) {
     try {
-      const { errors, isValid } = await validMit(req.body);
+      const { errors, isValid } = await validTraining(req.body);
       // Check Validation
       if (!isValid) {
         return res.status(400).json({
@@ -105,15 +105,15 @@ class ReportController {
 
       const { id: userId } = req.decoded;
 
-      const payload = await Mit.create({ userId, ...req.body });
+      const payload = await Training.create({ userId, ...req.body });
 
       res.status(200).json({
-        status: 200, message: 'MIT report submitted successfully', payload
+        status: 200, message: 'Training report submitted successfully', payload
       });
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'MIT report submission failed'
+        errors: 'Training report submission failed'
       });
     }
   }
@@ -194,9 +194,9 @@ class ReportController {
   * @return {json} Returns json object
   * @memberof ReportController
   */
-  static async greport(req, res) {
+  static async freport(req, res) {
     try {
-      const { errors, isValid } = await validGreport(req.body);
+      const { errors, isValid } = await validFreport(req.body);
       // Check Validation
       if (!isValid) {
         return res.status(400).json({
@@ -207,15 +207,15 @@ class ReportController {
 
       const { id: userId } = req.decoded;
 
-      const payload = await Greport.create({ userId, ...req.body });
+      const payload = await Freport.create({ userId, ...req.body });
 
       res.status(200).json({
-        status: 200, message: 'Gtwelve report submitted successfully', payload
+        status: 200, message: 'Fellowship report submitted successfully', payload
       });
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Gtwelve report submission failed'
+        errors: 'Fellowship report submission failed'
       });
     }
   }

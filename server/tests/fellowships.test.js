@@ -10,7 +10,7 @@ const { expect } = chai;
 
 let userToken, testUser, userId, testZone, testBranch;
 
-describe('GTWELVE TESTS', () => {
+describe('Fellowship TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
@@ -19,10 +19,10 @@ describe('GTWELVE TESTS', () => {
     const zoneId = testZone.id;
     testBranch = await createTestBranch({ userId, zoneId });
   });
-  it('should return success on CREATE A GTWELVE', (done) => {
+  it('should return success on CREATE A FELLOWSHIP', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/gtwelves')
+        .post('/api/v1/fellowships')
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
@@ -37,7 +37,7 @@ describe('GTWELVE TESTS', () => {
           expect(res.status).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Gtwelve created successfully');
+          expect(res.body.message).to.eql('Fellowship created successfully');
           done();
         });
     } catch (err) {
@@ -47,7 +47,7 @@ describe('GTWELVE TESTS', () => {
   it('should handle VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/gtwelves')
+        .post('/api/v1/fellowships')
         .set({ Authorization: userToken })
         .send({
           name: 'Ojodu',
@@ -72,7 +72,7 @@ describe('GTWELVE TESTS', () => {
   it('should handle UNIQUE VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/gtwelves')
+        .post('/api/v1/fellowships')
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
@@ -95,16 +95,16 @@ describe('GTWELVE TESTS', () => {
     }
   });
 
-  it('should return success on GET ALL GTWELVES', (done) => {
+  it('should return success on GET ALL FELLOWSHIPS', (done) => {
     try {
       chai.request(index)
-        .get('/api/v1/gtwelves')
+        .get('/api/v1/fellowships')
         .set({ Authorization: userToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Gtwelves retrieved successfully');
+          expect(res.body.message).to.eql('Fellowships retrieved successfully');
           done();
         });
     } catch (err) {
@@ -112,10 +112,10 @@ describe('GTWELVE TESTS', () => {
     }
   });
 
-  it('should return success on UPDATE A GTWELVE', (done) => {
+  it('should return success on UPDATE A FELLOWSHIP', (done) => {
     try {
       chai.request(index)
-        .put(`/api/v1/gtwelves/${1}`)
+        .put(`/api/v1/fellowships/${1}`)
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
@@ -130,7 +130,7 @@ describe('GTWELVE TESTS', () => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Gtwelve updated successfully');
+          expect(res.body.message).to.eql('Fellowship updated successfully');
           done();
         });
     } catch (err) {
@@ -140,7 +140,7 @@ describe('GTWELVE TESTS', () => {
   it('should handle VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .put(`/api/v1/gtwelves/${1}`)
+        .put(`/api/v1/fellowships/${1}`)
         .set({ Authorization: userToken })
         .send({
           name: 'A',
@@ -163,16 +163,16 @@ describe('GTWELVE TESTS', () => {
     }
   });
 
-  it('should return success on DELETE A GTWELVE', (done) => {
+  it('should return success on DELETE A FELLOWSHIP', (done) => {
     try {
       chai.request(index)
-        .delete(`/api/v1/gtwelves/${1}`)
+        .delete(`/api/v1/fellowships/${1}`)
         .set({ Authorization: userToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Gtwelve deleted successfully');
+          expect(res.body.message).to.eql('Fellowship deleted successfully');
           done();
         });
     } catch (err) {

@@ -1,12 +1,12 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
-import gtwelves from '@controllers/gtwelves';
-import { gtwelveFinder, gtwelvePermission } from '@middlewares/gtwelveFinder';
+import fellowships from '@controllers/fellowships';
+import { fellowshipFinder, fellowshipPermission } from '@middlewares/fellowshipFinder';
 
 chai.use(chaiHttp);
 
-describe('GTWELVE CONTROLLER TESTS', () => {
+describe('FELLOWSHIP CONTROLLER TESTS', () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -15,7 +15,7 @@ describe('GTWELVE CONTROLLER TESTS', () => {
     sandbox.restore();
   });
 
-  it('should handle error on CREATE GTWELVE', async () => {
+  it('should handle error on CREATE FELLOWSHIP', async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -23,11 +23,11 @@ describe('GTWELVE CONTROLLER TESTS', () => {
       })
     };
 
-    await gtwelves.create({}, res);
+    await fellowships.create({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on UPDATE GTWELVE', async () => {
+  it('should handle error on UPDATE FELLOWSHIP', async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -35,11 +35,11 @@ describe('GTWELVE CONTROLLER TESTS', () => {
       })
     };
 
-    await gtwelves.update({}, res);
+    await fellowships.update({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on DELETE GTWELVE', async () => {
+  it('should handle error on DELETE FELLOWSHIP', async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -47,11 +47,11 @@ describe('GTWELVE CONTROLLER TESTS', () => {
       })
     };
 
-    await gtwelves.delete({}, res);
+    await fellowships.delete({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on FIND GTWELVE', async () => {
+  it('should handle error on FIND FELLOWSHIP', async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -66,11 +66,11 @@ describe('GTWELVE CONTROLLER TESTS', () => {
       })
     };
 
-    await gtwelveFinder(req, res, next);
+    await fellowshipFinder(req, res, next);
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on GTWELVE PERMISSION', async () => {
+  it('should handle error on FELLOWSHIP PERMISSION', async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -88,7 +88,7 @@ describe('GTWELVE CONTROLLER TESTS', () => {
       })
     };
 
-    await gtwelvePermission(req, res, next);
+    await fellowshipPermission(req, res, next);
     sinon.assert.calledOnce(mock);
   });
 });

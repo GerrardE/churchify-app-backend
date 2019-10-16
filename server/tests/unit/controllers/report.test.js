@@ -38,7 +38,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT MIT REPORT', async () => {
+  it('should handle error on SUBMIT TRAINING REPORT', async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -46,7 +46,7 @@ describe('REPORT CONTROLLER TESTS', () => {
       })
     };
 
-    await reports.mit({}, res);
+    await reports.training({}, res);
     sinon.assert.calledOnce(mock);
   });
 
@@ -74,7 +74,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT GTWELVE REPORT', async () => {
+  it('should handle error on SUBMIT FELLOWSHIP REPORT', async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -82,7 +82,7 @@ describe('REPORT CONTROLLER TESTS', () => {
       })
     };
 
-    await reports.greport({}, res);
+    await reports.freport({}, res);
     sinon.assert.calledOnce(mock);
   });
 });

@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Branch = sequelize.define('Branch', {
     userId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: true
     },
 
     zoneId: {
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Branch.associate = (models) => {
     const {
-      User, Zone, Gtwelve, Activity, Attendance, Membership, Mit
+      User, Zone, Fellowship, Activity, Attendance, Membership, Training
     } = models;
 
     Branch.hasMany(User, {
@@ -52,9 +52,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'members'
     });
 
-    Branch.hasMany(Gtwelve, {
+    Branch.hasMany(Fellowship, {
       foreignKey: 'id',
-      as: 'gtwelves'
+      as: 'fellowships'
     });
 
     Branch.hasMany(Activity, {
@@ -67,9 +67,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'membership'
     });
 
-    Branch.hasMany(Mit, {
+    Branch.hasMany(Training, {
       foreignKey: 'id',
-      as: 'mit'
+      as: 'training'
     });
 
     Branch.hasMany(Attendance, {

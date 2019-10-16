@@ -1,21 +1,26 @@
 module.exports = (sequelize, DataTypes) => {
-  const Mit = sequelize.define('Mit', {
+  const Freport = sequelize.define('Freport', {
     userId: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    fellowshipId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    converts: {
+    newcells: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    trainees: {
+    totalcells: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    attendance: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -26,18 +31,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
 
-  Mit.associate = (models) => {
-    const { Branch, User } = models;
+  Freport.associate = (models) => {
+    const { Fellowship, User } = models;
 
-    Mit.belongsTo(User, {
+    Freport.belongsTo(User, {
       foreignKey: 'id',
-      as: 'user_mits'
+      as: 'user_report'
     });
 
-    Mit.belongsTo(Branch, {
+    Freport.belongsTo(Fellowship, {
       foreignKey: 'id',
-      as: 'mit'
+      as: 'reports'
     });
   };
-  return Mit;
+
+  return Freport;
 };

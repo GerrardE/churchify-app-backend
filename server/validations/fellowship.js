@@ -1,7 +1,7 @@
 import validator from 'validator';
 import isEmpty from '../middlewares/isEmpty';
 
-const validGtwelve = (data) => {
+const validFellowship = (data) => {
   const errors = {};
   data.name = !isEmpty(data.name) ? data.name : '';
   data.country = !isEmpty(data.country) ? data.country : '';
@@ -64,4 +64,4 @@ const validGtwelve = (data) => {
   };
 };
 
-export default validGtwelve;
+export default validFellowship;

@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Zone = sequelize.define('Zone', {
     userId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: true
     },
 
     name: {

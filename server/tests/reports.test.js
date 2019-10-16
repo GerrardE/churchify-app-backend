@@ -4,14 +4,14 @@ import index from '../index';
 import { createTestUser, generateToken } from './factory/user-factory';
 import createTestZone from './factory/zone-factory';
 import createTestBranch from './factory/branch-factory';
-import createTestGtwelve from './factory/gtwelve-factory';
+import createTestFellowship from './factory/fellowship-factory';
 import createTestEvent from './factory/event-factory';
 import createTestPreacher from './factory/preacher-factory';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, userId, testZone, testBranch, testPreacher, testEvent, testGtwelve;
+let userToken, testUser, userId, testZone, testBranch, testPreacher, testEvent, testFellowship;
 
 describe('REPORT TESTS', () => {
   before(async () => {
@@ -24,7 +24,7 @@ describe('REPORT TESTS', () => {
     const branchId = testBranch.id;
     testEvent = await createTestEvent({ userId, branchId });
     testPreacher = await createTestPreacher({ userId, branchId });
-    testGtwelve = await createTestGtwelve({ userId, branchId });
+    testFellowship = await createTestFellowship({ userId, branchId });
   });
   it('should return success on SUBMIT A MEMBERSHIP REPORT', (done) => {
     try {
@@ -126,32 +126,32 @@ describe('REPORT TESTS', () => {
     }
   });
 
-  it('should return success on SUBMIT AN MIT REPORT', (done) => {
+  it('should return success on SUBMIT A TRAINING REPORT', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/reports/mit')
+        .post('/api/v1/reports/training')
         .set({ Authorization: userToken })
         .send({
           trainees: '23',
           converts: '1',
-          notes: 'Good mit report',
+          notes: 'Good training report',
           branchId: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('MIT report submitted successfully');
+          expect(res.body.message).to.eql('Training report submitted successfully');
           done();
         });
     } catch (err) {
       throw err.message;
     }
   });
-  it('should return VALIDATION ERROR on SUBMIT AN MIT REPORT', (done) => {
+  it('should return VALIDATION ERROR on SUBMIT A TRAINING REPORT', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/reports/mit')
+        .post('/api/v1/reports/training')
         .set({ Authorization: userToken })
         .send({
           trainees: '23',
@@ -267,39 +267,39 @@ describe('REPORT TESTS', () => {
     }
   });
 
-  it('should return success on SUBMIT A GTWELVE REPORT', (done) => {
+  it('should return success on SUBMIT A FELLOWSHIP REPORT', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/reports/greport')
+        .post('/api/v1/reports/freport')
         .set({ Authorization: userToken })
         .send({
           newcells: '1',
           totalcells: '11',
           attendance: '2',
-          gtwelveId: testGtwelve.id.toString(),
+          fellowshipId: testFellowship.id.toString(),
           notes: 'Good job on the report'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Gtwelve report submitted successfully');
+          expect(res.body.message).to.eql('Fellowship report submitted successfully');
           done();
         });
     } catch (err) {
       throw err.message;
     }
   });
-  it('should return VALIDATION ERROR on SUBMIT A GTWELVE REPORT', (done) => {
+  it('should return VALIDATION ERROR on SUBMIT A FELLOWSHIP REPORT', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/reports/greport')
+        .post('/api/v1/reports/freport')
         .set({ Authorization: userToken })
         .send({
           newcells: '1',
           totalcells: '11',
           attendance: '2',
-          gtwelveId: testGtwelve.id.toString(),
+          fellowshipId: testFellowship.id.toString(),
           notes: ''
         })
         .end((err, res) => {
