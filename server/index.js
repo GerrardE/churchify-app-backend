@@ -1,7 +1,8 @@
 import express from 'express';
 import debug from 'debug';
-import logger from 'morgan';
 import { config } from 'dotenv';
+import cors from 'cors';
+import logger from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import apis from '@routes/api';
@@ -12,6 +13,17 @@ config();
 
 const index = express();
 const port = process.env.PORT || 4000;
+
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+};
+
+// Use the CORS
+index.use(cors(corsOptions));
 
 index.use(logger('dev'));
 index.use(bodyParser.json());
