@@ -7,7 +7,7 @@ const validGroup = (data) => {
   data.cwf = !isEmpty(data.cwf) ? data.cwf : '';
   data.cyf = !isEmpty(data.cyf) ? data.cyf : '';
   data.rcf = !isEmpty(data.rcf) ? data.rcf : '';
-  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
+  data.branchid = !isEmpty(data.branchid) ? data.branchid : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // cmf validations
@@ -31,7 +31,7 @@ const validGroup = (data) => {
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchId)) {
+  if (validator.isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 

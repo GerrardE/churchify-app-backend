@@ -22,13 +22,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true // change to false
       },
 
-      firstName: {
-        type: DataTypes.CITEXT,
+      firstname: {
+        type: DataTypes.STRING,
         allowNull: false
       },
 
-      lastName: {
-        type: DataTypes.CITEXT,
+      lastname: {
+        type: DataTypes.STRING,
         allowNull: false
       },
 
@@ -43,13 +43,13 @@ module.exports = (sequelize, DataTypes) => {
         unique: true
       },
 
-      branchId: {
+      branchid: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
 
       country: {
-        type: DataTypes.CITEXT,
+        type: DataTypes.STRING,
         allowNull: false
       },
 

@@ -12,12 +12,12 @@ module.exports = {
       allowNull: true // change to false
     },
 
-    firstName: {
+    firstname: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    lastName: {
+    lastname: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -33,7 +33,7 @@ module.exports = {
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: Sequelize.INTEGER,
       allowNull: false
     },

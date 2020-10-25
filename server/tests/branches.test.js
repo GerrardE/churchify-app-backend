@@ -7,14 +7,14 @@ import createTestZone from './factory/zone-factory';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, userId, testZone;
+let userToken, testUser, userid, testZone;
 
 describe('BRANCH TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
-    userId = testUser.id;
-    testZone = await createTestZone({ userId });
+    userid = testUser.id;
+    testZone = await createTestZone({ userid });
   });
   it('should return success on CREATE A BRANCH', (done) => {
     try {
@@ -27,8 +27,8 @@ describe('BRANCH TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          zoneId: testZone.id.toString(),
-          description: 'Trem Akoka'
+          zoneid: testZone.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -52,8 +52,8 @@ describe('BRANCH TESTS', () => {
           state: 'Lagos',
           address: 'A',
           city: 'Somolu',
-          zoneId: testZone.id.toString(),
-          description: 'Trem Ojodu'
+          zoneid: testZone.id.toString(),
+          notes: 'Trem Ojodu'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -77,8 +77,8 @@ describe('BRANCH TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          zoneId: testZone.id.toString(),
-          description: 'Trem Akoka'
+          zoneid: testZone.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -120,8 +120,8 @@ describe('BRANCH TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          zoneId: testZone.id.toString(),
-          description: 'Trem Akoka'
+          zoneid: testZone.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -145,8 +145,8 @@ describe('BRANCH TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          zoneId: testZone.id.toString(),
-          description: 'Trem Akoka'
+          zoneid: testZone.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

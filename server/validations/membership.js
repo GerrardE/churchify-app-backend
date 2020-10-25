@@ -6,8 +6,8 @@ const validMembership = (data) => {
   data.adults = !isEmpty(data.adults) ? data.adults : '';
   data.children = !isEmpty(data.children) ? data.children : '';
   data.tithers = !isEmpty(data.tithers) ? data.tithers : '';
-  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
-  data.newMembers = !isEmpty(data.newMembers) ? data.newMembers : '';
+  data.branchid = !isEmpty(data.branchid) ? data.branchid : '';
+  data.newmembers = !isEmpty(data.newmembers) ? data.newmembers : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // adult validations
@@ -25,9 +25,9 @@ const validMembership = (data) => {
     errors.tithers = 'tithers field is required';
   }
 
-  // newMembers validations
-  if (validator.isEmpty(data.newMembers)) {
-    errors.newMembers = 'newMembers field is required';
+  // newmembers validations
+  if (validator.isEmpty(data.newmembers)) {
+    errors.newmembers = 'newmembers field is required';
   }
 
   // notes validations
@@ -40,7 +40,7 @@ const validMembership = (data) => {
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchId)) {
+  if (validator.isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 

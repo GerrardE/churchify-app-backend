@@ -7,7 +7,7 @@ module.exports = {
       type: Sequelize.INTEGER
     },
 
-    userId: {
+    userid: {
       type: Sequelize.UUID,
       allowNull: true,
       references: {
@@ -16,7 +16,7 @@ module.exports = {
       }
     },
 
-    zoneId: {
+    zoneid: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -51,7 +51,7 @@ module.exports = {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: Sequelize.STRING,
       allowNull: false
     },

@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Fellowship = sequelize.define('Fellowship', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },

@@ -21,7 +21,7 @@ describe('ZONE TESTS', () => {
         .send({
           name: 'Headquarters',
           country: 'Nigeria',
-          description: 'Trem HQ'
+          notes: 'Trem HQ'
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -42,7 +42,7 @@ describe('ZONE TESTS', () => {
         .send({
           name: 'H',
           country: 'Nigeria',
-          description: 'Trem HQ'
+          notes: 'Trem HQ'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -63,7 +63,7 @@ describe('ZONE TESTS', () => {
         .send({
           name: 'Headquarters',
           country: 'Nigeria',
-          description: 'Trem HQ'
+          notes: 'Trem HQ'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -102,7 +102,7 @@ describe('ZONE TESTS', () => {
         .send({
           name: 'Lagos Quarters',
           country: 'Nigeria',
-          description: 'Trem HQ'
+          notes: 'Trem HQ'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -123,7 +123,7 @@ describe('ZONE TESTS', () => {
         .send({
           name: 'H',
           country: 'Nigeria',
-          description: 'Trem HQ'
+          notes: 'Trem HQ'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

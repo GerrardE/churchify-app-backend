@@ -11,11 +11,11 @@ describe('TESTS TO SIGNUP ', () => {
       chai.request(index)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'Test',
-          lastName: 'User',
+          firstname: 'Test',
+          lastname: 'User',
           phone: '08086814343',
           email: 'test@gmail.com',
-          branchId: '1',
+          branchid: '1',
           country: 'Nigeria',
           password: 'testpass'
         })
@@ -36,11 +36,11 @@ describe('TESTS TO SIGNUP ', () => {
       chai.request(index)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'Test',
-          lastName: 'User',
+          firstname: 'Test',
+          lastname: 'User',
           phone: '08086814343',
           email: 'test@gmail',
-          branchId: '1',
+          branchid: '1',
           country: 'Nigeria',
           password: 'testpass'
         })
@@ -60,11 +60,11 @@ describe('TESTS TO SIGNUP ', () => {
       chai.request(index)
         .post('/api/v1/auth/signup')
         .send({
-          firstName: 'Test',
-          lastName: 'User',
+          firstname: 'Test',
+          lastname: 'User',
           phone: '08086814343',
           email: 'test@gmail.com',
-          branchId: '1',
+          branchid: '1',
           country: 'Nigeria',
           password: 'testpass'
         })

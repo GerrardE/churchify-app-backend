@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },

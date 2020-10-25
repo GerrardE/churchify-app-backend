@@ -11,20 +11,20 @@ import createTestPreacher from './factory/preacher-factory';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, userId, testZone, testBranch, testPreacher, testEvent, testFellowship;
+let userToken, testUser, userid, testZone, testBranch, testPreacher, testEvent, testFellowship;
 
 describe('REPORT TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
-    userId = testUser.id;
-    testZone = await createTestZone({ userId });
-    const zoneId = testZone.id;
-    testBranch = await createTestBranch({ userId, zoneId });
-    const branchId = testBranch.id;
-    testEvent = await createTestEvent({ userId, branchId });
-    testPreacher = await createTestPreacher({ userId, branchId });
-    testFellowship = await createTestFellowship({ userId, branchId });
+    userid = testUser.id;
+    testZone = await createTestZone({ userid });
+    const zoneid = testZone.id;
+    testBranch = await createTestBranch({ userid, zoneid });
+    const branchid = testBranch.id;
+    testEvent = await createTestEvent({ userid, branchid });
+    testPreacher = await createTestPreacher({ userid, branchid });
+    testFellowship = await createTestFellowship({ userid, branchid });
   });
   it('should return success on SUBMIT A MEMBERSHIP REPORT', (done) => {
     try {
@@ -35,9 +35,9 @@ describe('REPORT TESTS', () => {
           adults: '10',
           children: '2',
           tithers: '12',
-          newMembers: '11',
+          newmembers: '11',
           notes: 'good report',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -59,9 +59,9 @@ describe('REPORT TESTS', () => {
           adults: '10',
           children: '2',
           tithers: '12',
-          newMembers: '11',
+          newmembers: '11',
           notes: '',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -84,10 +84,10 @@ describe('REPORT TESTS', () => {
           children: '12',
           women: '12',
           men: '11',
-          eventId: testEvent.id.toString(),
-          preacherId: testPreacher.id.toString(),
+          eventid: testEvent.id.toString(),
+          preacherid: testPreacher.id.toString(),
           notes: 'A very good note',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -109,10 +109,10 @@ describe('REPORT TESTS', () => {
           children: '12',
           women: '12',
           men: '11',
-          eventId: testEvent.id.toString(),
-          preacherId: testPreacher.id.toString(),
+          eventid: testEvent.id.toString(),
+          preacherid: testPreacher.id.toString(),
           notes: '',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -135,7 +135,7 @@ describe('REPORT TESTS', () => {
           trainees: '23',
           converts: '1',
           notes: 'Good training report',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -157,7 +157,7 @@ describe('REPORT TESTS', () => {
           trainees: '23',
           converts: '1',
           notes: '',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -181,7 +181,7 @@ describe('REPORT TESTS', () => {
           special: '4',
           project: '2',
           notes: 'God report',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -204,7 +204,7 @@ describe('REPORT TESTS', () => {
           special: '4',
           project: '2',
           notes: '',
-          branchId: testBranch.id.toString()
+          branchid: testBranch.id.toString()
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -228,7 +228,7 @@ describe('REPORT TESTS', () => {
           cwf: '1',
           cyf: '12',
           rcf: '7',
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           notes: 'Nice group report'
         })
         .end((err, res) => {
@@ -252,7 +252,7 @@ describe('REPORT TESTS', () => {
           cwf: '1',
           cyf: '12',
           rcf: '7',
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           notes: ''
         })
         .end((err, res) => {
@@ -276,7 +276,7 @@ describe('REPORT TESTS', () => {
           newcells: '1',
           totalcells: '11',
           attendance: '2',
-          fellowshipId: testFellowship.id.toString(),
+          fellowshipid: testFellowship.id.toString(),
           notes: 'Good job on the report'
         })
         .end((err, res) => {
@@ -299,7 +299,7 @@ describe('REPORT TESTS', () => {
           newcells: '1',
           totalcells: '11',
           attendance: '2',
-          fellowshipId: testFellowship.id.toString(),
+          fellowshipid: testFellowship.id.toString(),
           notes: ''
         })
         .end((err, res) => {

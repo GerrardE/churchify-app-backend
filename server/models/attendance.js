@@ -1,16 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Attendance = sequelize.define('Attendance', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    eventId: {
+    eventid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    preacherId: {
+    preacherid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

@@ -106,8 +106,8 @@ class UserController {
 
       const payload = {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstname: user.firstname,
+        lastname: user.lastname,
         phone: user.phone,
         email: user.email
       };

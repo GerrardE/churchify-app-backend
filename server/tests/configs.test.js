@@ -2,38 +2,32 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import index from '../index';
 import { createTestUser, generateToken } from './factory/user-factory';
-import createTestCategory from './factory/category-factory';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, testCategory;
+let userToken, testUser;
 
-describe('DOWNLOADS TESTS', () => {
+describe('CONFIGS TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
-    const userid = testUser.id;
-    testCategory = await createTestCategory({ userid });
   });
-  it('should return success on CREATE A DOWNLOAD', (done) => {
+  it('should return success on CREATE A CONFIG', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/downloads')
+        .post('/api/v1/config')
         .set({ Authorization: userToken })
         .send({
-          name: 'Jaja',
-          url: 'www.james.de',
-          month: 'February',
-          year: '2019',
-          categoryid: testCategory.id.toString(),
-          notes: 'Ebook TCF'
+          name: 'Alabama',
+          type: 'report',
+          config: [{}],
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Download created successfully');
+          expect(res.body.message).to.eql('Config created successfully');
           done();
         });
     } catch (err) {
@@ -43,15 +37,12 @@ describe('DOWNLOADS TESTS', () => {
   it('should handle VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/downloads')
+        .post('/api/v1/config')
         .set({ Authorization: userToken })
         .send({
-          name: 'J',
-          url: 'www.james.de',
-          month: 'February',
-          year: '2019',
-          categoryid: '2',
-          notes: 'Ebook TCF'
+          name: 'A',
+          type: 'report',
+          config: [{}],
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -67,15 +58,12 @@ describe('DOWNLOADS TESTS', () => {
   it('should handle UNIQUE VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .post('/api/v1/downloads')
+        .post('/api/v1/config')
         .set({ Authorization: userToken })
         .send({
-          name: 'Jaja',
-          url: 'www.james.de',
-          month: 'February',
-          year: '2019',
-          categoryid: testCategory.id.toString(),
-          notes: 'Ebook TCF'
+          name: 'Alabama',
+          type: 'report',
+          config: [{}],
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -89,16 +77,16 @@ describe('DOWNLOADS TESTS', () => {
     }
   });
 
-  it('should return success on GET ALL DOWNLOADS', (done) => {
+  it('should return success on GET ALL CONFIGS', (done) => {
     try {
       chai.request(index)
-        .get('/api/v1/downloads')
+        .get('/api/v1/config')
         .set({ Authorization: userToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Downloads retrieved successfully');
+          expect(res.body.message).to.eql('Configs retrieved successfully');
           done();
         });
     } catch (err) {
@@ -106,24 +94,38 @@ describe('DOWNLOADS TESTS', () => {
     }
   });
 
-  it('should return success on UPDATE A DOWNLOAD', (done) => {
+  it('should return success on GET A CONFIG', (done) => {
     try {
       chai.request(index)
-        .put(`/api/v1/downloads/${1}`)
+        .get(`/api/v1/config/${1}`)
+        .set({ Authorization: userToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('payload');
+          expect(res.body.message).to.eql('Config retrieved successfully');
+          done();
+        });
+    } catch (err) {
+      throw err.message;
+    }
+  });
+
+  it('should return success on UPDATE A CONFIG', (done) => {
+    try {
+      chai.request(index)
+        .put(`/api/v1/config/${1}`)
         .set({ Authorization: userToken })
         .send({
-          name: 'Jaja',
-          url: 'www.james.de',
-          month: 'February',
-          year: '2019',
-          categoryid: testCategory.id.toString(),
-          notes: 'Ebook TCF'
+          name: 'Alabama',
+          type: 'report',
+          config: [{}],
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Download updated successfully');
+          expect(res.body.message).to.eql('Config updated successfully');
           done();
         });
     } catch (err) {
@@ -133,15 +135,12 @@ describe('DOWNLOADS TESTS', () => {
   it('should handle VALIDATION error', (done) => {
     try {
       chai.request(index)
-        .put(`/api/v1/downloads/${1}`)
+        .put(`/api/v1/config/${1}`)
         .set({ Authorization: userToken })
         .send({
-          name: 'J',
-          url: 'www.james.de',
-          month: 'February',
-          year: '2019',
-          categoryid: testCategory.id.toString(),
-          notes: 'Ebook TCF'
+          name: 'A',
+          type: 'report',
+          config: [],
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -155,16 +154,16 @@ describe('DOWNLOADS TESTS', () => {
     }
   });
 
-  it('should return success on DELETE A DOWNLOAD', (done) => {
+  it('should return success on DELETE A CONFIG', (done) => {
     try {
       chai.request(index)
-        .delete(`/api/v1/downloads/${1}`)
+        .delete(`/api/v1/config/${1}`)
         .set({ Authorization: userToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('payload');
-          expect(res.body.message).to.eql('Download deleted successfully');
+          expect(res.body.message).to.eql('Config deleted successfully');
           done();
         });
     } catch (err) {

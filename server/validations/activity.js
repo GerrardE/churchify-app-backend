@@ -6,7 +6,7 @@ const validActivity = (data) => {
   data.council = !isEmpty(data.council) ? data.council : '';
   data.special = !isEmpty(data.special) ? data.special : '';
   data.project = !isEmpty(data.project) ? data.project : '';
-  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
+  data.branchid = !isEmpty(data.branchid) ? data.branchid : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // council validations
@@ -25,7 +25,7 @@ const validActivity = (data) => {
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchId)) {
+  if (validator.isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 

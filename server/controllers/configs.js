@@ -30,7 +30,7 @@ class ConfigController {
           errors,
         });
       }
-      
+
       const payload = await Config.create({ ...req.body });
 
       res.status(201).json({
@@ -39,7 +39,6 @@ class ConfigController {
         payload,
       });
     } catch (err) {
-      console.log(err);
       if (err.errors && err.errors[0].type === 'unique violation') {
         return res.status(400).json({
           status: 400,

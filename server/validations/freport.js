@@ -6,7 +6,7 @@ const validFreport = (data) => {
   data.newcells = !isEmpty(data.newcells) ? data.newcells : '';
   data.totalcells = !isEmpty(data.totalcells) ? data.totalcells : '';
   data.attendance = !isEmpty(data.attendance) ? data.attendance : '';
-  data.fellowshipId = !isEmpty(data.fellowshipId) ? data.fellowshipId : '';
+  data.fellowshipid = !isEmpty(data.fellowshipid) ? data.fellowshipid : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // newcells validations
@@ -25,7 +25,7 @@ const validFreport = (data) => {
   }
 
   // fellowship validations
-  if (validator.isEmpty(data.fellowshipId)) {
+  if (validator.isEmpty(data.fellowshipid)) {
     errors.fellowship = 'fellowship field is required';
   }
 

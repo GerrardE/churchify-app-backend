@@ -3,7 +3,7 @@ module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Zones', [{
     name: 'Headquarters Zone',
     country: 'Nigeria',
-    description: 'TREM International Headquarters Zone',
+    notes: 'TREM International Headquarters Zone',
     createdAt: new Date(),
     updatedAt: new Date()
   }], {}),

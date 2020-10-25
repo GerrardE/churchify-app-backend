@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Freport = sequelize.define('Freport', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    fellowshipId: {
+    fellowshipid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

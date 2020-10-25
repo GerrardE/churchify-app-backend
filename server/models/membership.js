@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Membership = sequelize.define('Membership', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    newMembers: {
+    newmembers: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

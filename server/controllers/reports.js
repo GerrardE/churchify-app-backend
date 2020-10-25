@@ -35,9 +35,9 @@ class ReportController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Membership.create({ userId, ...req.body });
+      const payload = await Membership.create({ userid, ...req.body });
 
       res.status(200).json({
         status: 200, message: 'Membership report submitted successfully', payload
@@ -69,9 +69,9 @@ class ReportController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Attendance.create({ userId, ...req.body });
+      const payload = await Attendance.create({ userid, ...req.body });
 
       res.status(200).json({
         status: 200, message: 'Attendance submitted successfully', payload
@@ -103,9 +103,9 @@ class ReportController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Training.create({ userId, ...req.body });
+      const payload = await Training.create({ userid, ...req.body });
 
       res.status(200).json({
         status: 200, message: 'Training report submitted successfully', payload
@@ -137,9 +137,9 @@ class ReportController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Activity.create({ userId, ...req.body });
+      const payload = await Activity.create({ userid, ...req.body });
 
       res.status(200).json({
         status: 200, message: 'Activity report submitted successfully', payload
@@ -171,9 +171,9 @@ class ReportController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Group.create({ userId, ...req.body });
+      const payload = await Group.create({ userid, ...req.body });
 
       res.status(200).json({
         status: 200, message: 'Group report submitted successfully', payload
@@ -205,9 +205,9 @@ class ReportController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Freport.create({ userId, ...req.body });
+      const payload = await Freport.create({ userid, ...req.body });
 
       res.status(200).json({
         status: 200, message: 'Fellowship report submitted successfully', payload

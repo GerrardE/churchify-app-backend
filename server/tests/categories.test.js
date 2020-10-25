@@ -20,7 +20,7 @@ describe('CATEGORIES TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          description: 'Best of akoka'
+          notes: 'Best of akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -40,7 +40,7 @@ describe('CATEGORIES TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'A',
-          description: 'Best of akoka'
+          notes: 'Best of akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -60,7 +60,7 @@ describe('CATEGORIES TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          description: 'Best of akoka'
+          notes: 'Best of akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -98,7 +98,7 @@ describe('CATEGORIES TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Ejigbo',
-          description: 'Best of ejigbo'
+          notes: 'Best of ejigbo'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -118,7 +118,7 @@ describe('CATEGORIES TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'A',
-          description: 'Best of akoka'
+          notes: 'Best of akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

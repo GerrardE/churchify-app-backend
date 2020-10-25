@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Zone = sequelize.define('Zone', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: true
     },
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     }

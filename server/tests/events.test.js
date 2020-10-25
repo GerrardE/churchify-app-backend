@@ -8,16 +8,16 @@ import createTestBranch from './factory/branch-factory';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, userId, testZone, testBranch;
+let userToken, testUser, userid, testZone, testBranch;
 
 describe('EVENTS TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
-    userId = testUser.id;
-    testZone = await createTestZone({ userId });
-    const zoneId = testZone.id;
-    testBranch = await createTestBranch({ userId, zoneId });
+    userid = testUser.id;
+    testZone = await createTestZone({ userid });
+    const zoneid = testZone.id;
+    testBranch = await createTestBranch({ userid, zoneid });
   });
   it('should return success on CREATE AN EVENT', (done) => {
     try {
@@ -25,11 +25,11 @@ describe('EVENTS TESTS', () => {
         .post('/api/v1/events')
         .set({ Authorization: userToken })
         .send({
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           name: 'Power For Living',
           month: 'January',
           year: '2019',
-          description: 'A good event'
+          notes: 'A good event'
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -48,11 +48,11 @@ describe('EVENTS TESTS', () => {
         .post('/api/v1/events')
         .set({ Authorization: userToken })
         .send({
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           name: 'P',
           month: 'January',
           year: '2019',
-          description: 'A good event'
+          notes: 'A good event'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -71,11 +71,11 @@ describe('EVENTS TESTS', () => {
         .post('/api/v1/events')
         .set({ Authorization: userToken })
         .send({
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           name: 'Power For Living',
           month: 'January',
           year: '2019',
-          description: 'A good event'
+          notes: 'A good event'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -112,11 +112,11 @@ describe('EVENTS TESTS', () => {
         .put(`/api/v1/events/${1}`)
         .set({ Authorization: userToken })
         .send({
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           name: 'Power',
           month: 'January',
           year: '2019',
-          description: 'A good event'
+          notes: 'A good event'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -135,11 +135,11 @@ describe('EVENTS TESTS', () => {
         .put(`/api/v1/events/${1}`)
         .set({ Authorization: userToken })
         .send({
-          branchId: testBranch.id.toString(),
+          branchid: testBranch.id.toString(),
           name: 'P',
           month: 'January',
           year: '2019',
-          description: 'A good event'
+          notes: 'A good event'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

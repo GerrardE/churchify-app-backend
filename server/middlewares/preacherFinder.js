@@ -18,9 +18,9 @@ const preacherFinder = async (req, res, next) => {
 
 const preacherPermission = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userId } = req.decoded;
+  const { id: userid } = req.decoded;
 
-  const preacher = await Preacher.findOne({ where: { id, userId } });
+  const preacher = await Preacher.findOne({ where: { id, userid } });
 
   if (!preacher) {
     return res.status(400).json({

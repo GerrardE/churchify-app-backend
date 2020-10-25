@@ -6,8 +6,8 @@ module.exports = {
     state: 'Lagos',
     address: 'Anthony Oke Expressway',
     city: 'Gbagada',
-    zoneId: '1',
-    description: 'TREM International Headquarters',
+    zoneid: '1',
+    notes: 'TREM International Headquarters',
     createdAt: new Date(),
     updatedAt: new Date()
   }], {}),

@@ -29,9 +29,9 @@ class BranchController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Branch.create({ userId, ...req.body });
+      const payload = await Branch.create({ userid, ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -92,9 +92,9 @@ class BranchController {
       }
 
       const { branch } = req;
-      const { userId, id } = branch;
+      const { userid, id } = branch;
 
-      await Branch.update(req.body, { returning: true, where: { id, userId } });
+      await Branch.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Branch.findAll();
       res.status(200).json({
@@ -122,8 +122,8 @@ class BranchController {
   static async delete(req, res) {
     try {
       const { branch } = req;
-      const { id, userId } = branch;
-      await Branch.destroy({ where: { id, userId } });
+      const { id, userid } = branch;
+      await Branch.destroy({ where: { id, userid } });
       const payload = await Branch.findAll();
 
       res.status(200).json({

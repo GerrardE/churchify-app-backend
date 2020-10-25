@@ -29,9 +29,9 @@ class FellowshipController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Fellowship.create({ userId, ...req.body });
+      const payload = await Fellowship.create({ userid, ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -93,9 +93,9 @@ class FellowshipController {
       }
 
       const { fellowship } = req;
-      const { userId, id } = fellowship;
+      const { userid, id } = fellowship;
 
-      await fellowship.update(req.body, { returning: true, where: { id, userId } });
+      await fellowship.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Fellowship.findAll();
       res.status(200).json({
@@ -123,8 +123,8 @@ class FellowshipController {
   static async delete(req, res) {
     try {
       const { fellowship } = req;
-      const { id, userId } = Fellowship;
-      await fellowship.destroy({ where: { id, userId } });
+      const { id, userid } = Fellowship;
+      await fellowship.destroy({ where: { id, userid } });
       const payload = await Fellowship.findAll();
 
       res.status(200).json({

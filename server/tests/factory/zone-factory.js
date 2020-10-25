@@ -4,13 +4,13 @@ import models from '@models';
 const { Zone } = models;
 
 const createTestZone = async ({
-  userId, name, country, description
+  userid, name, country, notes
 }) => {
   const newZone = await Zone.create({
-    userId: userId || faker.random.uuid(),
+    userid: userid || faker.random.uuid(),
     name: name || faker.random.word(6),
     country: country || faker.random.word(6),
-    description: description || faker.random.word(6)
+    notes: notes || faker.random.word(6)
   });
 
   return (newZone);

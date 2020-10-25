@@ -8,8 +8,8 @@ const validBranch = (data) => {
   data.state = !isEmpty(data.state) ? data.state : '';
   data.address = !isEmpty(data.address) ? data.address : '';
   data.city = !isEmpty(data.city) ? data.city : '';
-  data.zoneId = !isEmpty(data.zoneId) ? data.zoneId : '';
-  data.description = !isEmpty(data.description) ? data.description : '';
+  data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : '';
+  data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // name validations
   if (!validator.isLength(data.name, { min: 2, max: 20 })) {
@@ -45,17 +45,17 @@ const validBranch = (data) => {
   }
 
   // zone validations
-  if (validator.isEmpty(data.zoneId)) {
+  if (validator.isEmpty(data.zoneid)) {
     errors.zone = 'zone field is required';
   }
 
-  // description validations
-  if (!validator.isLength(data.description, { min: 5, max: 200 })) {
-    errors.description = 'description must be between 5 and 200 characters';
+  // notes validations
+  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
+    errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.description)) {
-    errors.description = 'description field is required';
+  if (validator.isEmpty(data.notes)) {
+    errors.notes = 'notes field is required';
   }
 
   return {

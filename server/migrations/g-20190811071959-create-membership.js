@@ -7,7 +7,7 @@ module.exports = {
       type: Sequelize.INTEGER
     },
 
-    userId: {
+    userid: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
@@ -16,7 +16,7 @@ module.exports = {
       }
     },
 
-    branchId: {
+    branchid: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -40,7 +40,7 @@ module.exports = {
       allowNull: false,
     },
 
-    newMembers: {
+    newmembers: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },

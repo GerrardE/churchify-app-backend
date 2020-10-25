@@ -29,9 +29,9 @@ class EventController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Event.create({ userId, ...req.body });
+      const payload = await Event.create({ userid, ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -92,9 +92,9 @@ class EventController {
       }
 
       const { event } = req;
-      const { userId, id } = event;
+      const { userid, id } = event;
 
-      await Event.update(req.body, { returning: true, where: { id, userId } });
+      await Event.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Event.findAll();
       res.status(200).json({
@@ -122,8 +122,8 @@ class EventController {
   static async delete(req, res) {
     try {
       const { event } = req;
-      const { id, userId } = event;
-      await Event.destroy({ where: { id, userId } });
+      const { id, userid } = event;
+      await Event.destroy({ where: { id, userid } });
       const payload = await Event.findAll();
 
       res.status(200).json({

@@ -29,10 +29,10 @@ class CategoryController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
       const payload = await Category.create({
-        userId, ...req.body
+        userid, ...req.body
       });
 
       res.status(201).json({
@@ -94,9 +94,9 @@ class CategoryController {
       }
 
       const { category } = req;
-      const { userId, id } = category;
+      const { userid, id } = category;
 
-      await Category.update(req.body, { returning: true, where: { id, userId } });
+      await Category.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Category.findAll();
       res.status(200).json({
@@ -124,8 +124,8 @@ class CategoryController {
   static async delete(req, res) {
     try {
       const { category } = req;
-      const { id, userId } = category;
-      await Category.destroy({ where: { id, userId } });
+      const { id, userid } = category;
+      await Category.destroy({ where: { id, userid } });
       const payload = await Category.findAll();
 
       res.status(200).json({

@@ -7,8 +7,8 @@ const validEvent = (data) => {
   data.url = !isEmpty(data.url) ? data.url : '';
   data.month = !isEmpty(data.month) ? data.month : '';
   data.year = !isEmpty(data.year) ? data.year : '';
-  data.categoryId = !isEmpty(data.categoryId) ? data.categoryId : '';
-  data.description = !isEmpty(data.description) ? data.description : '';
+  data.categoryid = !isEmpty(data.categoryid) ? data.categoryid : '';
+  data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // name validations
   if (!validator.isLength(data.name, { min: 2, max: 20 })) {
@@ -35,17 +35,17 @@ const validEvent = (data) => {
   }
 
   // category validations
-  if (validator.isEmpty(data.categoryId)) {
+  if (validator.isEmpty(data.categoryid)) {
     errors.category = 'category field is required';
   }
 
-  // description validations
-  if (!validator.isLength(data.description, { min: 5, max: 200 })) {
-    errors.description = 'description must be between 5 and 200 characters';
+  // notes validations
+  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
+    errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.description)) {
-    errors.description = 'description field is required';
+  if (validator.isEmpty(data.notes)) {
+    errors.notes = 'notes field is required';
   }
 
   return {

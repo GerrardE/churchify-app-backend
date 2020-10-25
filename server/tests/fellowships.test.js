@@ -8,16 +8,16 @@ import createTestBranch from './factory/branch-factory';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, userId, testZone, testBranch;
+let userToken, testUser, userid, testZone, testBranch;
 
 describe('Fellowship TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
-    userId = testUser.id;
-    testZone = await createTestZone({ userId });
-    const zoneId = testZone.id;
-    testBranch = await createTestBranch({ userId, zoneId });
+    userid = testUser.id;
+    testZone = await createTestZone({ userid });
+    const zoneid = testZone.id;
+    testBranch = await createTestBranch({ userid, zoneid });
   });
   it('should return success on CREATE A FELLOWSHIP', (done) => {
     try {
@@ -30,8 +30,8 @@ describe('Fellowship TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          branchId: testBranch.id.toString(),
-          description: 'Trem Akoka'
+          branchid: testBranch.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -55,8 +55,8 @@ describe('Fellowship TESTS', () => {
           state: 'Lagos',
           address: 'A',
           city: 'Somolu',
-          branchId: testBranch.id.toString(),
-          description: 'Trem Ojodu'
+          branchid: testBranch.id.toString(),
+          notes: 'Trem Ojodu'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -80,8 +80,8 @@ describe('Fellowship TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          branchId: testBranch.id.toString(),
-          description: 'Trem Akoka'
+          branchid: testBranch.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -123,8 +123,8 @@ describe('Fellowship TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          branchId: testBranch.id.toString(),
-          description: 'Trem Akoka'
+          branchid: testBranch.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -148,8 +148,8 @@ describe('Fellowship TESTS', () => {
           state: 'Lagos',
           address: 'Afolabi brown street',
           city: 'Somolu',
-          branchId: testBranch.id.toString(),
-          description: 'Trem Akoka'
+          branchid: testBranch.id.toString(),
+          notes: 'Trem Akoka'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

@@ -18,9 +18,9 @@ const branchFinder = async (req, res, next) => {
 
 const branchPermission = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userId } = req.decoded;
+  const { id: userid } = req.decoded;
 
-  const branch = await Branch.findOne({ where: { id, userId } });
+  const branch = await Branch.findOne({ where: { id, userid } });
 
   if (!branch) {
     return res.status(400).json({

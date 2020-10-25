@@ -8,16 +8,16 @@ import createTestBranch from './factory/branch-factory';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let userToken, testUser, userId, testZone, testBranch;
+let userToken, testUser, userid, testZone, testBranch;
 
 describe('PREACHERS TESTS', () => {
   before(async () => {
     testUser = await createTestUser({});
     userToken = await generateToken({ id: testUser.id });
-    userId = testUser.id;
-    testZone = await createTestZone({ userId });
-    const zoneId = testZone.id;
-    testBranch = await createTestBranch({ userId, zoneId });
+    userid = testUser.id;
+    testZone = await createTestZone({ userid });
+    const zoneid = testZone.id;
+    testBranch = await createTestBranch({ userid, zoneid });
   });
   it('should return success on CREATE A PREACHER', (done) => {
     try {
@@ -31,8 +31,8 @@ describe('PREACHERS TESTS', () => {
           state: 'Lagos',
           address: 'Lagos',
           city: 'Lagos',
-          branchId: testBranch.id.toString(),
-          description: 'A good coach'
+          branchid: testBranch.id.toString(),
+          notes: 'A good coach'
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -57,8 +57,8 @@ describe('PREACHERS TESTS', () => {
           state: 'Lagos',
           address: 'Lagos',
           city: 'Lagos',
-          branchId: testBranch.id.toString(),
-          description: 'A good coach'
+          branchid: testBranch.id.toString(),
+          notes: 'A good coach'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -101,8 +101,8 @@ describe('PREACHERS TESTS', () => {
           state: 'Lagos',
           address: 'Lagos',
           city: 'Lagos',
-          branchId: testBranch.id.toString(),
-          description: 'A good coach'
+          branchid: testBranch.id.toString(),
+          notes: 'A good coach'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -127,8 +127,8 @@ describe('PREACHERS TESTS', () => {
           state: 'Lagos',
           address: 'Lagos',
           city: 'Lagos',
-          branchId: testBranch.id.toString(),
-          description: 'A good coach'
+          branchid: testBranch.id.toString(),
+          notes: 'A good coach'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);

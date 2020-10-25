@@ -18,9 +18,9 @@ const eventFinder = async (req, res, next) => {
 
 const eventPermission = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userId } = req.decoded;
+  const { id: userid } = req.decoded;
 
-  const event = await Event.findOne({ where: { id, userId } });
+  const event = await Event.findOne({ where: { id, userid } });
 
   if (!event) {
     return res.status(400).json({

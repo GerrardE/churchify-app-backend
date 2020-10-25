@@ -29,9 +29,9 @@ class DownloadController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Download.create({ userId, ...req.body });
+      const payload = await Download.create({ userid, ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -92,9 +92,9 @@ class DownloadController {
       }
 
       const { download } = req;
-      const { userId, id } = download;
+      const { userid, id } = download;
 
-      await Download.update(req.body, { returning: true, where: { id, userId } });
+      await Download.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Download.findAll();
       res.status(200).json({
@@ -122,8 +122,8 @@ class DownloadController {
   static async delete(req, res) {
     try {
       const { download } = req;
-      const { id, userId } = download;
-      await Download.destroy({ where: { id, userId } });
+      const { id, userid } = download;
+      await Download.destroy({ where: { id, userid } });
       const payload = await Download.findAll();
 
       res.status(200).json({

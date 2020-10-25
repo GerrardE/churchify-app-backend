@@ -29,9 +29,9 @@ class ZoneController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Zone.create({ userId, ...req.body });
+      const payload = await Zone.create({ userid, ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -92,9 +92,9 @@ class ZoneController {
       }
 
       const { zone } = req;
-      const { userId, id } = zone;
+      const { userid, id } = zone;
 
-      await Zone.update(req.body, { returning: true, where: { id, userId } });
+      await Zone.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Zone.findAll();
       res.status(200).json({
@@ -122,8 +122,8 @@ class ZoneController {
   static async delete(req, res) {
     try {
       const { zone } = req;
-      const { id, userId } = zone;
-      await Zone.destroy({ where: { id, userId } });
+      const { id, userid } = zone;
+      await Zone.destroy({ where: { id, userid } });
       const payload = await Zone.findAll();
 
       res.status(200).json({

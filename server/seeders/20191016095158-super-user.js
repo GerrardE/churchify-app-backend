@@ -12,11 +12,11 @@ const password = bcrypt.hashSync(process.env.SUPER_ADMIN_PASSWORD, SALT_ROUNDS);
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Users', [{
     id: faker.random.uuid(),
-    firstName: 'Gerrard',
-    lastName: 'Ezeugwa',
+    firstname: 'Gerrard',
+    lastname: 'Ezeugwa',
     phone: '08137519688',
     email: 'ezeugwagerrard@gmail.com',
-    branchId: '1',
+    branchid: '1',
     country: 'Nigeria',
     password,
     createdAt: new Date(),

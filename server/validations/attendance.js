@@ -6,9 +6,9 @@ const validAttendance = (data) => {
   data.men = !isEmpty(data.men) ? data.men : '';
   data.women = !isEmpty(data.women) ? data.women : '';
   data.children = !isEmpty(data.children) ? data.children : '';
-  data.eventId = !isEmpty(data.eventId) ? data.eventId : '';
-  data.preacherId = !isEmpty(data.preacherId) ? data.preacherId : '';
-  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
+  data.eventid = !isEmpty(data.eventid) ? data.eventid : '';
+  data.preacherid = !isEmpty(data.preacherid) ? data.preacherid : '';
+  data.branchid = !isEmpty(data.branchid) ? data.branchid : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // children validations
@@ -27,17 +27,17 @@ const validAttendance = (data) => {
   }
 
   // event validations
-  if (validator.isEmpty(data.eventId)) {
+  if (validator.isEmpty(data.eventid)) {
     errors.event = 'event field is required';
   }
 
   // preacher validations
-  if (validator.isEmpty(data.preacherId)) {
+  if (validator.isEmpty(data.preacherid)) {
     errors.preacher = 'preacher field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchId)) {
+  if (validator.isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 

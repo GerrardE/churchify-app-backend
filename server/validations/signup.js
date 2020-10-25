@@ -3,30 +3,30 @@ import isEmpty from '../middlewares/isEmpty';
 
 const validSignup = (data) => {
   const errors = {};
-  data.firstName = !isEmpty(data.firstName) ? data.firstName : '';
-  data.lastName = !isEmpty(data.lastName) ? data.lastName : '';
+  data.firstname = !isEmpty(data.firstname) ? data.firstname : '';
+  data.lastname = !isEmpty(data.lastname) ? data.lastname : '';
   data.phone = !isEmpty(data.phone) ? data.phone : '';
   data.email = !isEmpty(data.email) ? data.email : '';
-  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
+  data.branchid = !isEmpty(data.branchid) ? data.branchid : '';
   data.country = !isEmpty(data.country) ? data.country : '';
   data.password = !isEmpty(data.password) ? data.password : '';
 
   // First name validations
-  if (!validator.isLength(data.firstName, { min: 2, max: 200 })) {
-    errors.firstName = 'first name must be between 2 and 100 characters';
+  if (!validator.isLength(data.firstname, { min: 2, max: 200 })) {
+    errors.firstname = 'first name must be between 2 and 100 characters';
   }
 
-  if (validator.isEmpty(data.firstName)) {
-    errors.firstName = 'first name field is required';
+  if (validator.isEmpty(data.firstname)) {
+    errors.firstname = 'first name field is required';
   }
 
   // Last name validations
-  if (!validator.isLength(data.lastName, { min: 2, max: 200 })) {
-    errors.lastName = 'last name must be between 2 and 100 characters';
+  if (!validator.isLength(data.lastname, { min: 2, max: 200 })) {
+    errors.lastname = 'last name must be between 2 and 100 characters';
   }
 
-  if (validator.isEmpty(data.lastName)) {
-    errors.lastName = 'last name field is required';
+  if (validator.isEmpty(data.lastname)) {
+    errors.lastname = 'last name field is required';
   }
 
   // phone validation
@@ -48,8 +48,8 @@ const validSignup = (data) => {
   }
 
   // branch validation
-  if (validator.isEmpty(data.branchId)) {
-    errors.branchId = 'branch field is required';
+  if (validator.isEmpty(data.branchid)) {
+    errors.branchid = 'branch field is required';
   }
 
   // Country validation

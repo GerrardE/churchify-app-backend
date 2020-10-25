@@ -18,9 +18,9 @@ const categoryFinder = async (req, res, next) => {
 
 const categoryPermission = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userId } = req.decoded;
+  const { id: userid } = req.decoded;
 
-  const category = await Category.findOne({ where: { id, userId } });
+  const category = await Category.findOne({ where: { id, userid } });
 
   if (!category) {
     return res.status(400).json({

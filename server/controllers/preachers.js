@@ -28,9 +28,9 @@ class PreacherController {
         });
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Preacher.create({ userId, ...req.body });
+      const payload = await Preacher.create({ userid, ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -84,9 +84,9 @@ class PreacherController {
       }
 
       const { preacher } = req;
-      const { userId, id } = preacher;
+      const { userid, id } = preacher;
 
-      await Preacher.update(req.body, { returning: true, where: { id, userId } });
+      await Preacher.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Preacher.findAll();
       res.status(200).json({
@@ -114,8 +114,8 @@ class PreacherController {
   static async delete(req, res) {
     try {
       const { preacher } = req;
-      const { id, userId } = preacher;
-      await Preacher.destroy({ where: { id, userId } });
+      const { id, userid } = preacher;
+      await Preacher.destroy({ where: { id, userid } });
       const payload = await Preacher.findAll();
 
       res.status(200).json({

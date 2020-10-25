@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Activity = sequelize.define('Activity', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

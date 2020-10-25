@@ -7,7 +7,7 @@ module.exports = {
       type: Sequelize.INTEGER
     },
 
-    userId: {
+    userid: {
       type: Sequelize.UUID,
       allowNull: true,
       references: {
@@ -27,7 +27,7 @@ module.exports = {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: Sequelize.STRING,
       allowNull: false
     },

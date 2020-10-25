@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Download = sequelize.define('Download', {
-    userId: {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    categoryId: {
+    categoryid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },

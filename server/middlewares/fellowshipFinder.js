@@ -18,9 +18,9 @@ const fellowshipFinder = async (req, res, next) => {
 
 const fellowshipPermission = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userId } = req.decoded;
+  const { id: userid } = req.decoded;
 
-  const fellowship = await Fellowship.findOne({ where: { id, userId } });
+  const fellowship = await Fellowship.findOne({ where: { id, userid } });
 
   if (!fellowship) {
     return res.status(400).json({
