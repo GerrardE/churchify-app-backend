@@ -79,10 +79,30 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getOne(req, res) {
+  static async getById(req, res) {
     const { config } = req;
     const { id } = config;
     const payload = await Config.findOne({ where: { id } });
+
+    return res.status(200).json({
+      status: 200,
+      message: 'Config retrieved successfully',
+      payload,
+    });
+  }
+
+  /**
+   * Get a config item
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof ConfigController
+   */
+  static async getByName(req, res) {
+    const { config } = req;
+    const { name } = config;
+    const payload = await Config.findOne({ where: { name } });
 
     return res.status(200).json({
       status: 200,
