@@ -72,6 +72,34 @@ class DownloadController {
   }
 
   /**
+   * Get a download
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof DownloadController
+   */
+  static async getById(req, res) {
+    try {
+      const { download } = req;
+      const { id } = download;
+      const payload = await Download.findOne({ where: { id } });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Download retrieved successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Download could not be retrieved',
+        err,
+      });
+    }
+  }
+
+  /**
    * Update a Download
    * @static
    * @param {*} req - Request object

@@ -7,15 +7,6 @@ module.exports = {
       type: Sequelize.INTEGER
     },
 
-    userid: {
-      type: Sequelize.UUID,
-      allowNull: true,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
-    },
-
     name: {
       type: Sequelize.STRING,
       unique: true,
@@ -23,8 +14,12 @@ module.exports = {
     },
 
     country: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Countries',
+        key: 'id'
+      }
     },
 
     notes: {

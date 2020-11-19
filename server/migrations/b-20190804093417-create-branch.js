@@ -26,13 +26,21 @@ module.exports = {
     },
 
     country: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Countries',
+        key: 'id'
+      }
     },
 
     city: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Cities',
+        key: 'id'
+      }
     },
 
     address: {
@@ -41,8 +49,12 @@ module.exports = {
     },
 
     state: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'States',
+        key: 'id'
+      }
     },
 
     name: {

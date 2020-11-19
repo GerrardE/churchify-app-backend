@@ -26,8 +26,9 @@ const corsOptions = {
 index.use(cors(corsOptions));
 
 index.use(logger('dev'));
-index.use(bodyParser.json());
+index.use(bodyParser.json({ limit: '50mb' }));
 index.use(bodyParser.urlencoded({
+  limit: '50mb',
   extended: true
 }));
 

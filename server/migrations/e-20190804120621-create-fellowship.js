@@ -31,24 +31,36 @@ module.exports = {
       allowNull: false
     },
 
-    city: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
     address: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
+    city: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Cities',
+        key: 'id'
+      }
+    },
+
     state: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'States',
+        key: 'id'
+      }
     },
 
     country: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: false,
+      references: {
+        model: 'Countries',
+        key: 'id'
+      }
     },
 
     notes: {

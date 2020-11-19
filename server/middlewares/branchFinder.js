@@ -4,6 +4,7 @@ const { Branch } = models;
 
 const branchFinder = async (req, res, next) => {
   const { id } = req.params;
+  Number(id);
   const branch = await Branch.findOne({ where: { id } });
 
   if (!branch) {

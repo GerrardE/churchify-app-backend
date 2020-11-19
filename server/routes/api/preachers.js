@@ -8,6 +8,7 @@ const preacherRouter = express.Router();
 
 preacherRouter.post('/', verifyToken, trim, preachers.create);
 preacherRouter.get('/', verifyToken, preachers.getAll);
+preacherRouter.get('/:id', verifyToken, preacherFinder, preachers.getById);
 preacherRouter.put('/:id', verifyToken, preacherFinder, preacherPermission, preachers.update);
 preacherRouter.delete('/:id', verifyToken, preacherFinder, preacherPermission, preachers.delete);
 

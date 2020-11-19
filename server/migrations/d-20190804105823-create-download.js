@@ -25,14 +25,9 @@ module.exports = {
       }
     },
 
-    month: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
-
-    year: {
-      type: Sequelize.STRING,
-      allowNull: true
+    date: {
+      type: Sequelize.DATE,
+      allowNull: false
     },
 
     url: {

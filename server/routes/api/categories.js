@@ -8,6 +8,7 @@ const categoryRouter = express.Router();
 
 categoryRouter.post('/', verifyToken, trim, categories.create);
 categoryRouter.get('/', verifyToken, categories.getAll);
+categoryRouter.get('/:id', verifyToken, categoryFinder, categories.getById);
 categoryRouter.put('/:id', verifyToken, categoryFinder, categoryPermission, categories.update);
 categoryRouter.delete('/:id', verifyToken, categoryFinder, categoryPermission, categories.delete);
 

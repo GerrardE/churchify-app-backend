@@ -8,7 +8,7 @@ module.exports = {
     },
 
     role: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true // change to false
     },
 
@@ -24,7 +24,7 @@ module.exports = {
 
     phone: {
       type: Sequelize.STRING,
-      allowNull: true
+      allowNull: false
     },
 
     email: {
@@ -38,9 +38,14 @@ module.exports = {
       allowNull: false
     },
 
+    state: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+
     country: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
 
     password: {

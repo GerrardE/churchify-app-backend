@@ -1,17 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const Zone = sequelize.define('Zone', {
-    userid: {
-      type: DataTypes.UUID,
-      allowNull: true
-    },
-
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
     },
 
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 

@@ -29,9 +29,7 @@ class ZoneController {
         });
       }
 
-      const { id: userid } = req.decoded;
-
-      const payload = await Zone.create({ userid, ...req.body });
+      const payload = await Zone.create({ ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -62,12 +60,40 @@ class ZoneController {
    * @memberof ZoneController
    */
   static async getAll(req, res) {
-    const payload = await Zone.findAll();
+    try {
+      const payload = await Zone.findAll();
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Zones retrieved successfully',
+        payload
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Zones could not be retrieved',
+        err
+      });
+    }
+  }
+
+  /**
+   * Get a zone
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof ZoneController
+   */
+  static async getById(req, res) {
+    const { zone } = req;
+    const { id } = zone;
+    const payload = await Zone.findOne({ where: { id } });
 
     return res.status(200).json({
       status: 200,
-      message: 'Zones retrieved successfully',
-      payload
+      message: 'Zone retrieved successfully',
+      payload,
     });
   }
 
@@ -92,9 +118,9 @@ class ZoneController {
       }
 
       const { zone } = req;
-      const { userid, id } = zone;
+      const { id } = zone;
 
-      await Zone.update(req.body, { returning: true, where: { id, userid } });
+      await Zone.update(req.body, { returning: true, where: { id } });
 
       const payload = await Zone.findAll();
       res.status(200).json({
@@ -122,8 +148,8 @@ class ZoneController {
   static async delete(req, res) {
     try {
       const { zone } = req;
-      const { id, userid } = zone;
-      await Zone.destroy({ where: { id, userid } });
+      const { id } = zone;
+      await Zone.destroy({ where: { id } });
       const payload = await Zone.findAll();
 
       res.status(200).json({

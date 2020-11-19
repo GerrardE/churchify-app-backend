@@ -16,7 +16,7 @@ module.exports = {
       allowNull: false,
     },
     config: {
-      type: Sequelize.ARRAY(Sequelize.JSON),
+      type: Sequelize.ARRAY(Sequelize.JSONB),
       allowNull: false,
     },
     createdAt: {

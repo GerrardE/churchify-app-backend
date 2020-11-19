@@ -62,13 +62,49 @@ class EventController {
    * @memberof EventController
    */
   static async getAll(req, res) {
-    const payload = await Event.findAll();
+    try {
+      const payload = await Event.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Events retrieved successfully',
-      payload
-    });
+      return res.status(200).json({
+        status: 200,
+        message: 'Events retrieved successfully',
+        payload
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Events could not be retrieved',
+        err
+      });
+    }
+  }
+
+  /**
+   * Get an event
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof EventController
+   */
+  static async getById(req, res) {
+    try {
+      const { event } = req;
+      const { id } = event;
+      const payload = await Event.findOne({ where: { id } });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Event retrieved successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Event could not be retrieved',
+        err,
+      });
+    }
   }
 
   /**

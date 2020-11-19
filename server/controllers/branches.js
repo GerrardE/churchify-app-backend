@@ -62,13 +62,48 @@ class BranchController {
    * @memberof BranchController
    */
   static async getAll(req, res) {
-    const payload = await Branch.findAll();
+    try {
+      const payload = await Branch.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Branches retrieved successfully',
-      payload
-    });
+      return res.status(200).json({
+        status: 200,
+        message: 'Branches retrieved successfully',
+        payload
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Branches could not be retrieved'
+      });
+    }
+  }
+
+  /**
+   * Get a branch
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof ZoneController
+   */
+  static async getById(req, res) {
+    try {
+      const { branch } = req;
+      const { id } = branch;
+      const payload = await Branch.findOne({ where: { id } });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Branch retrieved successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Branch could not be retrieved',
+        err,
+      });
+    }
   }
 
   /**

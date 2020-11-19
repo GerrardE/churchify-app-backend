@@ -64,6 +64,34 @@ class PreacherController {
   }
 
   /**
+   * Get a preacher
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof PreacherController
+   */
+  static async getById(req, res) {
+    try {
+      const { preacher } = req;
+      const { id } = preacher;
+      const payload = await Preacher.findOne({ where: { id } });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Preacher retrieved successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Preacher could not be retrieved',
+        err,
+      });
+    }
+  }
+
+  /**
    * Update a preacher
    * @static
    * @param {*} req - Request object

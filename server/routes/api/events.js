@@ -8,6 +8,7 @@ const eventRouter = express.Router();
 
 eventRouter.post('/', verifyToken, trim, events.create);
 eventRouter.get('/', verifyToken, events.getAll);
+eventRouter.get('/:id', verifyToken, eventFinder, events.getById);
 eventRouter.put('/:id', verifyToken, eventFinder, eventPermission, events.update);
 eventRouter.delete('/:id', verifyToken, eventFinder, eventPermission, events.delete);
 

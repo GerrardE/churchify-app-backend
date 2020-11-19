@@ -2,10 +2,10 @@
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Branches', [{
     name: 'Headquarters',
-    country: 'Nigeria',
-    state: 'Lagos',
+    country: 161,
+    state: 306,
     address: 'Anthony Oke Expressway',
-    city: 'Gbagada',
+    city: 6,
     zoneid: '1',
     notes: 'TREM International Headquarters',
     createdAt: new Date(),

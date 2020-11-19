@@ -18,6 +18,7 @@ module.exports = {
     email: 'ezeugwagerrard@gmail.com',
     branchid: '1',
     country: 'Nigeria',
+    role: 'superadmin',
     password,
     createdAt: new Date(),
     updatedAt: new Date()

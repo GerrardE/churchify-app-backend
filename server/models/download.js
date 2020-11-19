@@ -10,14 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    month: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-
-    year: {
-      type: DataTypes.STRING,
-      allowNull: true
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false
     },
 
     url: {

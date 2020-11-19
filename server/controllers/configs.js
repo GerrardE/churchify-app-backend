@@ -49,6 +49,7 @@ class ConfigController {
       res.status(400).json({
         status: 400,
         errors: 'Config creation unsuccessful',
+        err
       });
     }
   }

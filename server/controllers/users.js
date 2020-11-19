@@ -72,7 +72,7 @@ class UserController {
  */
   static async signin(req, res) {
     try {
-      const { errors, isValid } = await validSignin(req.body);
+      const { errors, isValid } = validSignin(req.body);
       // Check Validation
       if (!isValid) {
         return res.status(400).json({
@@ -111,7 +111,7 @@ class UserController {
         phone: user.phone,
         email: user.email
       };
-      const token = await createToken(payload);
+      const token = createToken(payload);
       res.status(200).json({
         status: 200, message: 'Login successful', user: userExtractor(user, token)
       });

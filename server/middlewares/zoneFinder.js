@@ -18,9 +18,8 @@ const zoneFinder = async (req, res, next) => {
 
 const zonePermission = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userid } = req.decoded;
 
-  const zone = await Zone.findOne({ where: { id, userid } });
+  const zone = await Zone.findOne({ where: { id } });
 
   if (!zone) {
     return res.status(400).json({

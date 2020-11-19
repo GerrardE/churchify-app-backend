@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     type: DataTypes.STRING,
-    config: DataTypes.ARRAY(DataTypes.JSON),
+    config: DataTypes.ARRAY(DataTypes.JSONB),
   }, {});
   Config.associate = () => {};
   return Config;

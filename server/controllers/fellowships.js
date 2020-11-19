@@ -73,6 +73,34 @@ class FellowshipController {
   }
 
   /**
+   * Get a fellowship
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof FellowshipController
+   */
+  static async getById(req, res) {
+    try {
+      const { fellowship } = req;
+      const { id } = fellowship;
+      const payload = await Fellowship.findOne({ where: { id } });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Fellowship retrieved successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Fellowship could not be retrieved',
+        err,
+      });
+    }
+  }
+
+  /**
    * Update a Fellowship
    * @static
    * @param {*} req - Request object

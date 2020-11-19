@@ -74,6 +74,34 @@ class CategoryController {
   }
 
   /**
+   * Get a category
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof CategoryController
+   */
+  static async getById(req, res) {
+    try {
+      const { category } = req;
+      const { id } = category;
+      const payload = await Category.findOne({ where: { id } });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Category retrieved successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Category could not be retrieved',
+        err,
+      });
+    }
+  }
+
+  /**
    * Update an Category
    * @static
    * @param {*} req - Request object

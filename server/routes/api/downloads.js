@@ -8,6 +8,7 @@ const downloadRouter = express.Router();
 
 downloadRouter.post('/', verifyToken, trim, downloads.create);
 downloadRouter.get('/', verifyToken, downloads.getAll);
+downloadRouter.get('/:id', verifyToken, downloadFinder, downloads.getById);
 downloadRouter.put('/:id', verifyToken, downloadFinder, downloadPermission, downloads.update);
 downloadRouter.delete('/:id', verifyToken, downloadFinder, downloadPermission, downloads.delete);
 
