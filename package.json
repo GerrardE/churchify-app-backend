@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.js",
-    "start:dev": "nodemon ./server/index.js --exec babel-node",
-    "build": "npm run clean && babel ./server -d ./dist",
+    "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
+    "build": "cross-env NODE_ENV=production && npm run clean && babel ./server -d ./dist",
     "heroku-postbuild": "npm run build && npm run migrate && npm run seed",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
@@ -15,9 +15,9 @@
     "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "clean": "rm -rf dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "pretest": "NODE_ENV=test npm run refreshdb",
+    "pretest": "cross-env NODE_ENV=test npm run refreshdb",
     "check": "npm run refreshdb && nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit",
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
   },
   "repository": {
     "type": "git",
@@ -50,6 +50,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "debug": "^4.1.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",

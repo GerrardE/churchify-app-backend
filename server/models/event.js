@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    month: {
-      type: DataTypes.STRING,
+    date: {
+      type: DataTypes.DATE,
       allowNull: false
     },
 
-    year: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false
     },

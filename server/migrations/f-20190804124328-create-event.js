@@ -31,13 +31,13 @@ module.exports = {
       allowNull: false
     },
 
-    month: {
-      type: Sequelize.STRING,
+    date: {
+      type: Sequelize.DATE,
       allowNull: false
     },
 
-    year: {
-      type: Sequelize.INTEGER,
+    address: {
+      type: Sequelize.STRING,
       allowNull: false
     },
 

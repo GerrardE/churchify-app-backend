@@ -5,8 +5,7 @@ const validEvent = (data) => {
   const errors = {};
   data.name = !isEmpty(data.name) ? data.name : '';
   data.url = !isEmpty(data.url) ? data.url : '';
-  data.month = !isEmpty(data.month) ? data.month : '';
-  data.year = !isEmpty(data.year) ? data.year : '';
+  data.date = !isEmpty(data.date) ? data.date : '';
   data.categoryid = !isEmpty(data.categoryid) ? data.categoryid : '';
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
@@ -24,14 +23,9 @@ const validEvent = (data) => {
     errors.url = 'url must be valid';
   }
 
-  // month validations
-  if (validator.isEmpty(data.month)) {
-    errors.month = 'month field is required';
-  }
-
-  // year validations
-  if (validator.isEmpty(data.year)) {
-    errors.year = 'year field is required';
+  // date validations
+  if (validator.isEmpty(data.date)) {
+    errors.date = 'date field is required';
   }
 
   // category validations
