@@ -26,10 +26,10 @@ describe('Fellowship TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'Trem Akoka'
         })
@@ -51,10 +51,10 @@ describe('Fellowship TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Ojodu',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'A',
-          city: 'Somolu',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'Trem Ojodu'
         })
@@ -76,10 +76,10 @@ describe('Fellowship TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'Trem Akoka'
         })
@@ -119,10 +119,10 @@ describe('Fellowship TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'Trem Akoka'
         })
@@ -144,10 +144,10 @@ describe('Fellowship TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'A',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'Trem Akoka'
         })

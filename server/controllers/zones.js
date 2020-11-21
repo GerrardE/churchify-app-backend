@@ -44,6 +44,8 @@ class ZoneController {
         });
       }
 
+      console.log(err);
+
       res.status(400).json({
         status: 400,
         errors: 'Zone creation unsuccessful'

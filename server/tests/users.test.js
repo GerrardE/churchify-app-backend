@@ -15,8 +15,8 @@ describe('TESTS TO SIGNUP ', () => {
           lastname: 'User',
           phone: '08086814343',
           email: 'test@gmail.com',
-          branchid: '1',
-          country: 'Nigeria',
+          branchid: 1,
+          country: 161,
           password: 'testpass'
         })
         .end((err, res) => {
@@ -40,8 +40,8 @@ describe('TESTS TO SIGNUP ', () => {
           lastname: 'User',
           phone: '08086814343',
           email: 'test@gmail',
-          branchid: '1',
-          country: 'Nigeria',
+          branchid: 1,
+          country: 161,
           password: 'testpass'
         })
         .end((err, res) => {
@@ -64,8 +64,8 @@ describe('TESTS TO SIGNUP ', () => {
           lastname: 'User',
           phone: '08086814343',
           email: 'test@gmail.com',
-          branchid: '1',
-          country: 'Nigeria',
+          branchid: 1,
+          country: 161,
           password: 'testpass'
         })
         .end((err, res) => {

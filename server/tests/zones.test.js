@@ -20,7 +20,7 @@ describe('ZONE TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Headquarters',
-          country: 'Nigeria',
+          country: 161,
           notes: 'Trem HQ'
         })
         .end((err, res) => {
@@ -41,7 +41,7 @@ describe('ZONE TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'H',
-          country: 'Nigeria',
+          country: 161,
           notes: 'Trem HQ'
         })
         .end((err, res) => {
@@ -62,7 +62,7 @@ describe('ZONE TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Headquarters',
-          country: 'Nigeria',
+          country: 161,
           notes: 'Trem HQ'
         })
         .end((err, res) => {
@@ -101,7 +101,7 @@ describe('ZONE TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'Lagos Quarters',
-          country: 'Nigeria',
+          country: 161,
           notes: 'Trem HQ'
         })
         .end((err, res) => {
@@ -122,7 +122,7 @@ describe('ZONE TESTS', () => {
         .set({ Authorization: userToken })
         .send({
           name: 'H',
-          country: 'Nigeria',
+          country: 161,
           notes: 'Trem HQ'
         })
         .end((err, res) => {

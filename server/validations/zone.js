@@ -17,7 +17,7 @@ const validZone = (data) => {
   }
 
   // country validations
-  if (validator.isEmpty(data.country)) {
+  if (!isEmpty(data.country)) {
     errors.country = 'country field is required';
   }
 

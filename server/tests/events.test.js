@@ -27,8 +27,7 @@ describe('EVENTS TESTS', () => {
         .send({
           branchid: testBranch.id.toString(),
           name: 'Power For Living',
-          month: 'January',
-          year: '2019',
+          date: Date.now(),
           notes: 'A good event'
         })
         .end((err, res) => {
@@ -50,8 +49,7 @@ describe('EVENTS TESTS', () => {
         .send({
           branchid: testBranch.id.toString(),
           name: 'P',
-          month: 'January',
-          year: '2019',
+          date: Date.now(),
           notes: 'A good event'
         })
         .end((err, res) => {
@@ -73,8 +71,7 @@ describe('EVENTS TESTS', () => {
         .send({
           branchid: testBranch.id.toString(),
           name: 'Power For Living',
-          month: 'January',
-          year: '2019',
+          date: Date.now(),
           notes: 'A good event'
         })
         .end((err, res) => {
@@ -114,8 +111,7 @@ describe('EVENTS TESTS', () => {
         .send({
           branchid: testBranch.id.toString(),
           name: 'Power',
-          month: 'January',
-          year: '2019',
+          date: Date.now(),
           notes: 'A good event'
         })
         .end((err, res) => {
@@ -137,8 +133,7 @@ describe('EVENTS TESTS', () => {
         .send({
           branchid: testBranch.id.toString(),
           name: 'P',
-          month: 'January',
-          year: '2019',
+          date: Date.now(),
           notes: 'A good event'
         })
         .end((err, res) => {

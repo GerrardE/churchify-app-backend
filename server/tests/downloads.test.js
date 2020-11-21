@@ -24,8 +24,7 @@ describe('DOWNLOADS TESTS', () => {
         .send({
           name: 'Jaja',
           url: 'www.james.de',
-          month: 'February',
-          year: '2019',
+          date: Date.now(),
           categoryid: testCategory.id.toString(),
           notes: 'Ebook TCF'
         })
@@ -48,8 +47,7 @@ describe('DOWNLOADS TESTS', () => {
         .send({
           name: 'J',
           url: 'www.james.de',
-          month: 'February',
-          year: '2019',
+          date: Date.now(),
           categoryid: '2',
           notes: 'Ebook TCF'
         })
@@ -72,8 +70,7 @@ describe('DOWNLOADS TESTS', () => {
         .send({
           name: 'Jaja',
           url: 'www.james.de',
-          month: 'February',
-          year: '2019',
+          date: Date.now(),
           categoryid: testCategory.id.toString(),
           notes: 'Ebook TCF'
         })
@@ -114,8 +111,7 @@ describe('DOWNLOADS TESTS', () => {
         .send({
           name: 'Jaja',
           url: 'www.james.de',
-          month: 'February',
-          year: '2019',
+          date: Date.now(),
           categoryid: testCategory.id.toString(),
           notes: 'Ebook TCF'
         })
@@ -138,8 +134,7 @@ describe('DOWNLOADS TESTS', () => {
         .send({
           name: 'J',
           url: 'www.james.de',
-          month: 'February',
-          year: '2019',
+          date: Date.now(),
           categoryid: testCategory.id.toString(),
           notes: 'Ebook TCF'
         })

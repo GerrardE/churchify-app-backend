@@ -18,17 +18,18 @@ describe('BRANCH TESTS', () => {
   });
   it('should return success on CREATE A BRANCH', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .post('/api/v1/branches')
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: '161',
+          state: '306',
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: '2',
           zoneid: testZone.id.toString(),
-          notes: 'Trem Akoka'
+          notes: 'Trem Akoka',
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -43,23 +44,26 @@ describe('BRANCH TESTS', () => {
   });
   it('should handle VALIDATION error', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .post('/api/v1/branches')
         .set({ Authorization: userToken })
         .send({
           name: 'Ojodu',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: '161',
+          state: '306',
           address: 'A',
-          city: 'Somolu',
+          city: '2',
           zoneid: testZone.id.toString(),
-          notes: 'Trem Ojodu'
+          notes: 'Trem Ojodu',
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('errors');
-          expect(res.body.errors.address).to.eql('address must be between 5 and 200 characters');
+          expect(res.body.errors.address).to.eql(
+            'address must be between 5 and 200 characters'
+          );
           done();
         });
     } catch (err) {
@@ -68,17 +72,18 @@ describe('BRANCH TESTS', () => {
   });
   it('should handle UNIQUE VALIDATION error', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .post('/api/v1/branches')
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: '161',
+          state: '306',
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: '2',
           zoneid: testZone.id.toString(),
-          notes: 'Trem Akoka'
+          notes: 'Trem Akoka',
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -94,7 +99,8 @@ describe('BRANCH TESTS', () => {
 
   it('should return success on GET ALL BRANCHES', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .get('/api/v1/branches')
         .set({ Authorization: userToken })
         .end((err, res) => {
@@ -111,17 +117,18 @@ describe('BRANCH TESTS', () => {
 
   it('should return success on UPDATE A BRANCH', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .put(`/api/v1/branches/${1}`)
         .set({ Authorization: userToken })
         .send({
           name: 'Akoka',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: '161',
+          state: '306',
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: '2',
           zoneid: testZone.id.toString(),
-          notes: 'Trem Akoka'
+          notes: 'Trem Akoka',
         })
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -136,23 +143,26 @@ describe('BRANCH TESTS', () => {
   });
   it('should handle VALIDATION error', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .put(`/api/v1/branches/${1}`)
         .set({ Authorization: userToken })
         .send({
           name: 'A',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: '161',
+          state: '306',
           address: 'Afolabi brown street',
-          city: 'Somolu',
+          city: '2',
           zoneid: testZone.id.toString(),
-          notes: 'Trem Akoka'
+          notes: 'Trem Akoka',
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('errors');
-          expect(res.body.errors.name).to.eql('name must be between 2 and 20 characters');
+          expect(res.body.errors.name).to.eql(
+            'name must be between 2 and 20 characters'
+          );
           done();
         });
     } catch (err) {
@@ -162,7 +172,8 @@ describe('BRANCH TESTS', () => {
 
   it('should return success on DELETE A BRANCH', (done) => {
     try {
-      chai.request(index)
+      chai
+        .request(index)
         .delete(`/api/v1/branches/${1}`)
         .set({ Authorization: userToken })
         .end((err, res) => {

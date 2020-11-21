@@ -27,10 +27,10 @@ describe('PREACHERS TESTS', () => {
         .send({
           firstname: 'Ugo',
           lastname: 'Eze',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Lagos',
-          city: 'Lagos',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'A good coach'
         })
@@ -53,10 +53,10 @@ describe('PREACHERS TESTS', () => {
         .send({
           firstname: 'U',
           lastname: 'Eze',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Lagos',
-          city: 'Lagos',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'A good coach'
         })
@@ -97,10 +97,10 @@ describe('PREACHERS TESTS', () => {
         .send({
           firstname: 'Ugochucku',
           lastname: 'Eze',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Lagos',
-          city: 'Lagos',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'A good coach'
         })
@@ -123,10 +123,10 @@ describe('PREACHERS TESTS', () => {
         .send({
           firstname: 'U',
           lastname: 'Eze',
-          country: 'Nigeria',
-          state: 'Lagos',
+          country: 161,
+          state: 306,
           address: 'Lagos',
-          city: 'Lagos',
+          city: 2,
           branchid: testBranch.id.toString(),
           notes: 'A good coach'
         })
