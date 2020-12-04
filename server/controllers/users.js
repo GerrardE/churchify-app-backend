@@ -6,7 +6,7 @@ import validationResponse from '@validations/validationResponse';
 import bcrypt from 'bcryptjs';
 import models from '@models';
 
-const { User } = models;
+const { User, Role, Permission } = models;
 
 /**
  * User Controller
@@ -56,7 +56,8 @@ class UserController {
 
       return res.status(400).json({
         status: 400,
-        errors: 'Registration unsuccessful'
+        errors: 'Registration unsuccessful',
+        err
       });
     }
   }
@@ -85,7 +86,25 @@ class UserController {
       const user = await User.findOne({
         where: {
           email
-        }
+        },
+        include: [
+          {
+            through: {
+              attributes: ['name']
+            },
+            attributes: ['name'],
+            model: Role,
+            as: 'roles',
+            include: {
+              model: Permission,
+              as: 'permissions',
+              through: {
+                attributes: ['name']
+              },
+              attributes: ['name']
+            }
+          }
+        ]
       });
 
       if (!user) {
@@ -109,7 +128,8 @@ class UserController {
         firstname: user.firstname,
         lastname: user.lastname,
         phone: user.phone,
-        email: user.email
+        email: user.email,
+        role: user.roles[0],
       };
       const token = createToken(payload);
       res.status(200).json({
@@ -119,6 +139,64 @@ class UserController {
       return res.status(400).json({
         status: 400,
         errors: 'Login unsuccessful'
+      });
+    }
+  }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof UserController
+   */
+  static async assignrole(req, res) {
+    try {
+      const { id } = req.decoded;
+      const user = await User.findOne({ where: { id } });
+
+      const payload = await user.addRole(req.body.role);
+
+      return res.status(201).json({
+        status: 201,
+        message: 'Role assigned successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Role could not be assigned',
+        err
+      });
+    }
+  }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof UserController
+   */
+  static async unassignrole(req, res) {
+    try {
+      const { id } = req.decoded;
+      const user = await User.findOne({ where: { id } });
+
+      const payload = await user.removeRole(req.body.role);
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Role unassigned successfully',
+        payload,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 400,
+        errors: 'Role could not be unassigned',
+        message: err.original.detail,
       });
     }
   }

@@ -11,22 +11,22 @@ const validMembership = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // adult validations
-  if (validator.isEmpty(data.adults)) {
+  if (isEmpty(data.adults)) {
     errors.adults = 'adults field is required';
   }
 
   // children validations
-  if (validator.isEmpty(data.children)) {
+  if (isEmpty(data.children)) {
     errors.children = 'children field is required';
   }
 
   // tithers validations
-  if (validator.isEmpty(data.tithers)) {
+  if (isEmpty(data.tithers)) {
     errors.tithers = 'tithers field is required';
   }
 
   // newmembers validations
-  if (validator.isEmpty(data.newmembers)) {
+  if (isEmpty(data.newmembers)) {
     errors.newmembers = 'newmembers field is required';
   }
 
@@ -35,12 +35,12 @@ const validMembership = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 

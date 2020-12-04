@@ -6,7 +6,7 @@ module.exports = {
     state: 306,
     address: 'Anthony Oke Expressway',
     city: 6,
-    zoneid: '1',
+    zoneid: 6,
     notes: 'TREM International Headquarters',
     createdAt: new Date(),
     updatedAt: new Date()

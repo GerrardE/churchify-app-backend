@@ -16,7 +16,7 @@ const validSignup = (data) => {
     errors.firstname = 'first name must be between 2 and 100 characters';
   }
 
-  if (validator.isEmpty(data.firstname)) {
+  if (isEmpty(data.firstname)) {
     errors.firstname = 'first name field is required';
   }
 
@@ -25,7 +25,7 @@ const validSignup = (data) => {
     errors.lastname = 'last name must be between 2 and 100 characters';
   }
 
-  if (validator.isEmpty(data.lastname)) {
+  if (isEmpty(data.lastname)) {
     errors.lastname = 'last name field is required';
   }
 
@@ -34,7 +34,7 @@ const validSignup = (data) => {
     errors.phone = 'phone must be between 5 and 15 characters';
   }
 
-  if (validator.isEmpty(data.phone)) {
+  if (isEmpty(data.phone)) {
     errors.phone = 'phone field is required';
   }
 
@@ -43,17 +43,17 @@ const validSignup = (data) => {
     errors.email = 'Email is invalid';
   }
 
-  if (validator.isEmpty(data.email)) {
+  if (isEmpty(data.email)) {
     errors.email = 'Email field is required';
   }
 
   // branch validation
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branchid = 'branch field is required';
   }
 
   // Country validation
-  if (validator.isEmpty(data.country)) {
+  if (isEmpty(data.country)) {
     errors.country = 'Country field is required';
   }
 
@@ -62,7 +62,7 @@ const validSignup = (data) => {
     errors.password = 'Password must be between 6 to 30 characters';
   }
 
-  if (validator.isEmpty(data.password)) {
+  if (isEmpty(data.password)) {
     errors.password = 'Password field is required';
   }
 

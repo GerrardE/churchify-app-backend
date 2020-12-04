@@ -1,5 +1,7 @@
 import express from 'express';
 import userRouter from './users';
+import roleRouter from './roles';
+import permissionRouter from './permissions';
 import zoneRouter from './zones';
 import branchRouter from './branches';
 import fellowshipRouter from './fellowships';
@@ -18,6 +20,8 @@ const apiRouter = express.Router();
 apiRouter.get('/', (req, res) => res.status(200).send('Welcome to the Churchify-App API'));
 
 apiRouter.use('/', userRouter);
+apiRouter.use('/roles', roleRouter);
+apiRouter.use('/permissions', permissionRouter);
 apiRouter.use('/zones', zoneRouter);
 apiRouter.use('/branches', branchRouter);
 apiRouter.use('/fellowships', fellowshipRouter);

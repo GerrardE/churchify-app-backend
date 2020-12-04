@@ -12,32 +12,32 @@ const validAttendance = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // children validations
-  if (validator.isEmpty(data.children)) {
+  if (isEmpty(data.children)) {
     errors.children = 'children field is required';
   }
 
   // women validations
-  if (validator.isEmpty(data.women)) {
+  if (isEmpty(data.women)) {
     errors.women = 'women field is required';
   }
 
   // men validations
-  if (validator.isEmpty(data.men)) {
+  if (isEmpty(data.men)) {
     errors.men = 'men field is required';
   }
 
   // event validations
-  if (validator.isEmpty(data.eventid)) {
+  if (isEmpty(data.eventid)) {
     errors.event = 'event field is required';
   }
 
   // preacher validations
-  if (validator.isEmpty(data.preacherid)) {
+  if (isEmpty(data.preacherid)) {
     errors.preacher = 'preacher field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 
@@ -46,7 +46,7 @@ const validAttendance = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

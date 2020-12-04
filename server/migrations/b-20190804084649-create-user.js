@@ -8,8 +8,12 @@ module.exports = {
     },
 
     role: {
-      type: Sequelize.STRING,
-      allowNull: true // change to false
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Roles',
+        key: 'id'
+      }
     },
 
     firstname: {
@@ -35,17 +39,29 @@ module.exports = {
 
     branchid: {
       type: Sequelize.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'Branches',
+        key: 'id'
+      }
     },
 
     state: {
-      type: Sequelize.STRING,
-      allowNull: true
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'States',
+        key: 'id'
+      }
     },
 
     country: {
-      type: Sequelize.STRING,
-      allowNull: true
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Countries',
+        key: 'id'
+      }
     },
 
     password: {

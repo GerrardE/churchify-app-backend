@@ -1,5 +1,6 @@
 import validationResponse from '@validations/validationResponse';
 import validBranch from '@validations/branch';
+import ResponseController from '@helpers/response';
 import models from '@models';
 
 const { Branch } = models;
@@ -29,9 +30,7 @@ class BranchController {
         });
       }
 
-      const { id: userid } = req.decoded;
-
-      const payload = await Branch.create({ userid, ...req.body });
+      const payload = await Branch.create({ ...req.body });
 
       res.status(201).json({
         status: 201,
@@ -87,23 +86,8 @@ class BranchController {
    * @memberof ZoneController
    */
   static async getById(req, res) {
-    try {
-      const { branch } = req;
-      const { id } = branch;
-      const payload = await Branch.findOne({ where: { id } });
-
-      return res.status(200).json({
-        status: 200,
-        message: 'Branch retrieved successfully',
-        payload,
-      });
-    } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Branch could not be retrieved',
-        err,
-      });
-    }
+    const { branch: payload } = req;
+    return ResponseController.success(res, 200, 200, 'Branch retrieved successfully', payload);
   }
 
   /**
@@ -127,12 +111,11 @@ class BranchController {
       }
 
       const { branch } = req;
-      const { userid, id } = branch;
+      const { id } = branch;
 
-      await Branch.update(req.body, { returning: true, where: { id, userid } });
+      const payload = await Branch.update(req.body, { returning: true, where: { id } });
 
-      const payload = await Branch.findAll();
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         message: 'Branch updated successfully',
         payload
@@ -157,8 +140,8 @@ class BranchController {
   static async delete(req, res) {
     try {
       const { branch } = req;
-      const { id, userid } = branch;
-      await Branch.destroy({ where: { id, userid } });
+      const { id } = branch;
+      await Branch.destroy({ where: { id } });
       const payload = await Branch.findAll();
 
       res.status(200).json({

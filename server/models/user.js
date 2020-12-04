@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       role: {
-        type: DataTypes.STRING,
-        allowNull: true // change to false
+        type: DataTypes.INTEGER,
+        allowNull: true
       },
 
       firstname: {
@@ -49,12 +49,12 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       state: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true
       },
 
       country: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true
       },
 
@@ -80,7 +80,8 @@ module.exports = (sequelize, DataTypes) => {
       Freport,
       Group,
       Membership,
-      Training
+      Training,
+      Role
     } = models;
 
     User.hasMany(Training, {
@@ -121,6 +122,12 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(Branch, {
       foreignKey: 'id',
       as: 'member'
+    });
+
+    User.belongsToMany(Role, {
+      through: 'UserRole',
+      as: 'roles',
+      foreignKey: 'userid'
     });
   };
 

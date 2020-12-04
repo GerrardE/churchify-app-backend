@@ -1,4 +1,5 @@
 import validationResponse from '@validations/validationResponse';
+import ResponseController from '@helpers/response';
 import validZone from '@validations/zone';
 import models from '@models';
 
@@ -23,33 +24,18 @@ class ZoneController {
       const { errors, isValid } = validZone(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        return ResponseController.error(res, 400, 400, 'invalid request', errors);
       }
 
       const payload = await Zone.create({ ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Zone created successfully',
-        payload
-      });
+      ResponseController.success(res, 201, 201, 'Zone created successfully', payload);
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+        return ResponseController.error(res, 400, 400, 'unique violation', validationResponse(err));
       }
 
-      console.log(err);
-
-      res.status(400).json({
-        status: 400,
-        errors: 'Zone creation unsuccessful'
-      });
+      ResponseController.error(res, 400, 400, {}, 'Zone creation unsuccessful');
     }
   }
 
@@ -65,17 +51,9 @@ class ZoneController {
     try {
       const payload = await Zone.findAll();
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Zones retrieved successfully',
-        payload
-      });
+      return ResponseController.success(res, 200, 200, 'Zones retrieved successfully', payload);
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Zones could not be retrieved',
-        err
-      });
+      return ResponseController.error(res, 400, 400, 'Zones could not be retrieved', err);
     }
   }
 
@@ -88,15 +66,8 @@ class ZoneController {
    * @memberof ZoneController
    */
   static async getById(req, res) {
-    const { zone } = req;
-    const { id } = zone;
-    const payload = await Zone.findOne({ where: { id } });
-
-    return res.status(200).json({
-      status: 200,
-      message: 'Zone retrieved successfully',
-      payload,
-    });
+    const { zone: payload } = req;
+    return ResponseController.success(res, 200, 200, 'Zone retrieved successfully', payload);
   }
 
   /**
@@ -124,17 +95,9 @@ class ZoneController {
 
       await Zone.update(req.body, { returning: true, where: { id } });
 
-      const payload = await Zone.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Zone updated successfully',
-        payload
-      });
+      return ResponseController.success(res, 200, 200, 'Zone updated successfully', {});
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Zone could not be updated'
-      });
+      return ResponseController.error(res, 400, 400, 'Zone could not be updated', err);
     }
   }
 
@@ -152,18 +115,10 @@ class ZoneController {
       const { zone } = req;
       const { id } = zone;
       await Zone.destroy({ where: { id } });
-      const payload = await Zone.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Zone deleted successfully',
-        payload
-      });
+      return ResponseController.success(res, 200, 200, 'Zone deleted successfully', {});
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Zone could not be deleted'
-      });
+      return ResponseController.error(res, 400, 400, 'Zone could not be deleted', err);
     }
   }
 }

@@ -10,22 +10,22 @@ const validActivity = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // council validations
-  if (validator.isEmpty(data.council)) {
+  if (isEmpty(data.council)) {
     errors.council = 'council field is required';
   }
 
   // special validations
-  if (validator.isEmpty(data.special)) {
+  if (isEmpty(data.special)) {
     errors.special = 'special field is required';
   }
 
   // project validations
-  if (validator.isEmpty(data.project)) {
+  if (isEmpty(data.project)) {
     errors.project = 'project field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 
@@ -34,7 +34,7 @@ const validActivity = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

@@ -11,9 +11,9 @@ const createTestBranch = async ({
     zoneid: zoneid || faker.random.number(),
     name: name || faker.random.alphaNumeric(6),
     address: address || faker.random.alphaNumeric(6),
-    city: city || faker.random.number(),
-    state: state || faker.random.number(),
-    country: country || faker.random.number(),
+    city: city || 6,
+    state: state || 32,
+    country: country || 161,
     notes: notes || faker.random.alphaNumeric(6)
   });
 

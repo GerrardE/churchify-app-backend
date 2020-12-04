@@ -16,17 +16,17 @@ const validFellowship = (data) => {
     errors.name = 'name must be between 2 and 20 characters';
   }
 
-  if (validator.isEmpty(data.name)) {
+  if (isEmpty(data.name)) {
     errors.name = 'name field is required';
   }
 
   // country validations
-  if (validator.isEmpty(data.country)) {
+  if (isEmpty(data.country)) {
     errors.country = 'country field is required';
   }
 
   // state validations
-  if (validator.isEmpty(data.state)) {
+  if (isEmpty(data.state)) {
     errors.state = 'state field is required';
   }
 
@@ -35,17 +35,17 @@ const validFellowship = (data) => {
     errors.address = 'address must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.address)) {
+  if (isEmpty(data.address)) {
     errors.address = 'address field is required';
   }
 
   // city validations
-  if (validator.isEmpty(data.city)) {
+  if (isEmpty(data.city)) {
     errors.city = 'city field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 
@@ -54,7 +54,7 @@ const validFellowship = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

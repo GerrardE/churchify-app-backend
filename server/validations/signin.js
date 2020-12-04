@@ -11,12 +11,12 @@ const validSignin = (data) => {
     errors.email = 'Email is invalid';
   }
 
-  if (validator.isEmpty(data.email)) {
+  if (isEmpty(data.email)) {
     errors.email = 'Email field is required';
   }
 
   // Password validations
-  if (validator.isEmpty(data.password)) {
+  if (isEmpty(data.password)) {
     errors.password = 'Password field is required';
   }
 

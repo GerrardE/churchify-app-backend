@@ -2,7 +2,7 @@ import express from 'express';
 import config from '@controllers/configs';
 import trim from '@middlewares/trim';
 import { verifyToken } from '@middlewares/Token';
-import { configFinder, confFinder } from '@middlewares/configFinder';
+import { configFinder, confFinder } from '@middlewares/config.middleware';
 
 const configRouter = express.Router();
 

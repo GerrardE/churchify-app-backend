@@ -11,7 +11,7 @@ const validCategory = (data) => {
     errors.name = 'name must be between 2 and 20 characters';
   }
 
-  if (validator.isEmpty(data.name)) {
+  if (isEmpty(data.name)) {
     errors.name = 'name field is required';
   }
 
@@ -20,7 +20,7 @@ const validCategory = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

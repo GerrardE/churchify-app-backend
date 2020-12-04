@@ -9,17 +9,17 @@ const validTraining = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // trainees validations
-  if (validator.isEmpty(data.trainees)) {
+  if (isEmpty(data.trainees)) {
     errors.trainees = 'trainees field is required';
   }
 
   // converts validations
-  if (validator.isEmpty(data.converts)) {
+  if (isEmpty(data.converts)) {
     errors.converts = 'converts field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 
@@ -28,7 +28,7 @@ const validTraining = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

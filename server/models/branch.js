@@ -1,10 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const Branch = sequelize.define('Branch', {
-    userid: {
-      type: DataTypes.UUID,
-      allowNull: true
-    },
-
     zoneid: {
       type: DataTypes.INTEGER,
       allowNull: false

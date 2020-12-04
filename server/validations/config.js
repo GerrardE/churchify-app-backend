@@ -12,7 +12,7 @@ const validConfig = (data) => {
     errors.name = 'name must be between 2 and 20 characters';
   }
 
-  if (validator.isEmpty(data.name)) {
+  if (isEmpty(data.name)) {
     errors.name = 'name field is required';
   }
 
@@ -21,7 +21,7 @@ const validConfig = (data) => {
     errors.type = 'type must be between 2 and 20 characters';
   }
 
-  if (validator.isEmpty(data.type)) {
+  if (isEmpty(data.type)) {
     errors.type = 'type field is required';
   }
 

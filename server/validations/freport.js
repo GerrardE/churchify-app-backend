@@ -10,22 +10,22 @@ const validFreport = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // newcells validations
-  if (validator.isEmpty(data.newcells)) {
+  if (isEmpty(data.newcells)) {
     errors.newcells = 'newcells field is required';
   }
 
   // totalcells validations
-  if (validator.isEmpty(data.totalcells)) {
+  if (isEmpty(data.totalcells)) {
     errors.totalcells = 'totalcells field is required';
   }
 
   // attendance validations
-  if (validator.isEmpty(data.attendance)) {
+  if (isEmpty(data.attendance)) {
     errors.attendance = 'attendance field is required';
   }
 
   // fellowship validations
-  if (validator.isEmpty(data.fellowshipid)) {
+  if (isEmpty(data.fellowshipid)) {
     errors.fellowship = 'fellowship field is required';
   }
 
@@ -34,7 +34,7 @@ const validFreport = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

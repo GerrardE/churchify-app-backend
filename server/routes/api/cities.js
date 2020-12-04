@@ -1,8 +1,8 @@
 import express from 'express';
 import cities from '@controllers/cities';
 import { verifyToken } from '@middlewares/Token';
-import cityFinder from '@middlewares/cityFinder';
-import stateFinder from '@middlewares/stateFinder';
+import cityFinder from '@middlewares/city.middleware';
+import stateFinder from '@middlewares/state.middleware';
 
 const cityRouter = express.Router();
 

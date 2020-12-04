@@ -17,7 +17,7 @@ const validPreacher = (data) => {
     errors.firstname = 'firstname must be between 2 and 20 characters';
   }
 
-  if (validator.isEmpty(data.firstname)) {
+  if (isEmpty(data.firstname)) {
     errors.firstname = 'firstname field is required';
   }
 
@@ -26,17 +26,17 @@ const validPreacher = (data) => {
     errors.lastname = 'lastname must be between 2 and 20 characters';
   }
 
-  if (validator.isEmpty(data.lastname)) {
+  if (isEmpty(data.lastname)) {
     errors.lastname = 'lastname field is required';
   }
 
   // country validations
-  if (validator.isEmpty(data.country)) {
+  if (isEmpty(data.country)) {
     errors.country = 'country field is required';
   }
 
   // state validations
-  if (validator.isEmpty(data.state)) {
+  if (isEmpty(data.state)) {
     errors.state = 'state field is required';
   }
 
@@ -45,17 +45,17 @@ const validPreacher = (data) => {
     errors.address = 'address must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.address)) {
+  if (isEmpty(data.address)) {
     errors.address = 'address field is required';
   }
 
   // city validations
-  if (validator.isEmpty(data.city)) {
+  if (isEmpty(data.city)) {
     errors.city = 'city field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 
@@ -64,7 +64,7 @@ const validPreacher = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 

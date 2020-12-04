@@ -11,27 +11,27 @@ const validGroup = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // cmf validations
-  if (validator.isEmpty(data.cmf)) {
+  if (isEmpty(data.cmf)) {
     errors.cmf = 'cmf field is required';
   }
 
   // cwf validations
-  if (validator.isEmpty(data.cwf)) {
+  if (isEmpty(data.cwf)) {
     errors.cwf = 'cwf field is required';
   }
 
   // cyf validations
-  if (validator.isEmpty(data.cyf)) {
+  if (isEmpty(data.cyf)) {
     errors.cyf = 'cyf field is required';
   }
 
   // rcf validations
-  if (validator.isEmpty(data.rcf)) {
+  if (isEmpty(data.rcf)) {
     errors.rcf = 'rcf field is required';
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchid)) {
+  if (isEmpty(data.branchid)) {
     errors.branch = 'branch field is required';
   }
 
@@ -40,7 +40,7 @@ const validGroup = (data) => {
     errors.notes = 'notes must be between 5 and 200 characters';
   }
 
-  if (validator.isEmpty(data.notes)) {
+  if (isEmpty(data.notes)) {
     errors.notes = 'notes field is required';
   }
 
