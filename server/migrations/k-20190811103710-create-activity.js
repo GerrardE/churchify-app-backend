@@ -16,6 +16,15 @@ module.exports = {
       }
     },
 
+    zoneid: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Zones',
+        key: 'id'
+      }
+    },
+
     branchid: {
       type: Sequelize.INTEGER,
       allowNull: false,

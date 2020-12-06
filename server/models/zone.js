@@ -19,12 +19,17 @@ module.exports = (sequelize, DataTypes) => {
 
   Zone.associate = (models) => {
     const {
-      Branch
+      Branch, Attendance
     } = models;
 
     Zone.hasMany(Branch, {
       foreignKey: 'id',
       as: 'branches'
+    });
+
+    Zone.hasMany(Attendance, {
+      foreignKey: 'zoneid',
+      as: 'zoneattendance'
     });
   };
 

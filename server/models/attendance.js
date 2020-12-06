@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    zoneid: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -43,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Attendance.associate = (models) => {
     const {
-      User, Branch, Event
+      User, Branch, Event, Zone
     } = models;
 
     Attendance.belongsTo(User, {
@@ -59,6 +64,11 @@ module.exports = (sequelize, DataTypes) => {
     Attendance.belongsTo(Branch, {
       foreignKey: 'id',
       as: 'attendance'
+    });
+
+    Attendance.belongsTo(Zone, {
+      foreignKey: 'id',
+      as: 'zoneattendance'
     });
   };
 

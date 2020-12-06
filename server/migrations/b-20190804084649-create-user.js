@@ -7,15 +7,6 @@ module.exports = {
       allowNull: false
     },
 
-    role: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Roles',
-        key: 'id'
-      }
-    },
-
     firstname: {
       type: Sequelize.STRING,
       allowNull: false
@@ -35,6 +26,15 @@ module.exports = {
       type: Sequelize.STRING,
       unique: true,
       allowNull: false
+    },
+
+    zoneid: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Zones',
+        key: 'id'
+      }
     },
 
     branchid: {

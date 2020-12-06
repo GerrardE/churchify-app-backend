@@ -5,6 +5,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    zoneid: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    branchid: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     fellowshipid: {
       type: DataTypes.INTEGER,
       allowNull: false

@@ -16,6 +16,24 @@ module.exports = {
       }
     },
 
+    zoneid: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Zones',
+        key: 'id'
+      }
+    },
+
+    branchid: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Branches',
+        key: 'id'
+      }
+    },
+
     fellowshipid: {
       type: Sequelize.INTEGER,
       allowNull: false,

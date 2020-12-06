@@ -17,11 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
 
-      role: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
-
       firstname: {
         type: DataTypes.STRING,
         allowNull: false
@@ -41,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+      },
+
+      zoneid: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
 
       branchid: {

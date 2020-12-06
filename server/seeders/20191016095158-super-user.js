@@ -16,6 +16,7 @@ module.exports = {
     lastname: 'Ezeugwa',
     phone: '08137519688',
     email: 'ezeugwagerrard@gmail.com',
+    zoneid: 6,
     branchid: 3,
     country: 161,
     password,

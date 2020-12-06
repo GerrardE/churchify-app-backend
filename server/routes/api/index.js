@@ -14,6 +14,7 @@ import configRouter from './configs';
 import countryRouter from './countries';
 import stateRouter from './states';
 import cityRouter from './cities';
+import dashboardRouter from './dashboard';
 
 const apiRouter = express.Router();
 
@@ -34,5 +35,6 @@ apiRouter.use('/configs', configRouter);
 apiRouter.use('/countries', countryRouter);
 apiRouter.use('/states', stateRouter);
 apiRouter.use('/cities', cityRouter);
+apiRouter.use('/dashboard', dashboardRouter);
 
 export default apiRouter;
