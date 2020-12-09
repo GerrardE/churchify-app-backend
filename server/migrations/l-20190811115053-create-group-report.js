@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Attendances', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Groups', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -14,6 +14,21 @@ module.exports = {
         model: 'Users',
         key: 'id'
       }
+    },
+
+    day: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+
+    month: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+
+    year: {
+      type: Sequelize.INTEGER,
+      allowNull: false
     },
 
     zoneid: {
@@ -34,37 +49,24 @@ module.exports = {
       }
     },
 
-    eventid: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Events',
-        key: 'id'
-      }
-    },
-
-    women: {
+    cmf: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
 
-    men: {
+    cwf: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
 
-    children: {
+    cyf: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
 
-    preacherid: {
+    rcf: {
       type: Sequelize.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Preachers',
-        key: 'id'
-      }
+      allowNull: false
     },
 
     notes: {
@@ -83,5 +85,5 @@ module.exports = {
     }
   }),
 
-  down: queryInterface => queryInterface.dropTable('Attendances')
+  down: queryInterface => queryInterface.dropTable('Groups')
 };

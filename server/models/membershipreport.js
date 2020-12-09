@@ -5,6 +5,21 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    day: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    month: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     zoneid: {
       type: DataTypes.INTEGER,
       allowNull: false

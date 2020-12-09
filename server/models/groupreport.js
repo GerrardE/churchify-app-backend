@@ -1,7 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
-  const Freport = sequelize.define('Freport', {
+  const Group = sequelize.define('Group', {
     userid: {
       type: DataTypes.UUID,
+      allowNull: false
+    },
+
+    day: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    month: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    year: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
@@ -15,22 +30,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    fellowshipid: {
+    cmf: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    newcells: {
+    cwf: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    totalcells: {
+    cyf: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    attendance: {
+    rcf: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -41,19 +56,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
 
-  Freport.associate = (models) => {
-    const { Fellowship, User } = models;
+  Group.associate = (models) => {
+    const { Branch, User } = models;
 
-    Freport.belongsTo(User, {
+    Group.belongsTo(User, {
       foreignKey: 'id',
-      as: 'user_report'
+      as: 'user_group'
     });
 
-    Freport.belongsTo(Fellowship, {
+    Group.belongsTo(Branch, {
       foreignKey: 'id',
-      as: 'reports'
+      as: 'groups'
     });
   };
 
-  return Freport;
+  return Group;
 };

@@ -1,7 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
-  const Attendance = sequelize.define('Attendance', {
+  const Freport = sequelize.define('Freport', {
     userid: {
       type: DataTypes.UUID,
+      allowNull: false
+    },
+
+    day: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    month: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    year: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
@@ -15,62 +30,45 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    eventid: {
+    fellowshipid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    women: {
+    newcells: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    men: {
+    totalcells: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    children: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-
-    preacherid: {
+    attendance: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
     notes: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     }
   }, {});
 
-  Attendance.associate = (models) => {
-    const {
-      User, Branch, Event, Zone
-    } = models;
+  Freport.associate = (models) => {
+    const { Fellowship, User } = models;
 
-    Attendance.belongsTo(User, {
+    Freport.belongsTo(User, {
       foreignKey: 'id',
-      as: 'activity'
+      as: 'user_report'
     });
 
-    Attendance.hasMany(Event, {
+    Freport.belongsTo(Fellowship, {
       foreignKey: 'id',
-      as: 'events'
-    });
-
-    Attendance.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'attendance'
-    });
-
-    Attendance.belongsTo(Zone, {
-      foreignKey: 'id',
-      as: 'zoneattendance'
+      as: 'reports'
     });
   };
 
-  return Attendance;
+  return Freport;
 };

@@ -1,7 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
-  const Group = sequelize.define('Group', {
+  const Activity = sequelize.define('Activity', {
     userid: {
       type: DataTypes.UUID,
+      allowNull: false
+    },
+
+    day: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    month: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    year: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
@@ -15,22 +30,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    cmf: {
+    council: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    cwf: {
+    special: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    cyf: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-
-    rcf: {
+    project: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -38,22 +48,24 @@ module.exports = (sequelize, DataTypes) => {
     notes: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
   }, {});
 
-  Group.associate = (models) => {
-    const { Branch, User } = models;
+  Activity.associate = (models) => {
+    const {
+      User, Branch
+    } = models;
 
-    Group.belongsTo(User, {
+    Activity.belongsTo(User, {
       foreignKey: 'id',
-      as: 'user_group'
+      as: 'activity'
     });
 
-    Group.belongsTo(Branch, {
+    Activity.belongsTo(Branch, {
       foreignKey: 'id',
-      as: 'groups'
+      as: 'branchActivity'
     });
   };
 
-  return Group;
+  return Activity;
 };

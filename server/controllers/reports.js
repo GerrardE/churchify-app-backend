@@ -12,6 +12,11 @@ const {
   Membership, Attendance, Training, Activity, Group, Freport
 } = models;
 
+const today = new Date();
+const day = today.getDay();
+const month = today.getMonth();
+const year = today.getFullYear();
+
 /**
  * Report Controller
  * @async
@@ -39,7 +44,9 @@ class ReportController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Membership.create({ userid, ...req.body });
+      const payload = await Membership.create({
+        userid, day, month, year, ...req.body
+      });
 
       return ResponseController.success(
         res,
@@ -80,7 +87,9 @@ class ReportController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Attendance.create({ userid, ...req.body });
+      const payload = await Attendance.create({
+        userid, day, month, year, ...req.body
+      });
 
       return ResponseController.success(
         res,
@@ -110,45 +119,29 @@ class ReportController {
    */
   static async getSynodAttendance(req, res) {
     try {
-      const payload = {};
+      const {
+        dd, yyyy
+      } = req.body;
 
-      const { from, to } = req.body;
-
-      payload.zones = await models.Zone.findAll({
+      const payload = await models.Zone.findAll({
         attributes: ['id', 'name'],
-        include: {
-          model: Attendance,
+        include: [{
+          model: models.Attendance,
           as: 'zoneattendance',
           attributes: [
             [
               sequelize.literal(
-                'COALESCE(children, 0) + COALESCE(women, 0) + COALESCE(men, 0)'
+                'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
               ),
               'total',
             ],
           ],
-        },
-        where: {
-          createdAt: {
-            [sequelize.Op.between]: [from, to],
+          where: {
+            day: dd,
+            year: yyyy
           },
-        },
+        }],
       });
-
-      // zones.forEach((zone) => {
-      //   const item = {};
-      //   item.id = zone.id;
-      //   item.name = zone.name;
-      //   // eslint-disable-next-line require-jsdoc
-      //   function reducer(accumulator, currentValue) {
-      //     return accumulator.dataValues.total + currentValue.dataValues.total;
-      //   }
-
-      //   const total = zone.zoneattendance.reduce(reducer);
-      //   item.total = total;
-      //   payload.push(item);
-      //   console.log(payload);
-      // });
 
       return ResponseController.success(
         res,
@@ -189,7 +182,9 @@ class ReportController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Training.create({ userid, ...req.body });
+      const payload = await Training.create({
+        userid, day, month, year, ...req.body
+      });
 
       return ResponseController.success(
         res,
@@ -230,7 +225,9 @@ class ReportController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Activity.create({ userid, ...req.body });
+      const payload = await Activity.create({
+        userid, day, month, year, ...req.body
+      });
 
       return ResponseController.success(
         res,
@@ -271,7 +268,9 @@ class ReportController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Group.create({ userid, ...req.body });
+      const payload = await Group.create({
+        userid, day, month, year, ...req.body
+      });
 
       return ResponseController.success(
         res,
@@ -312,7 +311,9 @@ class ReportController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Freport.create({ userid, ...req.body });
+      const payload = await Freport.create({
+        userid, day, month, year, ...req.body
+      });
 
       return ResponseController.success(
         res,
