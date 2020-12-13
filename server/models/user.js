@@ -50,12 +50,12 @@ module.exports = (sequelize, DataTypes) => {
 
       state: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: false
       },
 
       country: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: false
       },
 
       password: {

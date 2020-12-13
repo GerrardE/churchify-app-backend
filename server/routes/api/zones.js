@@ -7,8 +7,8 @@ import { zoneFinder, zonePermission } from '@middlewares/zone.middleware';
 const zoneRouter = express.Router();
 
 zoneRouter.post('/', verifyToken, trim, zonePermission, zones.create);
-zoneRouter.get('/', verifyToken, zones.getAll);
-zoneRouter.get('/:id', verifyToken, zoneFinder, zones.getById);
+zoneRouter.get('/', zones.getAll);
+zoneRouter.get('/:id', zoneFinder, zones.getById);
 zoneRouter.put('/:id', verifyToken, zoneFinder, zonePermission, zones.update);
 zoneRouter.delete('/:id', verifyToken, zoneFinder, zonePermission, zones.delete);
 

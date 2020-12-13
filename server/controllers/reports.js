@@ -45,7 +45,11 @@ class ReportController {
       const { id: userid } = req.decoded;
 
       const payload = await Membership.create({
-        userid, day, month, year, ...req.body
+        userid,
+        day,
+        month,
+        year,
+        ...req.body,
       });
 
       return ResponseController.success(
@@ -88,7 +92,11 @@ class ReportController {
       const { id: userid } = req.decoded;
 
       const payload = await Attendance.create({
-        userid, day, month, year, ...req.body
+        userid,
+        day,
+        month,
+        year,
+        ...req.body,
       });
 
       return ResponseController.success(
@@ -119,36 +127,44 @@ class ReportController {
    */
   static async getSynodAttendance(req, res) {
     try {
-      const {
-        dd, yyyy
-      } = req.body;
+      const { years, dd } = req.body;
 
-      const payload = await models.Zone.findAll({
-        attributes: ['id', 'name'],
-        include: [{
-          model: models.Attendance,
-          as: 'zoneattendance',
-          attributes: [
-            [
-              sequelize.literal(
-                'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
-              ),
-              'total',
-            ],
+      const payload = Object.values(years).map((v) => {
+        const d = models.Zone.findAll({
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: models.Attendance,
+              as: 'zoneattendance',
+              attributes: [
+                [
+                  sequelize.literal(
+                    'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
+                  ),
+                  'total',
+                ],
+              ],
+              where: {
+                year: v,
+                day: dd
+              },
+            },
           ],
-          where: {
-            day: dd,
-            year: yyyy
-          },
-        }],
+        });
+
+        const formatdata = ReportController.formatAttendance(d, v);
+
+        return formatdata;
       });
+
+      await Promise.all(payload);
 
       return ResponseController.success(
         res,
         200,
         200,
         'Synod attendance retrieved successfully',
-        payload
+        payload[1]
       );
     } catch (err) {
       return ResponseController.error(
@@ -159,6 +175,32 @@ class ReportController {
         err
       );
     }
+  }
+
+  /**
+   * @param {*} data - object
+   * @param {*} y - number
+   * @return {json} Returns json object
+   * @memberof ReportController
+   */
+  static formatAttendance(data, y) {
+    const r = data.map((d) => {
+      const result = {};
+
+      result.id = d.id;
+
+      result.name = d.name;
+
+      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
+
+      result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
+
+      result.year = y;
+
+      return result;
+    });
+
+    return r;
   }
 
   /**
@@ -183,7 +225,11 @@ class ReportController {
       const { id: userid } = req.decoded;
 
       const payload = await Training.create({
-        userid, day, month, year, ...req.body
+        userid,
+        day,
+        month,
+        year,
+        ...req.body,
       });
 
       return ResponseController.success(
@@ -226,7 +272,11 @@ class ReportController {
       const { id: userid } = req.decoded;
 
       const payload = await Activity.create({
-        userid, day, month, year, ...req.body
+        userid,
+        day,
+        month,
+        year,
+        ...req.body,
       });
 
       return ResponseController.success(
@@ -269,7 +319,11 @@ class ReportController {
       const { id: userid } = req.decoded;
 
       const payload = await Group.create({
-        userid, day, month, year, ...req.body
+        userid,
+        day,
+        month,
+        year,
+        ...req.body,
       });
 
       return ResponseController.success(
@@ -312,7 +366,11 @@ class ReportController {
       const { id: userid } = req.decoded;
 
       const payload = await Freport.create({
-        userid, day, month, year, ...req.body
+        userid,
+        day,
+        month,
+        year,
+        ...req.body,
       });
 
       return ResponseController.success(

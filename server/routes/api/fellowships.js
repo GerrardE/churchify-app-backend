@@ -7,8 +7,8 @@ import { fellowshipFinder, fellowshipPermission } from '@middlewares/fellowship.
 const fellowshipRouter = express.Router();
 
 fellowshipRouter.post('/', verifyToken, trim, fellowshipPermission, fellowships.create);
-fellowshipRouter.get('/', verifyToken, fellowships.getAll);
-fellowshipRouter.get('/:id', verifyToken, fellowshipFinder, fellowships.getById);
+fellowshipRouter.get('/', fellowships.getAll);
+fellowshipRouter.get('/:id', fellowshipFinder, fellowships.getById);
 fellowshipRouter.put('/:id', verifyToken, fellowshipFinder, fellowshipPermission, fellowships.update);
 fellowshipRouter.delete('/:id', verifyToken, fellowshipFinder, fellowshipPermission, fellowships.delete);
 

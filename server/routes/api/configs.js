@@ -7,9 +7,9 @@ import { configFinder, confFinder } from '@middlewares/config.middleware';
 const configRouter = express.Router();
 
 configRouter.post('/', verifyToken, trim, config.create);
-configRouter.get('/', verifyToken, config.getAll);
-configRouter.get('/:id', verifyToken, configFinder, config.getById);
-configRouter.get('/:name/config', verifyToken, confFinder, config.getByName);
+configRouter.get('/', config.getAll);
+configRouter.get('/:id', config.getById);
+configRouter.get('/:name/config', confFinder, config.getByName);
 configRouter.put('/:id', verifyToken, configFinder, trim, config.update);
 configRouter.delete('/:id', verifyToken, configFinder, config.delete);
 

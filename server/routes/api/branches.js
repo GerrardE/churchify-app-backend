@@ -7,8 +7,8 @@ import { branchFinder, branchPermission } from '@middlewares/branch.middleware';
 const branchRouter = express.Router();
 
 branchRouter.post('/', verifyToken, trim, branchPermission, branches.create);
-branchRouter.get('/', verifyToken, branches.getAll);
-branchRouter.get('/:id', verifyToken, branchFinder, branches.getById);
+branchRouter.get('/', branches.getAll);
+branchRouter.get('/:id', branchFinder, branches.getById);
 branchRouter.put('/:id', verifyToken, branchFinder, branchPermission, branches.update);
 branchRouter.delete('/:id', verifyToken, branchFinder, branchPermission, branches.delete);
 
