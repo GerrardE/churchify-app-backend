@@ -90,12 +90,13 @@ class RoleController {
   static async unassignpermissions(req, res) {
     try {
       const { role } = req;
+      console.log(req.body);
 
-      await role.removePermissions(req.body.permission);
-
+      const payload = await role.removePermissions(req.body.permission);
       return res.status(200).json({
         status: 200,
-        message: 'Permission(s) unassigned successfully'
+        message: 'Permission(s) unassigned successfully',
+        payload
       });
     } catch (err) {
       return res.status(400).json({

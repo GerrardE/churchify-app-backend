@@ -6,8 +6,8 @@ import { userFinder, userPermission } from '@middlewares/user.middleware';
 
 const userRouter = express.Router();
 
-userRouter.get('/users', verifyToken, userPermission, users.getAllUsers);
-userRouter.get('/users/:id', verifyToken, userFinder, userPermission, users.getUser);
+userRouter.get('/users', verifyToken, users.getAllUsers);
+userRouter.get('/users/:id', verifyToken, userFinder, users.getUser);
 userRouter.put('/users/:id', verifyToken, userFinder, userPermission, users.updateUser);
 userRouter.post('/auth/signup', trim, users.signup);
 userRouter.post('/auth/signin', trim, users.signin);
