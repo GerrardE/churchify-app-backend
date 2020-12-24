@@ -19,10 +19,9 @@ const eventFinder = async (req, res, next) => {
 };
 
 const eventPermission = async (req, res, next) => {
-  const { role } = req.decoded;
-  const { permissions } = role;
-
   try {
+    const { role } = req.decoded;
+    const { permissions } = role;
     await handlePermission(req, permissions, 'event');
   } catch (err) {
     return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);

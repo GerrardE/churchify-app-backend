@@ -30,7 +30,7 @@ class UserController {
       if (!isValid) {
         return res.status(400).json({
           status: 400,
-          errors
+          errors,
         });
       }
 
@@ -38,40 +38,40 @@ class UserController {
 
       const payload = {
         id: user.id,
-        email: user.email
+        email: user.email,
       };
 
       const token = await createToken(payload);
       res.status(201).json({
         status: 201,
         message: 'Registration successful',
-        user: userExtractor(user, token)
+        user: userExtractor(user, token),
       });
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
         return res.status(400).json({
           status: 400,
-          errors: validationResponse(err)
+          errors: validationResponse(err),
         });
       }
 
       return res.status(400).json({
         status: 400,
         errors: 'Registration unsuccessful',
-        err
+        err,
       });
     }
   }
 
   /**
- * User Signin
-  * @static
- * @param {*} req - Request object
- * @param {*} res - Response object
- * @param {*} next - The next middleware
- * @return {json} Returns json object
- * @memberof UserController
- */
+   * User Signin
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof UserController
+   */
   static async signin(req, res) {
     try {
       const { errors, isValid } = validSignin(req.body);
@@ -79,19 +79,19 @@ class UserController {
       if (!isValid) {
         return res.status(400).json({
           status: 400,
-          errors
+          errors,
         });
       }
 
       const { email, password } = req.body;
       const user = await User.findOne({
         where: {
-          email
+          email,
         },
         include: [
           {
             through: {
-              attributes: ['name']
+              attributes: ['name'],
             },
             attributes: ['name'],
             model: Role,
@@ -100,18 +100,18 @@ class UserController {
               model: Permission,
               as: 'permissions',
               through: {
-                attributes: ['name']
+                attributes: ['name'],
               },
-              attributes: ['name']
-            }
-          }
-        ]
+              attributes: ['name'],
+            },
+          },
+        ],
       });
 
       if (!user) {
         return res.status(400).json({
           status: 400,
-          errors: 'Invalid email or password'
+          errors: 'Invalid email or password',
         });
       }
 
@@ -120,7 +120,7 @@ class UserController {
       if (!match) {
         return res.status(400).json({
           status: 400,
-          errors: 'Invalid email or password'
+          errors: 'Invalid email or password',
         });
       }
 
@@ -134,12 +134,14 @@ class UserController {
       };
       const token = createToken(payload);
       res.status(200).json({
-        status: 200, message: 'Login successful', user: userExtractor(user, token)
+        status: 200,
+        message: 'Login successful',
+        user: userExtractor(user, token),
       });
     } catch (err) {
       return res.status(400).json({
         status: 400,
-        errors: 'Login unsuccessful'
+        errors: 'Login unsuccessful',
       });
     }
   }
@@ -155,14 +157,21 @@ class UserController {
   static async getAllUsers(req, res) {
     try {
       const payload = await User.findAll({
-        attributes: ['id', 'firstname', 'lastname', 'email', 'phone', 'password'],
+        attributes: [
+          'id',
+          'firstname',
+          'lastname',
+          'email',
+          'phone',
+          'createdAt',
+        ],
         include: [
           {
             model: Role,
             as: 'roles',
-            attributes: ['id', 'name']
-          }
-        ]
+            attributes: ['id', 'name'],
+          },
+        ],
       });
 
       return ResponseController.success(
@@ -193,7 +202,26 @@ class UserController {
    */
   static async getUser(req, res) {
     try {
-      const { user: payload } = req;
+      const {
+        user: {
+          id, firstname, lastname, email, phone, roles, updatedAt
+        },
+      } = req;
+
+      const payload = {
+        id,
+        firstname,
+        lastname,
+        email,
+        phone,
+        updatedAt,
+      };
+
+      if (roles.length < 1) {
+        payload.role = 'Role not assigned yet';
+      } else {
+        payload.role = roles[0].name;
+      }
 
       return ResponseController.success(
         res,
@@ -228,7 +256,7 @@ class UserController {
       if (!isValid) {
         return res.status(400).json({
           status: 400,
-          errors
+          errors,
         });
       }
 
@@ -287,7 +315,7 @@ class UserController {
       return res.status(400).json({
         status: 400,
         errors: 'Role could not be assigned',
-        err
+        err,
       });
     }
   }

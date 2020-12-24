@@ -10,12 +10,12 @@ const userFinder = async (req, res, next) => {
   try {
     user = await User.findOne({
       where: { id },
-      attributes: ['id', 'firstname', 'lastname', 'email', 'phone'],
+      attributes: ['id', 'firstname', 'lastname', 'email', 'phone', 'createdAt', 'updatedAt'],
       include: [
         {
           model: Role,
           as: 'roles',
-          attributes: ['id', 'name']
+          attributes: ['name']
         }
       ]
     });
@@ -29,10 +29,9 @@ const userFinder = async (req, res, next) => {
 };
 
 const userPermission = async (req, res, next) => {
-  const { role } = req.decoded;
-  const { permissions } = role;
-
   try {
+    const { role } = req.decoded;
+    const { permissions } = role;
     await handlePermission(req, permissions, 'user');
   } catch (err) {
     return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);

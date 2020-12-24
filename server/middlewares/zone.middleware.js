@@ -19,10 +19,9 @@ const zoneFinder = async (req, res, next) => {
 };
 
 const zonePermission = async (req, res, next) => {
-  const { role } = req.decoded;
-  const { permissions } = role;
-
   try {
+    const { role } = req.decoded;
+    const { permissions } = role;
     await handlePermission(req, permissions, 'zone');
   } catch (err) {
     return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);

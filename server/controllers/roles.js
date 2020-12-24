@@ -67,7 +67,7 @@ class RoleController {
 
       return res.status(201).json({
         status: 201,
-        message: 'Permission(s) assigned successfully',
+        message: 'Permission(s) assigned successfully, Please login again.',
         payload,
       });
     } catch (err) {
@@ -117,13 +117,7 @@ class RoleController {
   static async getAll(req, res) {
     try {
       const payload = await Role.findAll({
-        include: {
-          model: Permission,
-          as: 'permissions',
-          through: {
-            attributes: ['name']
-          }
-        }
+        attributes: ['id', 'name', 'notes']
       });
 
       return res.status(200).json({
@@ -154,7 +148,15 @@ class RoleController {
       const { id } = role;
       const payload = await Role.findOne({
         where: { id },
-        include: Permission,
+        attributes: ['id', 'name', 'notes', 'createdAt', 'updatedAt'],
+        include: {
+          model: Permission,
+          as: 'permissions',
+          attributes: ['id', 'name'],
+          through: {
+            attributes: ['id', 'name'],
+          }
+        },
       });
 
       return res.status(200).json({
