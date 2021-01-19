@@ -1,5 +1,5 @@
 # Churchify-App
-Churchify-App is a church management application built with Angular, Node, Express and Postgresql.
+Churchify-App is a church management application built with React, Node, Express and Postgresql.
 
 [![Build Status](https://travis-ci.org/GerrardE/churchify-app-backend.svg?branch=develop)](https://travis-ci.org/GerrardE/churchify-app-backend) [![Coverage Status](https://coveralls.io/repos/github/GerrardE/churchify-app-backend/badge.svg?branch=develop)](https://coveralls.io/github/GerrardE/churchify-app-backend?branch=develop) [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com) 
 
@@ -11,6 +11,21 @@ Below are the features of churchify-app-backend at this point
 ###
 - Users can be able to hit an api endpoint and register <br>
 - Users can be able to hit an api endpoint and login <br>
+- Users can be able to hit an api endpoint and retrieve dashboard statistics <br>
+- Users can be able to hit an api endpoint and retrieve downloads <br>
+- Users with permissions can be able to hit an api endpoint and submit reports <br>
+- Users with permissions can be able to hit an api endpoint and generate reports <br>
+- Users with permissions can be able to hit an api endpoint and create a user <br>
+- Users with permissions can be able to hit an api endpoint and CRUD users <br>
+- Users with permissions can be able to hit an api endpoint and CRUD roles <br>
+- Users with permissions can be able to hit an api endpoint and CRUD permissions <br>
+- Users with permissions can be able to hit an api endpoint and CRUD zones <br>
+- Users with permissions can be able to hit an api endpoint and CRUD branches <br>
+- Users with permissions can be able to hit an api endpoint and CRUD preachers <br>
+- Users with permissions can be able to hit an api endpoint and CRUD fellowships <br>
+- Users with permissions can be able to hit an api endpoint and CRUD events <br>
+- Users with permissions can be able to hit an api endpoint and CRUD categories <br>
+- Users with permissions can be able to hit an api endpoint and CRUD downloads <br>
 
 ## Installation
 1. Clone this repository below:
@@ -25,7 +40,19 @@ cd churchify-app-backend
 ```
 npm install
 ```
-
+4. Create a postgres database `chooseaname` and update `.env` file accordingly.
+5. Run database setup in this order:
+   Query: postgres -U postgres `chooseaname` < `file.sql`
+   
+   - `docs/countries.sql`
+   - `docs/states.sql`
+   - `docs/cities.sql`
+   - `docs/zones.sql`
+   - `docs/roles.sql`
+   - `docs/permissions.sql`
+   - `docs/configs.sql`
+   - `docs/branches.sql`
+   
 6. Run "npm run start:dev" to start the app
 
 8. Run "npm test" to test application

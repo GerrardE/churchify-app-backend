@@ -1,6 +1,6 @@
 import userExtractor from '@helpers/userExtractor';
 import { createToken } from '@middlewares/Token';
-import validSignup from '@validations/signup';
+import { validSignup, validUpdate } from '@validations/signup';
 import validSignin from '@validations/signin';
 import validationResponse from '@validations/validationResponse';
 import ResponseController from '@helpers/response';
@@ -251,7 +251,7 @@ class UserController {
    */
   static async updateUser(req, res) {
     try {
-      const { errors, isValid } = validSignup(req.body);
+      const { errors, isValid } = validUpdate(req.body);
       // Check Validation
       if (!isValid) {
         return res.status(400).json({

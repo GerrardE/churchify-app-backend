@@ -31,7 +31,7 @@ class RoleController {
 
       const payload = await Role.create({ ...req.body });
 
-      res.status(201).json({
+      return res.status(201).json({
         status: 201,
         message: `${RoleController.parameter} created successfully`,
         payload,
@@ -90,7 +90,6 @@ class RoleController {
   static async unassignpermissions(req, res) {
     try {
       const { role } = req;
-      console.log(req.body);
 
       const payload = await role.removePermissions(req.body.permission);
       return res.status(200).json({

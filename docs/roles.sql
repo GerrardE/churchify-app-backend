@@ -69,9 +69,10 @@ ALTER TABLE ONLY public."Roles" ALTER COLUMN id SET DEFAULT nextval('public."Rol
 --
 
 COPY public."Roles" (id, name, notes, "createdAt", "updatedAt") FROM stdin;
-1	super:admin	super admin role	2020-12-01 09:22:48.474-06	2020-12-01 09:22:48.474-06
-2	admin	admin role	2020-12-01 09:23:17.035-06	2020-12-01 09:23:17.035-06
-3	guest	guest role	2020-12-01 09:23:26.988-06	2020-12-01 09:23:26.988-06
+1	super:admin	super admin role	2021-12-01 09:22:48.474-06	2021-1-01 09:22:48.474-06
+2	admin	admin role	2021-12-01 09:23:17.035-06	2021-1-01 09:23:17.035-06
+3	user	user role	2021-12-01 09:24:26.988-06	2021-1-01 09:23:26.988-06
+4	guest	guest role	2021-12-01 09:25:26.988-06	2021-1-01 09:24:26.988-06
 \.
 
 

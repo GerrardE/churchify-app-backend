@@ -9,7 +9,7 @@ import ResponseController from '@helpers/response';
 import models from '@models';
 
 const {
-  Membership, Attendance, Training, Activity, Group, Freport
+  Membership, Attendance, Training, Activity, Group, Freport, Zone
 } = models;
 
 const today = new Date();
@@ -125,6 +125,60 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
+  static async retrieveAttendance(req, res) {
+    const { day: d = day, year: y = year } = req.body;
+
+    try {
+      const data = await Zone.findAll({
+        attributes: ['id', 'name'],
+        include: [
+          {
+            model: Attendance,
+            as: 'zoneattendance',
+            attributes: [
+              [
+                sequelize.literal(
+                  'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
+                ),
+                'total',
+              ],
+            ],
+            where: {
+              day: d,
+              year: y
+            }
+          },
+        ],
+      });
+
+      const payload = ReportController.format(data);
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        'Attendance retrieved successfully',
+        payload
+      );
+    } catch (err) {
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        'Attendance could not be retrieved',
+        err
+      );
+    }
+  }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof ReportController
+   */
   static async getSynodAttendance(req, res) {
     try {
       const { years, dd } = req.body;
@@ -196,6 +250,29 @@ class ReportController {
       result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
 
       result.year = y;
+
+      return result;
+    });
+
+    return r;
+  }
+
+  /**
+   * @param {*} data - object
+   * @return {json} Returns json object
+   * @memberof ReportController
+   */
+  static format(data) {
+    const r = data.map((d) => {
+      const result = {};
+
+      result.id = d.id;
+
+      result.name = d.name;
+
+      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
+
+      result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
 
       return result;
     });

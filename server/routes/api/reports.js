@@ -12,5 +12,6 @@ reportRouter.post('/activity', verifyToken, trim, reports.activity);
 reportRouter.post('/group', verifyToken, trim, reports.group);
 reportRouter.post('/freport', verifyToken, trim, reports.freport);
 reportRouter.post('/synodattendance', verifyToken, trim, reports.getSynodAttendance);
+reportRouter.post('/attendances', verifyToken, trim, reports.retrieveAttendance);
 
 export default reportRouter;
