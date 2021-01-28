@@ -11,7 +11,10 @@ reportRouter.post('/training', verifyToken, trim, reports.training);
 reportRouter.post('/activity', verifyToken, trim, reports.activity);
 reportRouter.post('/group', verifyToken, trim, reports.group);
 reportRouter.post('/freport', verifyToken, trim, reports.freport);
+
+// GENERATE ATTENDANCE
 reportRouter.post('/synodattendance', verifyToken, trim, reports.getSynodAttendance);
-reportRouter.post('/attendances', verifyToken, trim, reports.retrieveAttendance);
+reportRouter.post('/attendances', verifyToken, trim, reports.getZoneAttendance);
+reportRouter.post('/attendances/branches', verifyToken, trim, reports.getBranchAttendance);
 
 export default reportRouter;

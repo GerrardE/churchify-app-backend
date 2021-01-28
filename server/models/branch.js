@@ -68,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Branch.hasMany(Attendance, {
-      foreignKey: 'id',
-      as: 'attendance'
+      foreignKey: 'branchid',
+      as: 'branchattendance'
     });
 
     Branch.belongsTo(Zone, {

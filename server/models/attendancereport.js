@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Attendance.belongsTo(Branch, {
       foreignKey: 'id',
-      as: 'attendance'
+      as: 'branchattendance'
     });
 
     Attendance.belongsTo(Zone, {

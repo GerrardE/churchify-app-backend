@@ -9,7 +9,7 @@ import ResponseController from '@helpers/response';
 import models from '@models';
 
 const {
-  Membership, Attendance, Training, Activity, Group, Freport, Zone
+  Membership, Attendance, Training, Activity, Group, Freport, Zone, Branch
 } = models;
 
 const today = new Date();
@@ -125,7 +125,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async retrieveAttendance(req, res) {
+  static async getZoneAttendance(req, res) {
     const { day: d = day, year: y = year } = req.body;
 
     try {
@@ -166,6 +166,64 @@ class ReportController {
         400,
         400,
         'Attendance could not be retrieved',
+        err
+      );
+    }
+  }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof ReportController
+   */
+  static async getBranchAttendance(req, res) {
+    const { day: d = day, month: m = month, year: y = year } = req.body;
+
+    try {
+      const data = await Branch.findAll({
+        attributes: ['id', 'name'],
+        include: [
+          {
+            model: Attendance,
+            as: 'branchattendance',
+            attributes: [
+              'men',
+              'women',
+              'children',
+              [
+                sequelize.literal(
+                  'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
+                ),
+                'total',
+              ],
+            ],
+            where: {
+              day: d,
+              month: Number(m),
+              year: Number(y),
+            }
+          },
+        ],
+      });
+
+      const payload = ReportController.formatBranch(data);
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        'Branch attendance retrieved successfully',
+        payload
+      );
+    } catch (err) {
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        'Branch attendance could not be retrieved',
         err
       );
     }
@@ -273,6 +331,33 @@ class ReportController {
       const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
 
       result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
+
+      return result;
+    });
+
+    return r;
+  }
+
+  /**
+   * @param {*} data - object
+   * @return {json} Returns json object
+   * @memberof ReportController
+   */
+  static formatBranch(data) {
+    const r = data.map((d) => {
+      const result = {};
+
+      result.id = d.id;
+
+      result.name = d.name;
+
+      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
+
+      result.men = d.branchattendance[0].men;
+      result.women = d.branchattendance[0].women;
+      result.children = d.branchattendance[0].children;
+
+      result.branchattendance = d.branchattendance.reduce(reducer, 0);
 
       return result;
     });
