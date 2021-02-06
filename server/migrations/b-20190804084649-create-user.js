@@ -46,6 +46,15 @@ module.exports = {
       }
     },
 
+    city: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Cities',
+        key: 'id'
+      }
+    },
+
     state: {
       type: Sequelize.INTEGER,
       allowNull: true,
@@ -79,5 +88,5 @@ module.exports = {
     }
   }),
 
-  down: queryInterface => queryInterface.dropTable('Users')
+  down: (queryInterface) => queryInterface.dropTable('Users')
 };

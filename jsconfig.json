@@ -6,7 +6,7 @@
         "baseUrl": ".",
         "paths": {
             "@config/*": [
-                "./server/config/*"
+                "server/models/config/*"
             ],
             "@controllers/*": [
                 "./server/controllers/*"

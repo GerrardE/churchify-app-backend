@@ -10,15 +10,15 @@ const SALT_ROUNDS = +salt;
 const password = bcrypt.hashSync(process.env.SUPER_ADMIN_PASSWORD, SALT_ROUNDS);
 
 module.exports = {
-  up: queryInterface => queryInterface.bulkInsert('Users', [{
+  up: (queryInterface) => queryInterface.bulkInsert('Users', [{
     id: faker.random.uuid(),
     firstname: 'Gerrard',
     lastname: 'Ezeugwa',
     phone: '08137519688',
-    email: 'ezeugwagerrard@gmail.com',
-    cityid: 77002,
+    email: 'admin@projectchurchify.com',
     zoneid: 1,
-    branchid: 1,
+    branchid: 2,
+    city: 77002,
     state: 306,
     country: 161,
     password,
@@ -26,5 +26,5 @@ module.exports = {
     updatedAt: new Date()
   }], {}),
 
-  down: queryInterface => queryInterface.bulkDelete('Users', null, {})
+  down: (queryInterface) => queryInterface.bulkDelete('Users', null, {})
 };

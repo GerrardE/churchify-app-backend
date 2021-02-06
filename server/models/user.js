@@ -48,6 +48,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
 
+      city: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+
       state: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -65,8 +70,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate: user => User.hashPassword(user),
-        beforeUpdate: user => User.hashPassword(user)
+        beforeCreate: (user) => User.hashPassword(user),
+        beforeUpdate: (user) => User.hashPassword(user)
       }
     }
   );

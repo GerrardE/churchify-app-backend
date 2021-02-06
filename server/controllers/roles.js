@@ -117,7 +117,7 @@ class RoleController {
   static async getAll(req, res) {
     try {
       const payload = await Role.findAll({
-        attributes: ['id', 'name', 'notes']
+        // attributes: ['id', 'name', 'notes']
       });
 
       return res.status(200).json({
@@ -153,9 +153,6 @@ class RoleController {
           model: Permission,
           as: 'permissions',
           attributes: ['id', 'name'],
-          through: {
-            attributes: ['id', 'name'],
-          }
         },
       });
 

@@ -7,7 +7,7 @@ export const development = {
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE,
   host: process.env.DB_HOST,
-  dialect: 'postgres'
+  dialect: 'postgres',
 };
 
 export const test = {
@@ -19,10 +19,14 @@ export const test = {
 };
 
 export const production = {
-  use_env_variable: 'DATABASE_URL',
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD || '',
+  database: process.env.POSTGRES_DATABASE,
+  host: process.env.POSTGRES_HOST,
+  // use_env_variable: 'DATABASE_URL',
   dialect: 'postgres',
   dialectOptions: {
-    ssl: true,
+    ssl: false,
   },
   logging: false
 };

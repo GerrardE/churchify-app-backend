@@ -12,18 +12,10 @@ const debugged = debug('index');
 config();
 
 const index = express();
-const port = process.env.PORT || 4000;
-
-const corsOptions = {
-  origin: '*',
-  credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-};
+const port = process.env.PORT || 5000;
 
 // Use the CORS
-index.use(cors(corsOptions));
+index.use(cors());
 
 index.use(logger('dev'));
 index.use(bodyParser.json({ limit: '50mb' }));
@@ -39,6 +31,8 @@ index.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 index.listen(port, () => {
   debugged(`Listening from port ${port}`);
+  // eslint-disable-next-line no-console
+  console.log(`Listening from port ${port}`);
 });
 
 export default index;

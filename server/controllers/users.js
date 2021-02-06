@@ -90,19 +90,12 @@ class UserController {
         },
         include: [
           {
-            through: {
-              attributes: ['name'],
-            },
-            attributes: ['name'],
+            attributes: ['id', 'name'],
             model: Role,
             as: 'roles',
             include: {
               model: Permission,
               as: 'permissions',
-              through: {
-                attributes: ['name'],
-              },
-              attributes: ['name'],
             },
           },
         ],
@@ -142,6 +135,7 @@ class UserController {
       return res.status(400).json({
         status: 400,
         errors: 'Login unsuccessful',
+        err: err.message
       });
     }
   }

@@ -42,18 +42,19 @@ npm install
 ```
 4. Create a postgres database `chooseaname` and update `.env` file accordingly.
 5. Run database setup in this order:
-   Query: postgres -U postgres `chooseaname` < `file.sql`
+   Query: psql -U postgres `chooseaname` < `file.sql`
    
    - `docs/database/countries.sql`
    - `docs/database/states.sql`
    - `docs/database/cities.sql`
    - `docs/database/zones.sql`
    - `docs/database/roles.sql`
+   - `docs/database/userroles.sql`
    - `docs/database/permissions.sql`
    - `docs/database/configs.sql`
    - `docs/database/branches.sql`
 
-6. Etup your `.env` using the `.env.example` format
+6. Setup your `.env` using the `.env.example` format
 
 7. Run `npm run seed` to setup the `super:admin` with login credentials from the `.env`
 

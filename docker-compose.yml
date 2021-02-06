@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_USER: '${POSTGRES_USER}'
+      POSTGRES_DB: '${POSTGRES_DB}'
+      POSTGRES_HOST: '${POSTGRES_HOST}'
+    image: postgres:12-alpine
+    ports: 
+      - '${POSTGRES_PORT}:5432'
+    networks:
+      - default
+    volumes:
+      - projectchurchifydb:/var/lib/postgresql/data
+
+  dev:
+    container_name: "projectchurchifydevapi"
+    environment:
+      DB_USERNAME: '${DEV_POSTGRES_USER}'
+      DB_PASSWORD: '${DEV_POSTGRES_PASSWORD}'
+      DB_DATABASE: '${DEV_POSTGRES_DB}'
+      DB_HOST: '${DEV_POSTGRES_HOST}'
+      DB_PORT: '${DEV_POSTGRES_PORT}'
+    build:
+      context: .
+      target: devstage
+    command: yarn start:dev
+    depends_on:
+      - postgres
+    ports:
+      - '${DEV_PORT}:5000'
+
+  prod:
+    container_name: "projectchurchifyprodapi"
+    environment:
+      DB_USERNAME: '${POSTGRES_USER}'
+      DB_PASSWORD: '${POSTGRES_PASSWORD}'
+      DB_DATABASE: '${POSTGRES_DB}'
+      DB_HOST: '${POSTGRES_HOST}'
+      DB_PORT: '${POSTGRES_PORT}'
+    build:
+      context: .
+      target: buildstage
+    command: yarn pm2
+    networks: 
+      - default
+    ports:
+      - '${PROD_PORT}:5000'
+
+volumes:
+  projectchurchifydb:
+
+networks:
+  default:

@@ -1,7 +1,7 @@
 import ResponseController from '@helpers/response';
 import jwt from 'jsonwebtoken';
 
-export const createToken = (payload => jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1d' }));
+export const createToken = ((payload) => jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1d' }));
 
 export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization || req.body.token;
