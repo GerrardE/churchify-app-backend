@@ -38,19 +38,19 @@ SET default_table_access_method = heap;
 -- );
 
 
-ALTER TABLE public."Branches" OWNER TO postgres;
+-- ALTER TABLE public."Branches" OWNER TO postgres;
 
 --
 -- Name: Branches_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."Branches_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+-- CREATE SEQUENCE public."Branches_id_seq"
+--     AS integer
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1;
 
 
 ALTER TABLE public."Branches_id_seq" OWNER TO postgres;
@@ -88,48 +88,48 @@ SELECT pg_catalog.setval('public."Branches_id_seq"', 3, true);
 -- Name: Branches Branches_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Branches"
-    ADD CONSTRAINT "Branches_name_key" UNIQUE (name);
+-- ALTER TABLE ONLY public."Branches"
+--     ADD CONSTRAINT "Branches_name_key" UNIQUE (name);
 
 
 --
 -- Name: Branches Branches_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Branches"
-    ADD CONSTRAINT "Branches_pkey" PRIMARY KEY (id);
+-- ALTER TABLE ONLY public."Branches"
+--     ADD CONSTRAINT "Branches_pkey" PRIMARY KEY (id);
 
 
 --
 -- Name: Branches Branches_city_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Branches"
-    ADD CONSTRAINT "Branches_city_fkey" FOREIGN KEY (city) REFERENCES public."Cities"(id);
+-- ALTER TABLE ONLY public."Branches"
+--     ADD CONSTRAINT "Branches_city_fkey" FOREIGN KEY (city) REFERENCES public."Cities"(id);
 
 
 --
 -- Name: Branches Branches_country_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Branches"
-    ADD CONSTRAINT "Branches_country_fkey" FOREIGN KEY (country) REFERENCES public."Countries"(id);
+-- ALTER TABLE ONLY public."Branches"
+--     ADD CONSTRAINT "Branches_country_fkey" FOREIGN KEY (country) REFERENCES public."Countries"(id);
 
 
 --
 -- Name: Branches Branches_state_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Branches"
-    ADD CONSTRAINT "Branches_state_fkey" FOREIGN KEY (state) REFERENCES public."States"(id);
+-- ALTER TABLE ONLY public."Branches"
+--     ADD CONSTRAINT "Branches_state_fkey" FOREIGN KEY (state) REFERENCES public."States"(id);
 
 
 --
 -- Name: Branches Branches_zoneid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Branches"
-    ADD CONSTRAINT "Branches_zoneid_fkey" FOREIGN KEY (zoneid) REFERENCES public."Zones"(id);
+-- ALTER TABLE ONLY public."Branches"
+--     ADD CONSTRAINT "Branches_zoneid_fkey" FOREIGN KEY (zoneid) REFERENCES public."Zones"(id);
 
 
 --

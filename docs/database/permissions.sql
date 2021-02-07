@@ -33,19 +33,19 @@ SET default_table_access_method = heap;
 -- );
 
 
-ALTER TABLE public."Permissions" OWNER TO postgres;
+-- ALTER TABLE public."Permissions" OWNER TO postgres;
 
 --
 -- Name: Permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."Permissions_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+-- CREATE SEQUENCE public."Permissions_id_seq"
+--     AS integer
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1;
 
 
 ALTER TABLE public."Permissions_id_seq" OWNER TO postgres;
@@ -134,16 +134,16 @@ SELECT pg_catalog.setval('public."Permissions_id_seq"', 45, true);
 -- Name: Permissions Permissions_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Permissions"
-    ADD CONSTRAINT "Permissions_name_key" UNIQUE (name);
+-- ALTER TABLE ONLY public."Permissions"
+--     ADD CONSTRAINT "Permissions_name_key" UNIQUE (name);
 
 
 --
 -- Name: Permissions Permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Permissions"
-    ADD CONSTRAINT "Permissions_pkey" PRIMARY KEY (id);
+-- ALTER TABLE ONLY public."Permissions"
+--     ADD CONSTRAINT "Permissions_pkey" PRIMARY KEY (id);
 
 
 --

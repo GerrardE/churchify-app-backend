@@ -9,7 +9,7 @@
     "start:dist": "cross-env NODE_ENV=production && nodemon ./dist/index.js",
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
     "build": "cross-env NODE_ENV=production && yarn run clean && babel ./server -d ./dist",
-    "heroku-postbuild": "yarn run build && yarn run migrate && yarn run seed",
+    "heroku-postbuild": "yarn run build",
     "migrate": "cross-env NODE_ENV=production sequelize db:migrate",
     "seed": "cross-env NODE_ENV=production sequelize db:seed:all",
     "migrate:undo:all": "cross-env NODE_ENV=production sequelize db:migrate:undo:all",

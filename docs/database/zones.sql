@@ -34,19 +34,19 @@ SET default_table_access_method = heap;
 -- );
 
 
-ALTER TABLE public."Zones" OWNER TO postgres;
+-- ALTER TABLE public."Zones" OWNER TO postgres;
 
 --
 -- Name: Zones_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."Zones_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+-- CREATE SEQUENCE public."Zones_id_seq"
+--     AS integer
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1;
 
 
 ALTER TABLE public."Zones_id_seq" OWNER TO postgres;
@@ -84,24 +84,24 @@ SELECT pg_catalog.setval('public."Zones_id_seq"', 3, true);
 -- Name: Zones Zones_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Zones"
-    ADD CONSTRAINT "Zones_name_key" UNIQUE (name);
+-- ALTER TABLE ONLY public."Zones"
+--     ADD CONSTRAINT "Zones_name_key" UNIQUE (name);
 
 
 --
 -- Name: Zones Zones_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Zones"
-    ADD CONSTRAINT "Zones_pkey" PRIMARY KEY (id);
+-- ALTER TABLE ONLY public."Zones"
+--     ADD CONSTRAINT "Zones_pkey" PRIMARY KEY (id);
 
 
 --
 -- Name: Zones Zones_country_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Zones"
-    ADD CONSTRAINT "Zones_country_fkey" FOREIGN KEY (country) REFERENCES public."Countries"(id);
+-- ALTER TABLE ONLY public."Zones"
+--     ADD CONSTRAINT "Zones_country_fkey" FOREIGN KEY (country) REFERENCES public."Countries"(id);
 
 
 --
