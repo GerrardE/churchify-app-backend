@@ -24,24 +24,24 @@ SET default_table_access_method = heap;
 -- Name: Countries; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."Countries" (
-    id integer NOT NULL,
-    name character varying(255),
-    iso3 character varying(255),
-    iso2 character varying(255),
-    phonecode character varying(255),
-    capital character varying(255),
-    currency character varying(255),
-    native character varying(255),
-    region character varying(255),
-    subregion character varying(255),
-    emoji character varying(255),
-    "emojiU" character varying(255),
-    flag integer,
-    "wikiDataId" character varying(255),
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
-);
+-- CREATE TABLE public."Countries" (
+--     id integer NOT NULL,
+--     name character varying(255),
+--     iso3 character varying(255),
+--     iso2 character varying(255),
+--     phonecode character varying(255),
+--     capital character varying(255),
+--     currency character varying(255),
+--     native character varying(255),
+--     region character varying(255),
+--     subregion character varying(255),
+--     emoji character varying(255),
+--     "emojiU" character varying(255),
+--     flag integer,
+--     "wikiDataId" character varying(255),
+--     "createdAt" timestamp with time zone NOT NULL,
+--     "updatedAt" timestamp with time zone NOT NULL
+-- );
 
 
 ALTER TABLE public."Countries" OWNER TO postgres;
@@ -50,13 +50,13 @@ ALTER TABLE public."Countries" OWNER TO postgres;
 -- Name: Countries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."Countries_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+-- CREATE SEQUENCE public."Countries_id_seq"
+--     AS integer
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1;
 
 
 ALTER TABLE public."Countries_id_seq" OWNER TO postgres;
@@ -341,8 +341,8 @@ SELECT pg_catalog.setval('public."Countries_id_seq"', 250, false);
 -- Name: Countries Countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Countries"
-    ADD CONSTRAINT "Countries_pkey" PRIMARY KEY (id);
+-- ALTER TABLE ONLY public."Countries"
+--     ADD CONSTRAINT "Countries_pkey" PRIMARY KEY (id);
 
 
 --
