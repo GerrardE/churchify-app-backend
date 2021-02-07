@@ -14,8 +14,16 @@ config();
 const index = express();
 const port = process.env.PORT || 5000;
 
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+};
+
 // Use the CORS
-index.use(cors());
+index.use(cors(corsOptions));
 
 index.use(logger('dev'));
 index.use(bodyParser.json({ limit: '50mb' }));
