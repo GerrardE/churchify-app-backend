@@ -2,7 +2,36 @@ import handlePermission from '@helpers/permission';
 import ResponseController from '@helpers/response';
 import models from '@models';
 
-const { User, Role } = models;
+const { User, Role, Permission } = models;
+
+const userFindAll = async (email) => {
+  const user = await User.findOne({
+    where: {
+      email,
+    },
+    include: [
+      {
+        attributes: ['id', 'name'],
+        model: Role,
+        as: 'roles',
+        include: {
+          model: Permission,
+          as: 'permissions',
+        },
+      },
+    ],
+  });
+
+  let role = 'guest';
+  let permissions = [];
+
+  if (user.roles && user.roles.length > 0) {
+    role = user.roles[0].name;
+    permissions = user.roles[0].permissions;
+  }
+
+  return { role, permissions };
+};
 
 const userFinder = async (req, res, next) => {
   const { id } = req.params;
@@ -30,8 +59,10 @@ const userFinder = async (req, res, next) => {
 
 const userPermission = async (req, res, next) => {
   try {
-    const { role } = req.decoded;
-    const { permissions } = role;
+    const { email } = req.decoded;
+
+    const { permissions } = await userFindAll(email);
+
     await handlePermission(req, permissions, 'user');
   } catch (err) {
     return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
@@ -40,4 +71,4 @@ const userPermission = async (req, res, next) => {
   next();
 };
 
-export { userFinder, userPermission };
+export { userFinder, userPermission, userFindAll };

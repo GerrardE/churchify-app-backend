@@ -123,9 +123,10 @@ class UserController {
         lastname: user.lastname,
         phone: user.phone,
         email: user.email,
-        role: user.roles[0],
       };
+
       const token = createToken(payload);
+
       res.status(200).json({
         status: 200,
         message: 'Login successful',
@@ -295,7 +296,7 @@ class UserController {
    */
   static async assignrole(req, res) {
     try {
-      const { id } = req.decoded;
+      const { id } = req.body;
       const user = await User.findOne({ where: { id } });
 
       const payload = await user.addRole(req.body.role);
@@ -324,7 +325,7 @@ class UserController {
    */
   static async unassignrole(req, res) {
     try {
-      const { id } = req.decoded;
+      const { id } = req.body;
       const user = await User.findOne({ where: { id } });
 
       const payload = await user.removeRole(req.body.role);

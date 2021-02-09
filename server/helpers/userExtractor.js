@@ -7,10 +7,13 @@ const userExtractor = (user, token) => {
   const {
     email, id, firstname, lastname
   } = user;
+
   let role = 'guest';
+  let permissions = [];
 
   if (user.roles && user.roles.length > 0) {
     role = user.roles[0].name;
+    permissions = user.roles[0].permissions;
   }
 
   return {
@@ -20,6 +23,7 @@ const userExtractor = (user, token) => {
     email,
     token,
     role,
+    permissions,
   };
 };
 

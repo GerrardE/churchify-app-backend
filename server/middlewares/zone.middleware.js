@@ -1,6 +1,7 @@
 import handlePermission from '@helpers/permission';
 import ResponseController from '@helpers/response';
 import models from '@models';
+import { userFindAll } from './user.middleware';
 
 const { Zone } = models;
 
@@ -20,8 +21,10 @@ const zoneFinder = async (req, res, next) => {
 
 const zonePermission = async (req, res, next) => {
   try {
-    const { role } = req.decoded;
-    const { permissions } = role;
+    const { email } = req.decoded;
+
+    const { permissions } = await userFindAll(email);
+
     await handlePermission(req, permissions, 'zone');
   } catch (err) {
     return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
