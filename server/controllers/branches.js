@@ -23,8 +23,8 @@ class BranchController {
    */
   static async create(req, res) {
     const apilog = {
-      name: 'branches.create',
-      refid: randString('BRANCH'),
+      name: `${BranchController.parameters.toLowerCase()}.create`,
+      refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: '',
       httpstatuscode: 201,
@@ -112,8 +112,8 @@ class BranchController {
    */
   static async getAll(req, res) {
     const apilog = {
-      name: 'branches.getAll',
-      refid: randString('BRANCH'),
+      name: `${BranchController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: '',
       httpstatuscode: 200,
@@ -134,9 +134,9 @@ class BranchController {
 
       return ResponseController.success(
         res,
-        apilog.httpstatuscode,
-        apilog.httpstatuscode,
-        apilog.message,
+        200,
+        200,
+        `${BranchController.parameters} retrieved successfully`,
         payload
       );
     } catch (err) {
@@ -169,8 +169,8 @@ class BranchController {
     const { branch: payload } = req;
 
     const apilog = {
-      name: 'branches.getById',
-      refid: randString('BRANCH'),
+      name: `${BranchController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: '',
       httpstatuscode: 200,
@@ -198,7 +198,7 @@ class BranchController {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = `${BranchController.parameters} could not be retrieved`;
+      apilog.message = `${BranchController.parameter} could not be retrieved`;
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -223,8 +223,8 @@ class BranchController {
    */
   static async update(req, res) {
     const apilog = {
-      name: 'branches.update',
-      refid: randString('BRANCH'),
+      name: `${BranchController.parameters.toLowerCase()}.update`,
+      refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: '',
       httpstatuscode: 200,
@@ -304,8 +304,8 @@ class BranchController {
    */
   static async delete(req, res) {
     const apilog = {
-      name: 'branches.delete',
-      refid: randString('BRANCH'),
+      name: `${BranchController.parameters.toLowerCase()}.delete`,
+      refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: '',
       httpstatuscode: 200,

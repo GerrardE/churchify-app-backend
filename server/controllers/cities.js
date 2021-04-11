@@ -1,7 +1,9 @@
+import { v4 } from 'uuid';
 import ResponseController from '@helpers/response';
+import randString from '@helpers/utilities';
 import models from '@models';
 
-const { City } = models;
+const { City, ApiLogs } = models;
 
 /**
  * City Controller
@@ -18,17 +20,50 @@ class CityController {
    * @memberof CityController
    */
   static async getById(req, res) {
-    const { city } = req;
-    const { id } = city;
-    const payload = await City.findOne({ where: { id } });
+    const { city: payload } = req;
 
-    return ResponseController.success(
-      res,
-      200,
-      200,
-      `${CityController.parameter} retrieved successfully`,
-      payload
-    );
+    const apilog = {
+      name: `${CityController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${CityController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: '',
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CityController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: '',
+    };
+
+    try {
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${CityController.parameter} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CityController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CityController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -40,10 +75,28 @@ class CityController {
    * @memberof CityController
    */
   static async getByStateId(req, res) {
+    const apilog = {
+      name: `${CityController.parameters.toLowerCase()}.getByStateId`,
+      refid: randString(`${CityController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: '',
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CityController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: '',
+    };
+
     try {
       const { state } = req;
       const { id } = state;
       const payload = await City.findAll({ where: { state_id: id } });
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       return ResponseController.success(
         res,
@@ -53,6 +106,13 @@ class CityController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CityController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       return ResponseController.error(
         res,
         400,
