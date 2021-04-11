@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validConfig from '@validations/config';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Config } = models;
 
@@ -25,32 +26,37 @@ class ConfigController {
       const { errors, isValid } = validConfig(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        return ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const payload = await Config.create({ ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Config created successfully',
-        payload,
-      });
+      return ResponseController.success(
+        res,
+        201,
+        201,
+        `${ConfigController.parameter} created successfully`,
+        payload
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err),
-        });
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          validationResponse(err),
+
+          err
+        );
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Config creation unsuccessful',
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${ConfigController.parameter} could not be created`,
         err
-      });
+      );
     }
   }
 
@@ -65,11 +71,13 @@ class ConfigController {
   static async getAll(req, res) {
     const payload = await Config.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Configs retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(
+      res,
+      200,
+      200,
+      `${ConfigController.parameter} retrieved successfully`,
+      payload
+    );
   }
 
   /**
@@ -85,11 +93,13 @@ class ConfigController {
     const { id } = config;
     const payload = await Config.findOne({ where: { id } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Config retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(
+      res,
+      200,
+      200,
+      `${ConfigController.parameter} retrieved successfully`,
+      payload
+    );
   }
 
   /**
@@ -105,11 +115,13 @@ class ConfigController {
     const { name } = config;
     const payload = await Config.findOne({ where: { name } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Config retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(
+      res,
+      200,
+      200,
+      `${ConfigController.parameter} retrieved successfully`,
+      payload
+    );
   }
 
   /**
@@ -126,10 +138,7 @@ class ConfigController {
       const { errors, isValid } = validConfig(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        return ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { config } = req;
@@ -138,16 +147,22 @@ class ConfigController {
       await Config.update(req.body, { returning: true, where: { id } });
 
       const payload = await Config.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Config updated successfully',
-        payload,
-      });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${ConfigController.parameter} updated successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Config could not be updated',
-      });
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${ConfigController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -167,18 +182,26 @@ class ConfigController {
       await Config.destroy({ where: { id } });
       const payload = await Config.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Config deleted successfully',
-        payload,
-      });
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${ConfigController.parameter} deleted successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Config could not be deleted',
-      });
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${ConfigController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+ConfigController.parameter = 'Config';
+ConfigController.parameters = 'Configs';
 
 export default ConfigController;

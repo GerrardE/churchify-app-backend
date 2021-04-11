@@ -6,6 +6,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import apis from '@routes/api';
+import errorHandler from '@helpers/errorHandler';
 import swaggerSpec from './config/swagger';
 
 const debugged = debug('index');
@@ -28,6 +29,14 @@ index.use('/api/v1', apis);
 
 // swagger-ui-express for API endpoint documentation
 index.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+index.use((request, response, next) => {
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(error);
+});
+
+index.use(errorHandler);
 
 index.listen(port, () => {
   debugged(`Listening from port ${port}`);

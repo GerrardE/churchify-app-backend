@@ -28,10 +28,7 @@ class UserController {
       const { errors, isValid } = validSignup(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        return ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const user = await User.create(req.body);
@@ -42,24 +39,20 @@ class UserController {
       };
 
       const token = await createToken(payload);
-      res.status(201).json({
-        status: 201,
-        message: 'Registration successful',
-        user: userExtractor(user, token),
-      });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        'Registration successful',
+        userExtractor(user, token)
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err),
-        });
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      return res.status(400).json({
-        status: 400,
-        errors: 'Registration unsuccessful',
-        err,
-      });
+      return ResponseController.error(res, 400, 400, 'Registration unsuccessful', err);
     }
   }
 
@@ -77,10 +70,13 @@ class UserController {
       const { errors, isValid } = validSignin(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          'Invalid email or password',
+          errors
+        );
       }
 
       const { email, password } = req.body;
@@ -102,19 +98,25 @@ class UserController {
       });
 
       if (!user) {
-        return res.status(400).json({
-          status: 400,
-          errors: 'Invalid email or password',
-        });
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          'Invalid email or password',
+          {}
+        );
       }
 
       const match = await bcrypt.compare(password, user.password);
 
       if (!match) {
-        return res.status(400).json({
-          status: 400,
-          errors: 'Invalid email or password',
-        });
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          'Invalid email or password',
+          {}
+        );
       }
 
       const payload = {
@@ -127,17 +129,15 @@ class UserController {
 
       const token = createToken(payload);
 
-      res.status(200).json({
-        status: 200,
-        message: 'Login successful',
-        user: userExtractor(user, token),
-      });
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        'Login successful',
+        userExtractor(user, token)
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Login unsuccessful',
-        err: err.message
-      });
+      return ResponseController.error(res, 400, 400, 'Login unsuccessful', err);
     }
   }
 
@@ -173,7 +173,7 @@ class UserController {
         res,
         200,
         200,
-        'Users retrieved successfully',
+        `${UserController.parameters} retrieved successfully`,
         payload
       );
     } catch (err) {
@@ -181,7 +181,7 @@ class UserController {
         res,
         400,
         400,
-        'Users could not be retrieved',
+        `${UserController.parameters} could not be retrieved`,
         err
       );
     }
@@ -222,7 +222,7 @@ class UserController {
         res,
         200,
         200,
-        'User retrieved successfully',
+        `${UserController.parameter} retrieved successfully`,
         payload
       );
     } catch (err) {
@@ -230,7 +230,7 @@ class UserController {
         res,
         400,
         400,
-        'User could not be retrieved',
+        `${UserController.parameter} could not be retrieved`,
         err
       );
     }
@@ -263,7 +263,7 @@ class UserController {
         res,
         200,
         200,
-        'User updated successfully',
+        `${UserController.parameter} updated successfully`,
         userExtractor(payload)
       );
     } catch (err) {
@@ -272,15 +272,15 @@ class UserController {
           res,
           400,
           400,
-          'User could not be updated',
-          validationResponse(err)
+          validationResponse(err),
+          err
         );
       }
       return ResponseController.error(
         res,
         400,
         400,
-        'User could not be updated',
+        `${UserController.parameter} could not be updated`,
         err
       );
     }
@@ -301,17 +301,21 @@ class UserController {
 
       const payload = await user.addRole(req.body.role);
 
-      return res.status(201).json({
-        status: 201,
-        message: 'Role assigned successfully',
-        payload,
-      });
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        'Role assigned successfully',
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Role could not be assigned',
-        err,
-      });
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        'Role could not be assigned',
+        err
+      );
     }
   }
 
@@ -330,19 +334,26 @@ class UserController {
 
       const payload = await user.removeRole(req.body.role);
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Role unassigned successfully',
-        payload,
-      });
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        'Role unassigned successfully',
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Role could not be unassigned',
-        message: err.original.detail,
-      });
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        'Role could not be unassigned',
+        err
+      );
     }
   }
 }
+
+UserController.parameter = 'User';
+UserController.parameters = 'Users';
 
 export default UserController;

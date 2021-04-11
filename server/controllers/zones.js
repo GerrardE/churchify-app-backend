@@ -24,18 +24,42 @@ class ZoneController {
       const { errors, isValid } = validZone(req.body);
       // Check Validation
       if (!isValid) {
-        return ResponseController.error(res, 400, 400, 'invalid request', errors);
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          'Error: invalid input',
+          errors
+        );
       }
 
       const payload = await Zone.create({ ...req.body });
 
-      ResponseController.success(res, 201, 201, 'Zone created successfully', payload);
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${ZoneController.parameter} created successfully`,
+        payload
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return ResponseController.error(res, 400, 400, 'unique violation', validationResponse(err));
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          'unique violation',
+          validationResponse(err)
+        );
       }
 
-      ResponseController.error(res, 400, 400, {}, 'Zone creation unsuccessful');
+      ResponseController.error(
+        res,
+        400,
+        400,
+        {},
+        `${ZoneController.parameter} creation unsuccessful`
+      );
     }
   }
 
@@ -51,9 +75,21 @@ class ZoneController {
     try {
       const payload = await Zone.findAll();
 
-      return ResponseController.success(res, 200, 200, 'Zones retrieved successfully', payload);
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${ZoneController.parameters} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return ResponseController.error(res, 400, 400, 'Zones could not be retrieved', err);
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${ZoneController.parameters} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -67,7 +103,13 @@ class ZoneController {
    */
   static async getById(req, res) {
     const { zone: payload } = req;
-    return ResponseController.success(res, 200, 200, 'Zone retrieved successfully', payload);
+    return ResponseController.success(
+      res,
+      200,
+      200,
+      `${ZoneController.parameter} retrieved successfully`,
+      payload
+    );
   }
 
   /**
@@ -86,7 +128,7 @@ class ZoneController {
       if (!isValid) {
         return res.status(400).json({
           status: 400,
-          errors
+          errors,
         });
       }
 
@@ -95,9 +137,21 @@ class ZoneController {
 
       await Zone.update(req.body, { returning: true, where: { id } });
 
-      return ResponseController.success(res, 200, 200, 'Zone updated successfully', {});
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${ZoneController.parameter} updated successfully`,
+        {}
+      );
     } catch (err) {
-      return ResponseController.error(res, 400, 400, 'Zone could not be updated', err);
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${ZoneController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -116,11 +170,26 @@ class ZoneController {
       const { id } = zone;
       await Zone.destroy({ where: { id } });
 
-      return ResponseController.success(res, 200, 200, 'Zone deleted successfully', {});
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${ZoneController.parameter} deleted successfully`,
+        {}
+      );
     } catch (err) {
-      return ResponseController.error(res, 400, 400, 'Zone could not be deleted', err);
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${ZoneController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+ZoneController.parameter = 'Zone';
+ZoneController.parameters = 'Zones';
 
 export default ZoneController;

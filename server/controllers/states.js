@@ -1,3 +1,4 @@
+import ResponseController from '@helpers/response';
 import models from '@models';
 
 const { State } = models;
@@ -21,11 +22,13 @@ class StateController {
     const { id } = state;
     const payload = await State.findOne({ where: { id } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'State retrieved successfully',
-      payload,
-    });
+    ResponseController.success(
+      res,
+      200,
+      200,
+      `${StateController.parameter} retrieved successfully`,
+      payload
+    );
   }
 
   /**
@@ -41,12 +44,17 @@ class StateController {
     const { id } = state;
     const payload = await State.findAll({ where: { country_id: id } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'States retrieved successfully',
-      payload,
-    });
+    ResponseController.success(
+      res,
+      200,
+      200,
+      `${StateController.parameters} retrieved successfully`,
+      payload
+    );
   }
 }
+
+StateController.parameter = 'State';
+StateController.parameters = 'States';
 
 export default StateController;

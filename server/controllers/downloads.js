@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validDownload from '@validations/download';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Download } = models;
 
@@ -25,7 +26,7 @@ class DownloadController {
       if (!isValid) {
         return res.status(400).json({
           status: 400,
-          errors
+          errors,
         });
       }
 
@@ -33,23 +34,25 @@ class DownloadController {
 
       const payload = await Download.create({ userid, ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Download created successfully',
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${DownloadController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Download creation unsuccessful'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${DownloadController.parameter} could not be created`,
+        err
+      );
     }
   }
 
@@ -64,11 +67,13 @@ class DownloadController {
   static async getAll(req, res) {
     const payload = await Download.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Downloads retrieved successfully',
+    ResponseController.success(
+      res,
+      200,
+      200,
+      `${DownloadController.parameters} retrieved successfully`,
       payload
-    });
+    );
   }
 
   /**
@@ -85,17 +90,21 @@ class DownloadController {
       const { id } = download;
       const payload = await Download.findOne({ where: { id } });
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Download retrieved successfully',
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${DownloadController.parameter} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Download could not be retrieved',
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${DownloadController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -113,28 +122,34 @@ class DownloadController {
       const { errors, isValid } = validDownload(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { download } = req;
       const { userid, id } = download;
 
-      await Download.update(req.body, { returning: true, where: { id, userid } });
+      await Download.update(req.body, {
+        returning: true,
+        where: { id, userid },
+      });
 
       const payload = await Download.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Download updated successfully',
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${DownloadController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Download could not be updated'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${DownloadController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -154,18 +169,26 @@ class DownloadController {
       await Download.destroy({ where: { id, userid } });
       const payload = await Download.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Download deleted successfully',
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${DownloadController.parameter} deleted successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Download could not be deleted'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${DownloadController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+DownloadController.parameter = 'Download';
+DownloadController.parameters = 'Downloads';
 
 export default DownloadController;

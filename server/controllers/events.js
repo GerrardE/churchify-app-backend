@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validEvent from '@validations/event';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Event } = models;
 
@@ -23,33 +24,32 @@ class EventController {
       const { errors, isValid } = validEvent(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
 
       const payload = await Event.create({ userid, ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Event created successfully',
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${EventController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Event creation unsuccessful'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${EventController.parameter} creation unsuccessful`,
+        err
+      );
     }
   }
 
@@ -65,17 +65,21 @@ class EventController {
     try {
       const payload = await Event.findAll();
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Events retrieved successfully',
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${EventController.parameters} retrieved successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Events could not be retrieved',
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${EventController.parameters} could not be retrieved`,
         err
-      });
+      );
     }
   }
 
@@ -93,17 +97,21 @@ class EventController {
       const { id } = event;
       const payload = await Event.findOne({ where: { id } });
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Event retrieved successfully',
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${EventController.parameter} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Event could not be retrieved',
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${EventController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -121,10 +129,7 @@ class EventController {
       const { errors, isValid } = validEvent(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { event } = req;
@@ -133,16 +138,22 @@ class EventController {
       await Event.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Event.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Event updated successfully',
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${EventController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Event could not be updated'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${EventController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -162,18 +173,26 @@ class EventController {
       await Event.destroy({ where: { id, userid } });
       const payload = await Event.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Event deleted successfully',
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${EventController.parameter} deleted successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Event could not be deleted'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${EventController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+EventController.parameters = 'Events';
+EventController.parameter = 'Event';
 
 export default EventController;

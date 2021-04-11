@@ -1,8 +1,12 @@
+import { v4 } from 'uuid';
+import randString from '@helpers/utilities';
 import handlePermission from '@helpers/permission';
 import ResponseController from '@helpers/response';
 import models from '@models';
 
-const { User, Role, Permission } = models;
+const {
+  User, Role, Permission, ApiLogs
+} = models;
 
 const userFindAll = async (email) => {
   const user = await User.findOne({
@@ -50,6 +54,21 @@ const userFinder = async (req, res, next) => {
     });
     if (!user) throw new Error();
   } catch (err) {
+    const apilog = {
+      name: 'userFinder',
+      refid: randString('USER'),
+      reqbody: JSON.stringify(req.body),
+      resbody: JSON.stringify(err),
+      httpstatuscode: 404,
+      statuscode: 404,
+      message: 'User does not exist',
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: Date.now(),
+    };
+
+    await ApiLogs.create({ ...apilog });
     return ResponseController.error(res, 404, 404, 'User does not exist', err);
   }
 
@@ -65,6 +84,21 @@ const userPermission = async (req, res, next) => {
 
     await handlePermission(req, permissions, 'user');
   } catch (err) {
+    const apilog = {
+      name: 'userPermission',
+      refid: randString('USER'),
+      reqbody: JSON.stringify(req.body),
+      resbody: JSON.stringify(err),
+      httpstatuscode: 403,
+      statuscode: 403,
+      message: 'You do not have enough permissions',
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: Date.now(),
+    };
+
+    await ApiLogs.create({ ...apilog });
     return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
   }
 

@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validFellowship from '@validations/fellowship';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Fellowship } = models;
 
@@ -33,26 +34,15 @@ class FellowshipController {
 
       const payload = await Fellowship.create({ userid, ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Fellowship created successfully',
-        payload
-      });
+      ResponseController.success(res, 201, 201, `${FellowshipController.parameter} created successfully`, payload);
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Fellowship creation unsuccessful'
-      });
+      ResponseController.error(res, 400, 400, `${FellowshipController.parameter} creation unsuccessful`, err);
     }
   }
-
 
   /**
    * Get all Fellowships
@@ -65,11 +55,7 @@ class FellowshipController {
   static async getAll(req, res) {
     const payload = await Fellowship.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Fellowships retrieved successfully',
-      payload
-    });
+    ResponseController.success(res, 200, 200, `${FellowshipController.parameters} retrieved successfully`, payload);
   }
 
   /**
@@ -86,17 +72,9 @@ class FellowshipController {
       const { id } = fellowship;
       const payload = await Fellowship.findOne({ where: { id } });
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Fellowship retrieved successfully',
-        payload,
-      });
+      ResponseController.success(res, 200, 200, `${FellowshipController.parameter} retrieved successfully`, payload);
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Fellowship could not be retrieved',
-        err,
-      });
+      ResponseController.success(res, 400, 400, `${FellowshipController.parameter} could not be retrieved`, err);
     }
   }
 
@@ -126,16 +104,10 @@ class FellowshipController {
       await fellowship.update(req.body, { returning: true, where: { id, userid } });
 
       const payload = await Fellowship.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Fellowship updated successfully',
-        payload
-      });
+
+      ResponseController.success(res, 200, 200, `${FellowshipController.parameter} updated successfully`, payload);
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Fellowship could not be updated'
-      });
+      ResponseController.success(res, 400, 400, `${FellowshipController.parameter} could not be updated`, err);
     }
   }
 
@@ -155,18 +127,14 @@ class FellowshipController {
       await fellowship.destroy({ where: { id, userid } });
       const payload = await Fellowship.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Fellowship deleted successfully',
-        payload
-      });
+      ResponseController.success(res, 200, 200, `${FellowshipController.parameter} deleted successfully`, payload);
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Fellowship could not be deleted'
-      });
+      ResponseController.success(res, 400, 400, `${FellowshipController.parameter} could not be deleted`, err);
     }
   }
 }
+
+FellowshipController.parameter = 'Fellowship';
+FellowshipController.parameters = 'Fellowships';
 
 export default FellowshipController;

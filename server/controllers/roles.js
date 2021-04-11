@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validRole from '@validations/role';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Role, Permission } = models;
 
@@ -31,23 +32,25 @@ class RoleController {
 
       const payload = await Role.create({ ...req.body });
 
-      return res.status(201).json({
-        status: 201,
-        message: `${RoleController.parameter} created successfully`,
-        payload,
-      });
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${RoleController.parameter} created successfully`,
+        payload
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err),
-        });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: `${RoleController.parameter} creation unsuccessful`,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${RoleController.parameter} could not be created`,
+        err
+      );
     }
   }
 
@@ -65,17 +68,21 @@ class RoleController {
 
       const payload = await role.addPermissions(req.body.permission);
 
-      return res.status(201).json({
-        status: 201,
-        message: 'Permission(s) assigned successfully, Please login again.',
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        'Permission(s) assigned successfully, Please logout and login again',
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Permission(s) could not be assigned',
-        message: err.original.detail,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        'Permission(s) could not be assigned',
+        err
+      );
     }
   }
 
@@ -92,17 +99,22 @@ class RoleController {
       const { role } = req;
 
       const payload = await role.removePermissions(req.body.permission);
-      return res.status(200).json({
-        status: 200,
-        message: 'Permission(s) unassigned successfully',
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        'Permission(s) unassigned successfully, Please logout and login again',
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Permission(s) could not be unassigned',
-        message: err.original.detail,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        'Permission(s) could not be unassigned',
+        err
+      );
     }
   }
 
@@ -120,17 +132,21 @@ class RoleController {
         // attributes: ['id', 'name', 'notes']
       });
 
-      return res.status(200).json({
-        status: 200,
-        message: `${RoleController.parameters} retrieved successfully`,
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${RoleController.parameters} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${RoleController.parameters} could not be retrieved`,
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${RoleController.parameters} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -156,17 +172,21 @@ class RoleController {
         },
       });
 
-      return res.status(200).json({
-        status: 200,
-        message: `${RoleController.parameter} retrieved successfully`,
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${RoleController.parameter} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${RoleController.parameter} could not be retrieved`,
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${RoleController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -184,10 +204,7 @@ class RoleController {
       const { errors, isValid } = validRole(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { role } = req;
@@ -196,16 +213,22 @@ class RoleController {
       await Role.update(req.body, { returning: true, where: { id } });
 
       const payload = await Role.findAll();
-      res.status(200).json({
-        status: 200,
-        message: `${RoleController.parameter} updated successfully`,
-        payload,
-      });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${RoleController.parameter} updated successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${RoleController.parameter} could not be updated`,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${RoleController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -225,16 +248,21 @@ class RoleController {
       await Role.destroy({ where: { id } });
       const payload = await Role.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: `${RoleController.parameter} deleted successfully`,
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${RoleController.parameter} deleted successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${RoleController.parameter} could not be deleted`,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${RoleController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }

@@ -132,7 +132,7 @@ class DashboardController {
         payload.weeklabels.push(ending);
       }
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -140,7 +140,7 @@ class DashboardController {
         payload
       );
     } catch (err) {
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,

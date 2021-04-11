@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validCategory from '@validations/category';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Category } = models;
 
@@ -23,35 +24,42 @@ class CategoryController {
       const { errors, isValid } = validCategory(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
 
       const payload = await Category.create({
-        userid, ...req.body
+        userid,
+        ...req.body,
       });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Category created successfully',
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${CategoryController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+        ResponseController.error(
+          res,
+          400,
+          400,
+          validationResponse(err),
+
+          err
+        );
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Category creation unsuccessful'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be created`,
+        err
+      );
     }
   }
 
@@ -66,11 +74,13 @@ class CategoryController {
   static async getAll(req, res) {
     const payload = await Category.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Categories retrieved successfully',
+    ResponseController.success(
+      res,
+      200,
+      200,
+      `${CategoryController.parameters} retrieved successfully`,
       payload
-    });
+    );
   }
 
   /**
@@ -87,17 +97,21 @@ class CategoryController {
       const { id } = category;
       const payload = await Category.findOne({ where: { id } });
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Category retrieved successfully',
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameter} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Category could not be retrieved',
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -115,28 +129,34 @@ class CategoryController {
       const { errors, isValid } = validCategory(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { category } = req;
       const { userid, id } = category;
 
-      await Category.update(req.body, { returning: true, where: { id, userid } });
+      await Category.update(req.body, {
+        returning: true,
+        where: { id, userid },
+      });
 
       const payload = await Category.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Category updated successfully',
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Category could not be updated'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -156,18 +176,26 @@ class CategoryController {
       await Category.destroy({ where: { id, userid } });
       const payload = await Category.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Category deleted successfully',
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameter} deleted successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Category could not be deleted'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+CategoryController.parameter = 'Category';
+CategoryController.parameters = 'Categories';
 
 export default CategoryController;

@@ -9,7 +9,14 @@ import ResponseController from '@helpers/response';
 import models from '@models';
 
 const {
-  Membership, Attendance, Training, Activity, Group, Freport, Zone, Branch
+  Membership,
+  Attendance,
+  Training,
+  Activity,
+  Group,
+  Freport,
+  Zone,
+  Branch,
 } = models;
 
 const today = new Date();
@@ -36,10 +43,7 @@ class ReportController {
       const { errors, isValid } = await validMembership(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -83,10 +87,7 @@ class ReportController {
       const { errors, isValid } = await validAttendance(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -145,8 +146,8 @@ class ReportController {
             ],
             where: {
               day: d,
-              year: y
-            }
+              year: y,
+            },
           },
         ],
       });
@@ -204,7 +205,7 @@ class ReportController {
               day: d,
               month: Number(m),
               year: Number(y),
-            }
+            },
           },
         ],
       });
@@ -258,7 +259,7 @@ class ReportController {
               ],
               where: {
                 year: v,
-                day: dd
+                day: dd,
               },
             },
           ],
@@ -378,10 +379,7 @@ class ReportController {
       const { errors, isValid } = await validTraining(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -425,10 +423,7 @@ class ReportController {
       const { errors, isValid } = await validActivity(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -472,10 +467,7 @@ class ReportController {
       const { errors, isValid } = await validGroup(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -519,10 +511,7 @@ class ReportController {
       const { errors, isValid } = await validFreport(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -553,5 +542,8 @@ class ReportController {
     }
   }
 }
+
+ReportController.parameter = 'Report';
+ReportController.parameters = 'Reports';
 
 export default ReportController;

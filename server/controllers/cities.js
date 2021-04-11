@@ -1,3 +1,4 @@
+import ResponseController from '@helpers/response';
 import models from '@models';
 
 const { City } = models;
@@ -21,11 +22,13 @@ class CityController {
     const { id } = city;
     const payload = await City.findOne({ where: { id } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'City retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(
+      res,
+      200,
+      200,
+      `${CityController.parameter} retrieved successfully`,
+      payload
+    );
   }
 
   /**
@@ -41,18 +44,27 @@ class CityController {
       const { state } = req;
       const { id } = state;
       const payload = await City.findAll({ where: { state_id: id } });
-      return res.status(200).json({
-        status: 200,
-        message: 'Cities retrieved successfully',
-        payload,
-      });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${CityController.parameters} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Cities could not be retrieved',
-      });
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${CityController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 }
+
+CityController.parameter = 'City';
+CityController.parameters = 'Cities';
 
 export default CityController;

@@ -1,3 +1,4 @@
+import ResponseController from '@helpers/response';
 import models from '@models';
 
 const { Country } = models;
@@ -19,11 +20,7 @@ class CountryController {
   static async getAll(req, res) {
     const payload = await Country.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Countries retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(res, 200, 200, 'Countries retrieved successfully', payload);
   }
 
   /**
@@ -39,11 +36,7 @@ class CountryController {
     const { id } = country;
     const payload = await Country.findOne({ where: { id } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Country retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(res, 200, 200, 'Country retrieved successfully', payload);
   }
 
   /**
@@ -59,11 +52,7 @@ class CountryController {
     const { name } = country;
     const payload = await Country.findOne({ where: { name } });
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Country retrieved successfully',
-      payload,
-    });
+    return ResponseController.success(res, 200, 200, 'Country retrieved successfully', payload);
   }
 }
 

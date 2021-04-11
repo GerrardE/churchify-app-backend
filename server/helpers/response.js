@@ -30,7 +30,7 @@ class ResponseController {
    * @returns {object} object
    * @memberof ResponseController
    */
-  static error(res, code = 200, status = 200, message = 'Successful', errors = {}) {
+  static error(res, code = 400, status = 400, message = 'An error occured', errors = {}) {
     return res.status(code).json({
       status,
       message,

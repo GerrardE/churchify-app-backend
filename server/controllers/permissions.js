@@ -1,6 +1,7 @@
 import validationResponse from '@validations/validationResponse';
 import validPermission from '@validations/permission';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Permission } = models;
 
@@ -23,31 +24,30 @@ class PermissionController {
       const { errors, isValid } = validPermission(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const payload = await Permission.create({ ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: `${PermissionController.parameter} created successfully`,
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${PermissionController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
       if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: `${PermissionController.parameter} creation unsuccessful`
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PermissionController.parameter} creation unsuccessful`,
+        err
+      );
     }
   }
 
@@ -63,17 +63,21 @@ class PermissionController {
     try {
       const payload = await Permission.findAll();
 
-      return res.status(200).json({
-        status: 200,
-        message: `${PermissionController.parameters} retrieved successfully`,
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PermissionController.parameters} retrieved successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${PermissionController.parameters} could not be retrieved`,
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PermissionController.parameters} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -91,17 +95,21 @@ class PermissionController {
       const { id } = permission;
       const payload = await Permission.findOne({ where: { id } });
 
-      return res.status(200).json({
-        status: 200,
-        message: `${PermissionController.parameter} retrieved successfully`,
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PermissionController.parameter} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${PermissionController.parameter} could not be retrieved`,
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PermissionController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -119,10 +127,7 @@ class PermissionController {
       const { errors, isValid } = validPermission(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { permission } = req;
@@ -132,16 +137,21 @@ class PermissionController {
 
       const payload = await Permission.findOne({ where: { id } });
 
-      res.status(200).json({
-        status: 200,
-        message: `${PermissionController.parameter} updated successfully`,
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PermissionController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${PermissionController.parameter} could not be updated`
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PermissionController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -162,13 +172,23 @@ class PermissionController {
 
       res.status(200).json({
         status: 200,
-        message: `${PermissionController.parameter} deleted successfully`
+        message: `${PermissionController.parameter} deleted successfully`,
       });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PermissionController.parameter} deleted successfully`,
+        {}
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: `${PermissionController.parameter} could not be deleted`
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PermissionController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }

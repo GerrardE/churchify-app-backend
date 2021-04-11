@@ -8,8 +8,8 @@
     "pm2": "pm2 start process.yml --no-daemon",
     "start:dist": "cross-env NODE_ENV=production && nodemon ./dist/index.js",
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
-    "build": "cross-env NODE_ENV=production && npm run clean && babel ./server -d ./dist",
-    "heroku-postbuild": "npm run build",
+    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist",
+    "heroku-postbuild": "yarn build",
     "migrate": "cross-env NODE_ENV=production sequelize db:migrate",
     "seed": "cross-env NODE_ENV=production sequelize db:seed:all",
     "migrate:undo:all": "cross-env NODE_ENV=production sequelize db:migrate:undo:all",
@@ -22,8 +22,8 @@
     "refreshdb:dev": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "clean": "rm -rf dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "pretest": "cross-env NODE_ENV=test npm run refreshdb",
-    "check": "npm run refreshdb && nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit",
+    "pretest": "cross-env NODE_ENV=test yarn refreshdb",
+    "check": "yarn refreshdb && nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit",
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
   },
   "repository": {
@@ -72,7 +72,9 @@
     "sequelize-cli": "^6.2.0",
     "swagger-jsdoc": "^6.0.2",
     "swagger-ui-express": "^4.1.6",
-    "validator": "^13.5.2"
+    "uuid": "^8.3.2",
+    "validator": "^13.5.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "coveralls": "^3.1.0",

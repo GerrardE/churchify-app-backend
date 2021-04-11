@@ -13,10 +13,10 @@ module.exports = {
       type: Sequelize.STRING,
     },
     reqbody: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     resbody: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     httpstatuscode: {
       type: Sequelize.STRING,
@@ -25,7 +25,7 @@ module.exports = {
       type: Sequelize.STRING,
     },
     message: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     apiref: {
       type: Sequelize.STRING,

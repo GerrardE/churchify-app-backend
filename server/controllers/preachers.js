@@ -1,5 +1,6 @@
 import validPreacher from '@validations/preacher';
 import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Preacher } = models;
 
@@ -22,26 +23,28 @@ class PreacherController {
       const { errors, isValid } = validPreacher(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
 
       const payload = await Preacher.create({ userid, ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Preacher created successfully',
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${PreacherController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
-      res.status(400).json({
-        status: 400,
-        errors: 'Preacher creation unsuccessful'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PreacherController.parameter} creation unsuccessful`,
+        err
+      );
     }
   }
 
@@ -56,11 +59,13 @@ class PreacherController {
   static async getAll(req, res) {
     const payload = await Preacher.findAll();
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Preachers retrieved successfully',
+    ResponseController.success(
+      res,
+      200,
+      200,
+      `${PreacherController.parameters} retrieved successfully`,
       payload
-    });
+    );
   }
 
   /**
@@ -77,17 +82,21 @@ class PreacherController {
       const { id } = preacher;
       const payload = await Preacher.findOne({ where: { id } });
 
-      return res.status(200).json({
-        status: 200,
-        message: 'Preacher retrieved successfully',
-        payload,
-      });
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PreacherController.parameter} retrieved successfully`,
+        payload
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Preacher could not be retrieved',
-        err,
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PreacherController.parameter} could not be retrieved`,
+        err
+      );
     }
   }
 
@@ -105,28 +114,34 @@ class PreacherController {
       const { errors, isValid } = validPreacher(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { preacher } = req;
       const { userid, id } = preacher;
 
-      await Preacher.update(req.body, { returning: true, where: { id, userid } });
+      await Preacher.update(req.body, {
+        returning: true,
+        where: { id, userid },
+      });
 
       const payload = await Preacher.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Preacher updated successfully',
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PreacherController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Preacher could not be updated'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PreacherController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -146,18 +161,26 @@ class PreacherController {
       await Preacher.destroy({ where: { id, userid } });
       const payload = await Preacher.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Preacher deleted successfully',
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PreacherController.parameter} deleted successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Preacher could not be deleted'
-      });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PreacherController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+PreacherController.parameter = 'Preacher';
+PreacherController.parameters = 'Preachers';
 
 export default PreacherController;
