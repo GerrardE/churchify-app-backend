@@ -1,9 +1,9 @@
-import { v4 } from "uuid";
-import randString from "@helpers/utilities";
-import validationResponse from "@validations/validationResponse";
-import validEvent from "@validations/event";
-import models from "@models";
-import ResponseController from "@helpers/response";
+import { v4 } from 'uuid';
+import randString from '@helpers/utilities';
+import validationResponse from '@validations/validationResponse';
+import validEvent from '@validations/event';
+import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Event, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class EventController {
       name: `${EventController.parameters.toLowerCase()}.create`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
       message: `${EventController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -43,10 +43,10 @@ class EventController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -70,7 +70,7 @@ class EventController {
       apilog.statuscode = 400;
       apilog.message = `${EventController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === "unique violation") {
+      if (err.errors && err.errors[0].type === 'unique violation') {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
@@ -103,14 +103,14 @@ class EventController {
       name: `${EventController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${EventController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -160,14 +160,14 @@ class EventController {
       name: `${EventController.parameters.toLowerCase()}.getById`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${EventController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -214,14 +214,14 @@ class EventController {
       name: `${EventController.parameters.toLowerCase()}.update`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${EventController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -231,10 +231,10 @@ class EventController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { event } = req;
@@ -287,14 +287,14 @@ class EventController {
       name: `${EventController.parameters.toLowerCase()}.delete`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${EventController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -332,7 +332,7 @@ class EventController {
   }
 }
 
-EventController.parameters = "Events";
-EventController.parameter = "Event";
+EventController.parameters = 'Events';
+EventController.parameter = 'Event';
 
 export default EventController;

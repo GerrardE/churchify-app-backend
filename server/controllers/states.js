@@ -1,7 +1,7 @@
-import { v4 } from "uuid";
-import randString from "@helpers/utilities";
-import ResponseController from "@helpers/response";
-import models from "@models";
+import { v4 } from 'uuid';
+import randString from '@helpers/utilities';
+import ResponseController from '@helpers/response';
+import models from '@models';
 
 const { State, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class StateController {
       name: `${StateController.parameters.toLowerCase()}.getById`,
       refid: randString(`${StateController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${StateController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -83,14 +83,14 @@ class StateController {
       name: `${StateController.parameters.toLowerCase()}.getById`,
       refid: randString(`${StateController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${StateController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -124,7 +124,7 @@ class StateController {
   }
 }
 
-StateController.parameter = "State";
-StateController.parameters = "States";
+StateController.parameter = 'State';
+StateController.parameters = 'States';
 
 export default StateController;

@@ -1,9 +1,9 @@
-import { v4 } from "uuid";
-import randString from "@helpers/utilities";
-import validationResponse from "@validations/validationResponse";
-import validPermission from "@validations/permission";
-import models from "@models";
-import ResponseController from "@helpers/response";
+import { v4 } from 'uuid';
+import randString from '@helpers/utilities';
+import validationResponse from '@validations/validationResponse';
+import validPermission from '@validations/permission';
+import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Permission, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class PermissionController {
       name: `${PermissionController.parameters.toLowerCase()}.create`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
       message: `${PermissionController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -43,10 +43,10 @@ class PermissionController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const payload = await Permission.create({ ...req.body });
@@ -68,7 +68,7 @@ class PermissionController {
       apilog.statuscode = 400;
       apilog.message = `${PermissionController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === "unique violation") {
+      if (err.errors && err.errors[0].type === 'unique violation') {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
@@ -101,14 +101,14 @@ class PermissionController {
       name: `${PermissionController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${PermissionController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -158,14 +158,14 @@ class PermissionController {
       name: `${PermissionController.parameters.toLowerCase()}.getById`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${PermissionController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -212,14 +212,14 @@ class PermissionController {
       name: `${PermissionController.parameters.toLowerCase()}.update`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${PermissionController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -229,10 +229,10 @@ class PermissionController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { permission } = req;
@@ -285,14 +285,14 @@ class PermissionController {
       name: `${PermissionController.parameters.toLowerCase()}.delete`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${PermissionController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
     try {
       const { permission } = req;
@@ -330,7 +330,7 @@ class PermissionController {
   }
 }
 
-PermissionController.parameters = "Permissions";
-PermissionController.parameter = "Permission";
+PermissionController.parameters = 'Permissions';
+PermissionController.parameter = 'Permission';
 
 export default PermissionController;

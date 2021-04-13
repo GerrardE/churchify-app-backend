@@ -1,7 +1,7 @@
-import { v4 } from "uuid";
-import ResponseController from "@helpers/response";
-import models from "@models";
-import randString from "@helpers/utilities";
+import { v4 } from 'uuid';
+import ResponseController from '@helpers/response';
+import models from '@models';
+import randString from '@helpers/utilities';
 
 const { Country, ApiLogs } = models;
 
@@ -24,14 +24,14 @@ class CountryController {
       name: `${CountryController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CountryController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -81,14 +81,14 @@ class CountryController {
       name: `${CountryController.parameters.toLowerCase()}.getById`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CountryController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -134,14 +134,14 @@ class CountryController {
       name: `${CountryController.parameters.toLowerCase()}.getById`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CountryController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {

@@ -1,14 +1,14 @@
-import { v4 } from "uuid";
-import randString from "@helpers/utilities";
-import sequelize from "sequelize";
-import validMembership from "@validations/membership";
-import validAttendance from "@validations/attendance";
-import validTraining from "@validations/training";
-import validActivity from "@validations/activity";
-import validGroup from "@validations/group";
-import validFreport from "@validations/freport";
-import ResponseController from "@helpers/response";
-import models from "@models";
+import { v4 } from 'uuid';
+import randString from '@helpers/utilities';
+import sequelize from 'sequelize';
+import validMembership from '@validations/membership';
+import validAttendance from '@validations/attendance';
+import validTraining from '@validations/training';
+import validActivity from '@validations/activity';
+import validGroup from '@validations/group';
+import validFreport from '@validations/freport';
+import ResponseController from '@helpers/response';
+import models from '@models';
 
 const {
   Membership,
@@ -46,14 +46,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.membership`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
-      message: "Membership report submitted successfully",
+      message: 'Membership report submitted successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -63,10 +63,10 @@ class ReportController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -87,14 +87,14 @@ class ReportController {
         res,
         201,
         201,
-        "Membership report submitted successfully",
+        'Membership report submitted successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Membership report submission failed";
+      apilog.message = 'Membership report submission failed';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -102,7 +102,7 @@ class ReportController {
         res,
         400,
         400,
-        "Membership report submission failed",
+        'Membership report submission failed',
         err
       );
     }
@@ -121,14 +121,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.attendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
-      message: "Attendance submitted successfully",
+      message: 'Attendance submitted successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -138,10 +138,10 @@ class ReportController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -162,14 +162,14 @@ class ReportController {
         res,
         201,
         201,
-        "Attendance submitted successfully",
+        'Attendance submitted successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Attendance submission failed";
+      apilog.message = 'Attendance submission failed';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -177,7 +177,7 @@ class ReportController {
         res,
         400,
         400,
-        "Attendance submission failed",
+        'Attendance submission failed',
         err
       );
     }
@@ -196,31 +196,31 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.getZoneAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
-      message: "Attendance retrieved successfully",
+      message: 'Attendance retrieved successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     const { day: d = day, year: y = year } = req.body;
 
     try {
       const data = await Zone.findAll({
-        attributes: ["id", "name"],
+        attributes: ['id', 'name'],
         include: [
           {
             model: Attendance,
-            as: "zoneattendance",
+            as: 'zoneattendance',
             attributes: [
               [
                 sequelize.literal(
-                  "COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)"
+                  'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
                 ),
-                "total",
+                'total',
               ],
             ],
             where: {
@@ -241,14 +241,14 @@ class ReportController {
         res,
         200,
         200,
-        "Attendance retrieved successfully",
+        'Attendance retrieved successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Attendance could not be retrieved";
+      apilog.message = 'Attendance could not be retrieved';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -256,7 +256,7 @@ class ReportController {
         res,
         400,
         400,
-        "Attendance could not be retrieved",
+        'Attendance could not be retrieved',
         err
       );
     }
@@ -275,34 +275,34 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.getBranchAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
-      message: "Branch attendance retrieved successfully",
+      message: 'Branch attendance retrieved successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     const { day: d = day, month: m = month, year: y = year } = req.body;
 
     try {
       const data = await Branch.findAll({
-        attributes: ["id", "name"],
+        attributes: ['id', 'name'],
         include: [
           {
             model: Attendance,
-            as: "branchattendance",
+            as: 'branchattendance',
             attributes: [
-              "men",
-              "women",
-              "children",
+              'men',
+              'women',
+              'children',
               [
                 sequelize.literal(
-                  "COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)"
+                  'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
                 ),
-                "total",
+                'total',
               ],
             ],
             where: {
@@ -324,14 +324,14 @@ class ReportController {
         res,
         200,
         200,
-        "Branch attendance retrieved successfully",
+        'Branch attendance retrieved successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Branch attendance could not be retrieved";
+      apilog.message = 'Branch attendance could not be retrieved';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -339,7 +339,7 @@ class ReportController {
         res,
         400,
         400,
-        "Branch attendance could not be retrieved",
+        'Branch attendance could not be retrieved',
         err
       );
     }
@@ -358,14 +358,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.getSynodAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
-      message: "Synod attendance retrieved successfully",
+      message: 'Synod attendance retrieved successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -373,17 +373,17 @@ class ReportController {
 
       const payload = Object.values(years).map((v) => {
         const d = models.Zone.findAll({
-          attributes: ["id", "name"],
+          attributes: ['id', 'name'],
           include: [
             {
               model: models.Attendance,
-              as: "zoneattendance",
+              as: 'zoneattendance',
               attributes: [
                 [
                   sequelize.literal(
-                    "COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)"
+                    'COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)'
                   ),
-                  "total",
+                  'total',
                 ],
               ],
               where: {
@@ -409,14 +409,14 @@ class ReportController {
         res,
         200,
         200,
-        "Synod attendance retrieved successfully",
+        'Synod attendance retrieved successfully',
         payload[1]
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Synod attendance could not be retrieved";
+      apilog.message = 'Synod attendance could not be retrieved';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -424,7 +424,7 @@ class ReportController {
         res,
         400,
         400,
-        "Synod attendance could not be retrieved",
+        'Synod attendance could not be retrieved',
         err
       );
     }
@@ -444,8 +444,7 @@ class ReportController {
 
       result.name = d.name;
 
-      const reducer = (accumulator, currentvalue) =>
-        accumulator + currentvalue.dataValues.total;
+      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
 
       result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
 
@@ -470,8 +469,7 @@ class ReportController {
 
       result.name = d.name;
 
-      const reducer = (accumulator, currentvalue) =>
-        accumulator + currentvalue.dataValues.total;
+      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
 
       result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
 
@@ -494,8 +492,7 @@ class ReportController {
 
       result.name = d.name;
 
-      const reducer = (accumulator, currentvalue) =>
-        accumulator + currentvalue.dataValues.total;
+      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
 
       result.men = d.branchattendance[0].men;
       result.women = d.branchattendance[0].women;
@@ -522,14 +519,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.training`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
-      message: "Training report submitted successfully",
+      message: 'Training report submitted successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -539,10 +536,10 @@ class ReportController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -563,14 +560,14 @@ class ReportController {
         res,
         201,
         201,
-        "Training report submitted successfully",
+        'Training report submitted successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Training report submission failed";
+      apilog.message = 'Training report submission failed';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -578,7 +575,7 @@ class ReportController {
         res,
         400,
         400,
-        "Training report submission failed",
+        'Training report submission failed',
         err
       );
     }
@@ -597,14 +594,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.activity`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
-      message: "Activity report submitted successfully",
+      message: 'Activity report submitted successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -614,10 +611,10 @@ class ReportController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -638,14 +635,14 @@ class ReportController {
         res,
         201,
         201,
-        "Activity report submitted successfully",
+        'Activity report submitted successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Activity report submission failed";
+      apilog.message = 'Activity report submission failed';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -653,7 +650,7 @@ class ReportController {
         res,
         400,
         400,
-        "Activity report submission failed",
+        'Activity report submission failed',
         err
       );
     }
@@ -672,14 +669,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.group`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
-      message: "Group report submitted successfully",
+      message: 'Group report submitted successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -689,10 +686,10 @@ class ReportController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -713,14 +710,14 @@ class ReportController {
         res,
         201,
         201,
-        "Group report submitted successfully",
+        'Group report submitted successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Group report submission failed";
+      apilog.message = 'Group report submission failed';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -728,7 +725,7 @@ class ReportController {
         res,
         400,
         400,
-        "Group report submission failed",
+        'Group report submission failed',
         err
       );
     }
@@ -747,14 +744,14 @@ class ReportController {
       name: `${ReportController.parameters.toLowerCase()}.freport`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
-      message: "Fellowship report submitted successfully",
+      message: 'Fellowship report submitted successfully',
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -764,10 +761,10 @@ class ReportController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -788,14 +785,14 @@ class ReportController {
         res,
         201,
         201,
-        "Fellowship report submitted successfully",
+        'Fellowship report submitted successfully',
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Fellowship report submission failed";
+      apilog.message = 'Fellowship report submission failed';
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -803,14 +800,14 @@ class ReportController {
         res,
         400,
         400,
-        "Fellowship report submission failed",
+        'Fellowship report submission failed',
         err
       );
     }
   }
 }
 
-ReportController.parameter = "Report";
-ReportController.parameters = "Reports";
+ReportController.parameter = 'Report';
+ReportController.parameters = 'Reports';
 
 export default ReportController;

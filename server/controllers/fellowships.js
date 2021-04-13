@@ -1,9 +1,9 @@
-import { v4 } from "uuid";
-import randString from "@helpers/utilities";
-import validationResponse from "@validations/validationResponse";
-import validFellowship from "@validations/fellowship";
-import models from "@models";
-import ResponseController from "@helpers/response";
+import { v4 } from 'uuid';
+import randString from '@helpers/utilities';
+import validationResponse from '@validations/validationResponse';
+import validFellowship from '@validations/fellowship';
+import models from '@models';
+import ResponseController from '@helpers/response';
 
 const { Fellowship, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class FellowshipController {
       name: `${FellowshipController.parameters.toLowerCase()}.create`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 201,
       statuscode: 201,
       message: `${FellowshipController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -43,10 +43,10 @@ class FellowshipController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { id: userid } = req.decoded;
@@ -70,7 +70,7 @@ class FellowshipController {
       apilog.statuscode = 400;
       apilog.message = `${FellowshipController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === "unique violation") {
+      if (err.errors && err.errors[0].type === 'unique violation') {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
@@ -103,14 +103,14 @@ class FellowshipController {
       name: `${FellowshipController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${FellowshipController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -160,14 +160,14 @@ class FellowshipController {
       name: `${FellowshipController.parameters.toLowerCase()}.getById`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${FellowshipController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -214,14 +214,14 @@ class FellowshipController {
       name: `${FellowshipController.parameters.toLowerCase()}.update`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${FellowshipController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -231,10 +231,10 @@ class FellowshipController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = 'Error: invalid input';
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
       }
 
       const { fellowship } = req;
@@ -290,14 +290,14 @@ class FellowshipController {
       name: `${FellowshipController.parameters.toLowerCase()}.delete`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: "",
+      resbody: '',
       httpstatuscode: 200,
       statuscode: 200,
       message: `${FellowshipController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: "",
+      reqendtime: '',
     };
 
     try {
@@ -335,7 +335,7 @@ class FellowshipController {
   }
 }
 
-FellowshipController.parameter = "Fellowship";
-FellowshipController.parameters = "Fellowships";
+FellowshipController.parameter = 'Fellowship';
+FellowshipController.parameters = 'Fellowships';
 
 export default FellowshipController;
