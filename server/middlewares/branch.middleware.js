@@ -1,9 +1,9 @@
-import { v4 } from 'uuid';
-import handlePermission from '@helpers/permission';
-import ResponseController from '@helpers/response';
-import randString from '@helpers/utilities';
-import models from '@models';
-import { userFindAll } from './user.middleware';
+import { v4 } from "uuid";
+import handlePermission from "@helpers/permission";
+import ResponseController from "@helpers/response";
+import randString from "@helpers/utilities";
+import models from "@models";
+import { userFindAll } from "./user.middleware";
 
 const { Branch, ApiLogs } = models;
 
@@ -15,13 +15,13 @@ const branchFinder = async (req, res, next) => {
     if (!branch) throw new Error();
   } catch (err) {
     const apilog = {
-      name: 'branchFinder',
-      refid: randString('BRANCH'),
+      name: "branchFinder",
+      refid: randString("BRANCH"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 404,
       statuscode: 404,
-      message: 'Branch does not exist',
+      message: "Branch does not exist",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -30,7 +30,7 @@ const branchFinder = async (req, res, next) => {
 
     await ApiLogs.create({ ...apilog });
 
-    return ResponseController.error(res, 404, 404, 'Branch does not exist', err);
+    ResponseController.error(res, 404, 404, "Branch does not exist", err);
   }
 
   req.branch = branch;
@@ -43,16 +43,16 @@ const branchPermission = async (req, res, next) => {
 
     const { permissions } = await userFindAll(email);
 
-    await handlePermission(req, permissions, 'branch');
+    await handlePermission(req, permissions, "branch");
   } catch (err) {
     const apilog = {
-      name: 'branchPermission',
-      refid: randString('BRANCH'),
+      name: "branchPermission",
+      refid: randString("BRANCH"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 403,
       statuscode: 403,
-      message: 'You do not have enough permissions',
+      message: "You do not have enough permissions",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -60,7 +60,13 @@ const branchPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
+    ResponseController.error(
+      res,
+      403,
+      403,
+      "You do not have enough permissions",
+      err
+    );
   }
 
   next();

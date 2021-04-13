@@ -1,9 +1,11 @@
-import validationResponse from '@validations/validationResponse';
-import ResponseController from '@helpers/response';
-import validZone from '@validations/zone';
-import models from '@models';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import ResponseController from "@helpers/response";
+import validZone from "@validations/zone";
+import models from "@models";
 
-const { Zone } = models;
+const { Zone, ApiLogs } = models;
 
 /**
  * Zone Controller
@@ -20,20 +22,38 @@ class ZoneController {
    * @memberof ZoneController
    */
   static async create(req, res) {
+    const apilog = {
+      name: `${ZoneController.parameters.toLowerCase()}.create`,
+      refid: randString(`${ZoneController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 201,
+      statuscode: 201,
+      message: `${ZoneController.parameter} created successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { errors, isValid } = validZone(req.body);
       // Check Validation
       if (!isValid) {
-        return ResponseController.error(
-          res,
-          400,
-          400,
-          'Error: invalid input',
-          errors
-        );
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Zone.create({ ...req.body });
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -43,22 +63,33 @@ class ZoneController {
         payload
       );
     } catch (err) {
-      if (err.errors && err.errors[0].type === 'unique violation') {
-        return ResponseController.error(
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${ZoneController.parameter} could not be created`;
+
+      if (err.errors && err.errors[0].type === "unique violation") {
+        apilog.message = JSON.stringify(validationResponse(err));
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(
           res,
           400,
           400,
-          'unique violation',
+          "unique violation",
           validationResponse(err)
         );
       }
+
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.error(
         res,
         400,
         400,
-        {},
-        `${ZoneController.parameter} creation unsuccessful`
+        `${ZoneController.parameter} creation unsuccessful`,
+        err
       );
     }
   }
@@ -72,10 +103,28 @@ class ZoneController {
    * @memberof ZoneController
    */
   static async getAll(req, res) {
+    const apilog = {
+      name: `${ZoneController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${ZoneController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${ZoneController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const payload = await Zone.findAll();
 
-      return ResponseController.success(
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
         res,
         200,
         200,
@@ -83,7 +132,14 @@ class ZoneController {
         payload
       );
     } catch (err) {
-      return ResponseController.error(
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${ZoneController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
         res,
         400,
         400,
@@ -103,13 +159,49 @@ class ZoneController {
    */
   static async getById(req, res) {
     const { zone: payload } = req;
-    return ResponseController.success(
-      res,
-      200,
-      200,
-      `${ZoneController.parameter} retrieved successfully`,
-      payload
-    );
+
+    const apilog = {
+      name: `${ZoneController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${ZoneController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${ZoneController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${ZoneController.parameter} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${ZoneController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${ZoneController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -122,14 +214,31 @@ class ZoneController {
    * @memberof ZoneController
    */
   static async update(req, res) {
+    const apilog = {
+      name: `${ZoneController.parameters.toLowerCase()}.update`,
+      refid: randString(`${ZoneController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${ZoneController.parameter} updated successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const { errors, isValid } = validZone(req.body);
+      const { errors, isValid } = validZone(req.body, true);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors,
-        });
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { zone } = req;
@@ -137,15 +246,28 @@ class ZoneController {
 
       await Zone.update(req.body, { returning: true, where: { id } });
 
-      return ResponseController.success(
+      const payload = await Zone.findAll();
+
+      apilog.resbody = "";
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
         res,
         200,
         200,
         `${ZoneController.parameter} updated successfully`,
-        {}
+        payload
       );
     } catch (err) {
-      return ResponseController.error(
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${ZoneController.parameter} could not be updated`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
         res,
         400,
         400,
@@ -165,12 +287,29 @@ class ZoneController {
    * @memberof ZoneController
    */
   static async delete(req, res) {
+    const apilog = {
+      name: `${ZoneController.parameters.toLowerCase()}.delete`,
+      refid: randString(`${ZoneController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${ZoneController.parameter} deleted successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { zone } = req;
       const { id } = zone;
       await Zone.destroy({ where: { id } });
 
-      return ResponseController.success(
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
         res,
         200,
         200,
@@ -178,7 +317,14 @@ class ZoneController {
         {}
       );
     } catch (err) {
-      return ResponseController.error(
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${ZoneController.parameter} could not be deleted`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
         res,
         400,
         400,
@@ -189,7 +335,7 @@ class ZoneController {
   }
 }
 
-ZoneController.parameter = 'Zone';
-ZoneController.parameters = 'Zones';
+ZoneController.parameter = "Zone";
+ZoneController.parameters = "Zones";
 
 export default ZoneController;

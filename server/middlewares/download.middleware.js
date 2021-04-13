@@ -1,9 +1,9 @@
-import { v4 } from 'uuid';
-import randString from '@helpers/utilities';
-import handlePermission from '@helpers/permission';
-import ResponseController from '@helpers/response';
-import models from '@models';
-import { userFindAll } from './user.middleware';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import handlePermission from "@helpers/permission";
+import ResponseController from "@helpers/response";
+import models from "@models";
+import { userFindAll } from "./user.middleware";
 
 const { Download, ApiLogs } = models;
 
@@ -15,13 +15,13 @@ const downloadFinder = async (req, res, next) => {
     if (!download) throw new Error();
   } catch (err) {
     const apilog = {
-      name: 'downloadFinder',
-      refid: randString('DOWNLOAD'),
+      name: "downloadFinder",
+      refid: randString("DOWNLOAD"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 404,
       statuscode: 404,
-      message: 'Download does not exist',
+      message: "Download does not exist",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -29,7 +29,7 @@ const downloadFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 404, 404, 'Download does not exist', err);
+    ResponseController.error(res, 404, 404, "Download does not exist", err);
   }
 
   req.download = download;
@@ -42,16 +42,16 @@ const downloadPermission = async (req, res, next) => {
 
     const { permissions } = await userFindAll(email);
 
-    await handlePermission(req, permissions, 'download');
+    await handlePermission(req, permissions, "download");
   } catch (err) {
     const apilog = {
-      name: 'downloadPermission',
-      refid: randString('DOWNLOAD'),
+      name: "downloadPermission",
+      refid: randString("DOWNLOAD"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 403,
       statuscode: 403,
-      message: 'You do not have enough permissions',
+      message: "You do not have enough permissions",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -59,7 +59,13 @@ const downloadPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
+    ResponseController.error(
+      res,
+      403,
+      403,
+      "You do not have enough permissions",
+      err
+    );
   }
 
   next();

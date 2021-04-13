@@ -1,12 +1,10 @@
-import { v4 } from 'uuid';
-import randString from '@helpers/utilities';
-import handlePermission from '@helpers/permission';
-import ResponseController from '@helpers/response';
-import models from '@models';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import handlePermission from "@helpers/permission";
+import ResponseController from "@helpers/response";
+import models from "@models";
 
-const {
-  User, Role, Permission, ApiLogs
-} = models;
+const { User, Role, Permission, ApiLogs } = models;
 
 const userFindAll = async (email) => {
   const user = await User.findOne({
@@ -15,18 +13,18 @@ const userFindAll = async (email) => {
     },
     include: [
       {
-        attributes: ['id', 'name'],
+        attributes: ["id", "name"],
         model: Role,
-        as: 'roles',
+        as: "roles",
         include: {
           model: Permission,
-          as: 'permissions',
+          as: "permissions",
         },
       },
     ],
   });
 
-  let role = 'guest';
+  let role = "guest";
   let permissions = [];
 
   if (user.roles && user.roles.length > 0) {
@@ -43,25 +41,33 @@ const userFinder = async (req, res, next) => {
   try {
     user = await User.findOne({
       where: { id },
-      attributes: ['id', 'firstname', 'lastname', 'email', 'phone', 'createdAt', 'updatedAt'],
+      attributes: [
+        "id",
+        "firstname",
+        "lastname",
+        "email",
+        "phone",
+        "createdAt",
+        "updatedAt",
+      ],
       include: [
         {
           model: Role,
-          as: 'roles',
-          attributes: ['name']
-        }
-      ]
+          as: "roles",
+          attributes: ["name"],
+        },
+      ],
     });
     if (!user) throw new Error();
   } catch (err) {
     const apilog = {
-      name: 'userFinder',
-      refid: randString('USER'),
+      name: "userFinder",
+      refid: randString("USER"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 404,
       statuscode: 404,
-      message: 'User does not exist',
+      message: "User does not exist",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -69,7 +75,7 @@ const userFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 404, 404, 'User does not exist', err);
+    ResponseController.error(res, 404, 404, "User does not exist", err);
   }
 
   req.user = user;
@@ -82,16 +88,16 @@ const userPermission = async (req, res, next) => {
 
     const { permissions } = await userFindAll(email);
 
-    await handlePermission(req, permissions, 'user');
+    await handlePermission(req, permissions, "user");
   } catch (err) {
     const apilog = {
-      name: 'userPermission',
-      refid: randString('USER'),
+      name: "userPermission",
+      refid: randString("USER"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 403,
       statuscode: 403,
-      message: 'You do not have enough permissions',
+      message: "You do not have enough permissions",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -99,7 +105,13 @@ const userPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
+    ResponseController.error(
+      res,
+      403,
+      403,
+      "You do not have enough permissions",
+      err
+    );
   }
 
   next();

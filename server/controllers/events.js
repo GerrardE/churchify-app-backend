@@ -1,9 +1,11 @@
-import validationResponse from '@validations/validationResponse';
-import validEvent from '@validations/event';
-import models from '@models';
-import ResponseController from '@helpers/response';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import validEvent from "@validations/event";
+import models from "@models";
+import ResponseController from "@helpers/response";
 
-const { Event } = models;
+const { Event, ApiLogs } = models;
 
 /**
  * Event Controller
@@ -20,16 +22,40 @@ class EventController {
    * @memberof EventController
    */
   static async create(req, res) {
+    const apilog = {
+      name: `${EventController.parameters.toLowerCase()}.create`,
+      refid: randString(`${EventController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 201,
+      statuscode: 201,
+      message: `${EventController.parameter} created successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { errors, isValid } = validEvent(req.body);
       // Check Validation
       if (!isValid) {
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
 
       const payload = await Event.create({ userid, ...req.body });
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -39,9 +65,20 @@ class EventController {
         payload
       );
     } catch (err) {
-      if (err.errors && err.errors[0].type === 'unique violation') {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${EventController.parameter} could not be created`;
+
+      if (err.errors && err.errors[0].type === "unique violation") {
+        apilog.message = JSON.stringify(validationResponse(err));
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
         ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
+
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.error(
         res,
@@ -62,8 +99,26 @@ class EventController {
    * @memberof EventController
    */
   static async getAll(req, res) {
+    const apilog = {
+      name: `${EventController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${EventController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${EventController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const payload = await Event.findAll();
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -73,6 +128,13 @@ class EventController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${EventController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -92,10 +154,26 @@ class EventController {
    * @memberof EventController
    */
   static async getById(req, res) {
+    const { event: payload } = req;
+
+    const apilog = {
+      name: `${EventController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${EventController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${EventController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const { event } = req;
-      const { id } = event;
-      const payload = await Event.findOne({ where: { id } });
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -105,6 +183,13 @@ class EventController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${EventController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -125,11 +210,31 @@ class EventController {
    * @memberof EventController
    */
   static async update(req, res) {
+    const apilog = {
+      name: `${EventController.parameters.toLowerCase()}.update`,
+      refid: randString(`${EventController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${EventController.parameter} updated successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const { errors, isValid } = validEvent(req.body);
+      const { errors, isValid } = validEvent(req.body, true);
       // Check Validation
       if (!isValid) {
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { event } = req;
@@ -139,6 +244,10 @@ class EventController {
 
       const payload = await Event.findAll();
 
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.success(
         res,
         200,
@@ -147,6 +256,13 @@ class EventController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${EventController.parameter} could not be updated`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -167,11 +283,28 @@ class EventController {
    * @memberof EventController
    */
   static async delete(req, res) {
+    const apilog = {
+      name: `${EventController.parameters.toLowerCase()}.delete`,
+      refid: randString(`${EventController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${EventController.parameter} deleted successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { event } = req;
       const { id, userid } = event;
       await Event.destroy({ where: { id, userid } });
       const payload = await Event.findAll();
+
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -181,6 +314,13 @@ class EventController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${EventController.parameter} could not be deleted`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -192,7 +332,7 @@ class EventController {
   }
 }
 
-EventController.parameters = 'Events';
-EventController.parameter = 'Event';
+EventController.parameters = "Events";
+EventController.parameter = "Event";
 
 export default EventController;

@@ -1,52 +1,53 @@
 import { v4 } from "uuid";
-import randString from "@helpers/utilities";
 import handlePermission from "@helpers/permission";
 import ResponseController from "@helpers/response";
+import randString from "@helpers/utilities";
 import models from "@models";
 import { userFindAll } from "./user.middleware";
 
-const { Role, ApiLogs } = models;
+const { ApiLogs } = models;
 
-const roleFinder = async (req, res, next) => {
+const apilogFinder = async (req, res, next) => {
   const { id } = req.params;
-  let role;
+  let apilog;
   try {
-    role = await Role.findOne({ where: { id } });
-    if (!role) throw role;
+    apilog = await ApiLogs.findOne({ where: { id } });
+    if (!apilog) throw new Error();
   } catch (err) {
-    const apilog = {
-      name: "roleFinder",
-      refid: randString("ROLE"),
+    const apilogg = {
+      name: "apilogFinder",
+      refid: randString("APILOG"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 404,
       statuscode: 404,
-      message: "Role does not exist",
+      message: "ApiLog does not exist",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
       reqendtime: Date.now(),
     };
 
-    await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Role does not exist", err);
+    await ApiLogs.create({ ...apilogg });
+
+    ResponseController.error(res, 404, 404, "ApiLog does not exist", err);
   }
 
-  req.role = role;
+  req.apilog = apilog;
   next();
 };
 
-const rolePermission = async (req, res, next) => {
+const apilogPermission = async (req, res, next) => {
   try {
     const { email } = req.decoded;
 
     const { permissions } = await userFindAll(email);
 
-    await handlePermission(req, permissions, "role");
+    await handlePermission(req, permissions, "apilog");
   } catch (err) {
     const apilog = {
-      name: "rolePermission",
-      refid: randString("ROLE"),
+      name: "apilogPermission",
+      refid: randString("APILOG"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 403,
@@ -71,4 +72,4 @@ const rolePermission = async (req, res, next) => {
   next();
 };
 
-export { roleFinder, rolePermission };
+export { apilogFinder, apilogPermission };

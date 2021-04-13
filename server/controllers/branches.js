@@ -1,9 +1,9 @@
-import validationResponse from '@validations/validationResponse';
-import validBranch from '@validations/branch';
-import ResponseController from '@helpers/response';
-import models from '@models';
-import randString from '@helpers/utilities';
-import { v4 } from 'uuid';
+import validationResponse from "@validations/validationResponse";
+import validBranch from "@validations/branch";
+import ResponseController from "@helpers/response";
+import models from "@models";
+import randString from "@helpers/utilities";
+import { v4 } from "uuid";
 
 const { Branch, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class BranchController {
       name: `${BranchController.parameters.toLowerCase()}.create`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
       message: `${BranchController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -43,17 +43,11 @@ class BranchController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        return ResponseController.error(
-          res,
-          400,
-          400,
-          'Error: invalid input',
-          errors
-        );
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Branch.create({ ...req.body });
@@ -62,7 +56,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         201,
         201,
@@ -75,24 +69,18 @@ class BranchController {
       apilog.statuscode = 400;
       apilog.message = `${BranchController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === 'unique violation') {
+      if (err.errors && err.errors[0].type === "unique violation") {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        return ResponseController.error(
-          res,
-          400,
-          400,
-          validationResponse(err),
-          err
-        );
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,
@@ -115,14 +103,14 @@ class BranchController {
       name: `${BranchController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${BranchController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -132,7 +120,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -147,7 +135,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,
@@ -172,14 +160,14 @@ class BranchController {
       name: `${BranchController.parameters.toLowerCase()}.getById`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${BranchController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -187,7 +175,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -202,7 +190,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,
@@ -226,14 +214,14 @@ class BranchController {
       name: `${BranchController.parameters.toLowerCase()}.update`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${BranchController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -243,17 +231,11 @@ class BranchController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        return ResponseController.error(
-          res,
-          400,
-          400,
-          'Error: invalid input',
-          errors
-        );
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { branch } = req;
@@ -268,7 +250,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -283,7 +265,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,
@@ -307,14 +289,14 @@ class BranchController {
       name: `${BranchController.parameters.toLowerCase()}.delete`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${BranchController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -326,7 +308,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -341,7 +323,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,
@@ -352,7 +334,7 @@ class BranchController {
   }
 }
 
-BranchController.parameter = 'Branch';
-BranchController.parameters = 'Branches';
+BranchController.parameter = "Branch";
+BranchController.parameters = "Branches";
 
 export default BranchController;

@@ -1,7 +1,7 @@
-import { v4 } from 'uuid';
-import ResponseController from '@helpers/response';
-import randString from '@helpers/utilities';
-import models from '@models';
+import { v4 } from "uuid";
+import ResponseController from "@helpers/response";
+import randString from "@helpers/utilities";
+import models from "@models";
 
 const { City, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class CityController {
       name: `${CityController.parameters.toLowerCase()}.getById`,
       refid: randString(`${CityController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CityController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -41,7 +41,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -79,14 +79,14 @@ class CityController {
       name: `${CityController.parameters.toLowerCase()}.getByStateId`,
       refid: randString(`${CityController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CityController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -98,7 +98,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.success(
+      ResponseController.success(
         res,
         200,
         200,
@@ -113,7 +113,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      return ResponseController.error(
+      ResponseController.error(
         res,
         400,
         400,
@@ -124,7 +124,7 @@ class CityController {
   }
 }
 
-CityController.parameter = 'City';
-CityController.parameters = 'Cities';
+CityController.parameter = "City";
+CityController.parameters = "Cities";
 
 export default CityController;

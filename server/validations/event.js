@@ -1,7 +1,7 @@
 import validator from 'validator';
 import isEmpty from '../middlewares/isEmpty';
 
-const validEvent = (data) => {
+const validEvent = (data, isEdit = false) => {
   const errors = {};
   data.name = !isEmpty(data.name) ? data.name : '';
   data.date = !isEmpty(data.date) ? data.date : '';
@@ -9,11 +9,11 @@ const validEvent = (data) => {
   data.notes = !isEmpty(data.notes) ? data.notes : '';
 
   // name validations
-  if (!validator.isLength(data.name, { min: 2, max: 100 })) {
+  if (!validator.isLength(data.name, { min: 2, max: 100 }) && !isEdit) {
     errors.name = 'name must be between 2 and 100 characters';
   }
 
-  if (isEmpty(data.name)) {
+  if (isEmpty(data.name) && !isEdit) {
     errors.name = 'name field is required';
   }
 

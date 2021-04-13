@@ -16,18 +16,8 @@ module.exports = {
       }
     },
 
-    day: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
-
-    month: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
-
-    year: {
-      type: Sequelize.INTEGER,
+    date: {
+      type: Sequelize.DATE,
       allowNull: false
     },
 

@@ -1,7 +1,11 @@
 /* eslint-disable no-await-in-loop */
-import sequelize from 'sequelize';
-import ResponseController from '@helpers/response';
-import models from '@models';
+import { v4 } from "uuid";
+import sequelize from "sequelize";
+import ResponseController from "@helpers/response";
+import models from "@models";
+import randString from "@helpers/utilities";
+
+const { ApiLogs } = models;
 
 /**
  * Dashboard Controller
@@ -18,8 +22,26 @@ class DashboardController {
    * @memberof DashboardController
    */
   static async getStatistics(req, res) {
+    const apilog = {
+      name: `${DashboardController.parameters.toLowerCase()}.getStatistics`,
+      refid: randString(`${DashboardController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 201,
+      statuscode: 201,
+      message: "Statistics retrieved successfully",
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const payload = { weeklabels: [], weeklymembership: [], weeklyattendance: [] };
+      const payload = {
+        weeklabels: [],
+        weeklymembership: [],
+        weeklyattendance: [],
+      };
 
       // Total number of each report submitted today
       const todayDate = new Date();
@@ -30,42 +52,42 @@ class DashboardController {
         where: {
           createdAt: {
             [sequelize.Op.between]: [start, end],
-          }
+          },
         },
       });
       payload.dailyactivity = await models.Activity.count({
         where: {
           createdAt: {
             [sequelize.Op.between]: [start, end],
-          }
+          },
         },
       });
       payload.dailymembership = await models.Membership.count({
         where: {
           createdAt: {
             [sequelize.Op.between]: [start, end],
-          }
+          },
         },
       });
       payload.dailytraining = await models.Training.count({
         where: {
           createdAt: {
             [sequelize.Op.between]: [start, end],
-          }
+          },
         },
       });
       payload.dailygroup = await models.Group.count({
         where: {
           createdAt: {
             [sequelize.Op.between]: [start, end],
-          }
+          },
         },
       });
       payload.dailyfellowship = await models.Freport.count({
         where: {
           createdAt: {
             [sequelize.Op.between]: [start, end],
-          }
+          },
         },
       });
 
@@ -78,37 +100,35 @@ class DashboardController {
 
         let ending = new Date(tDate);
 
-        const attendance = await models.Attendance.findAll(
-          {
-            where: {
-              createdAt: {
-                [sequelize.Op.between]: [begining, ending],
-              },
+        const attendance = await models.Attendance.findAll({
+          where: {
+            createdAt: {
+              [sequelize.Op.between]: [begining, ending],
             },
-            attributes: [
-              [sequelize.literal(
-                'COALESCE(children, 0) + COALESCE(women, 0) + COALESCE(men, 0)'
-              ), 'total'
-              ],
+          },
+          attributes: [
+            [
+              sequelize.literal(
+                "COALESCE(children, 0) + COALESCE(women, 0) + COALESCE(men, 0)"
+              ),
+              "total",
             ],
-          }
-        );
+          ],
+        });
 
-        const membership = await models.Membership.findAll(
-          {
-            where: {
-              createdAt: {
-                [sequelize.Op.between]: [start, end],
-              }
+        const membership = await models.Membership.findAll({
+          where: {
+            createdAt: {
+              [sequelize.Op.between]: [start, end],
             },
-            attributes: [
-              [sequelize.literal(
-                'COALESCE(adults, 0) + COALESCE(children, 0)'
-              ), 'total'
-              ],
+          },
+          attributes: [
+            [
+              sequelize.literal("COALESCE(adults, 0) + COALESCE(children, 0)"),
+              "total",
             ],
-          }
-        );
+          ],
+        });
 
         let mdata = 0;
 
@@ -132,23 +152,36 @@ class DashboardController {
         payload.weeklabels.push(ending);
       }
 
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.success(
         res,
         200,
         200,
-        'Statistics retrieved successfully',
+        "Statistics retrieved successfully",
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = "Statistics could not be retrieved";
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
         400,
-        'Statistics could not be retrieved',
+        "Statistics could not be retrieved",
         err
       );
     }
   }
 }
+
+DashboardController.parameter = "Dashboard";
 
 export default DashboardController;

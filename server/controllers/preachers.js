@@ -1,8 +1,11 @@
-import validPreacher from '@validations/preacher';
-import models from '@models';
-import ResponseController from '@helpers/response';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validPreacher from "@validations/preacher";
+import models from "@models";
+import ResponseController from "@helpers/response";
+import validationResponse from "@validations/validationResponse";
 
-const { Preacher } = models;
+const { Preacher, ApiLogs } = models;
 
 /**
  * Preacher Controller
@@ -19,16 +22,40 @@ class PreacherController {
    * @memberof PreacherController
    */
   static async create(req, res) {
+    const apilog = {
+      name: `${PreacherController.parameters.toLowerCase()}.create`,
+      refid: randString(`${PreacherController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 201,
+      statuscode: 201,
+      message: `${PreacherController.parameter} created successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { errors, isValid } = validPreacher(req.body);
       // Check Validation
       if (!isValid) {
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
 
       const payload = await Preacher.create({ userid, ...req.body });
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -38,6 +65,21 @@ class PreacherController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${PreacherController.parameter} could not be created`;
+
+      if (err.errors && err.errors[0].type === "unique violation") {
+        apilog.message = JSON.stringify(validationResponse(err));
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
+      }
+
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -57,15 +99,50 @@ class PreacherController {
    * @memberof PreacherController
    */
   static async getAll(req, res) {
-    const payload = await Preacher.findAll();
+    const apilog = {
+      name: `${PreacherController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${PreacherController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${PreacherController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
 
-    ResponseController.success(
-      res,
-      200,
-      200,
-      `${PreacherController.parameters} retrieved successfully`,
-      payload
-    );
+    try {
+      const payload = await Preacher.findAll();
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${PreacherController.parameters} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${PreacherController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${PreacherController.parameters} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -77,10 +154,26 @@ class PreacherController {
    * @memberof PreacherController
    */
   static async getById(req, res) {
+    const { preacher: payload } = req;
+
+    const apilog = {
+      name: `${PreacherController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${PreacherController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${PreacherController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const { preacher } = req;
-      const { id } = preacher;
-      const payload = await Preacher.findOne({ where: { id } });
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -90,6 +183,13 @@ class PreacherController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${PreacherController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -110,11 +210,31 @@ class PreacherController {
    * @memberof PreacherController
    */
   static async update(req, res) {
+    const apilog = {
+      name: `${PreacherController.parameters.toLowerCase()}.update`,
+      refid: randString(`${PreacherController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${PreacherController.parameter} updated successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { errors, isValid } = validPreacher(req.body);
       // Check Validation
       if (!isValid) {
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { preacher } = req;
@@ -127,6 +247,10 @@ class PreacherController {
 
       const payload = await Preacher.findAll();
 
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.success(
         res,
         200,
@@ -135,6 +259,13 @@ class PreacherController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${PreacherController.parameter} could not be updated`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -155,11 +286,28 @@ class PreacherController {
    * @memberof PreacherController
    */
   static async delete(req, res) {
+    const apilog = {
+      name: `${PreacherController.parameters.toLowerCase()}.delete`,
+      refid: randString(`${PreacherController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${PreacherController.parameter} deleted successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { preacher } = req;
       const { id, userid } = preacher;
       await Preacher.destroy({ where: { id, userid } });
       const payload = await Preacher.findAll();
+
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
 
       ResponseController.success(
         res,
@@ -169,6 +317,13 @@ class PreacherController {
         payload
       );
     } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${PreacherController.parameter} could not be deleted`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
       ResponseController.error(
         res,
         400,
@@ -180,7 +335,7 @@ class PreacherController {
   }
 }
 
-PreacherController.parameter = 'Preacher';
-PreacherController.parameters = 'Preachers';
+PreacherController.parameter = "Preacher";
+PreacherController.parameters = "Preachers";
 
 export default PreacherController;

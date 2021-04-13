@@ -1,9 +1,9 @@
-import { v4 } from 'uuid';
-import randString from '@helpers/utilities';
-import handlePermission from '@helpers/permission';
-import ResponseController from '@helpers/response';
-import models from '@models';
-import { userFindAll } from './user.middleware';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import handlePermission from "@helpers/permission";
+import ResponseController from "@helpers/response";
+import models from "@models";
+import { userFindAll } from "./user.middleware";
 
 const { Fellowship, ApiLogs } = models;
 
@@ -15,13 +15,13 @@ const fellowshipFinder = async (req, res, next) => {
     if (!fellowship) throw new Error();
   } catch (err) {
     const apilog = {
-      name: 'fellowshipFinder',
-      refid: randString('FELLOWSHIP'),
+      name: "fellowshipFinder",
+      refid: randString("FELLOWSHIP"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 404,
       statuscode: 404,
-      message: 'Fellowship does not exist',
+      message: "Fellowship does not exist",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -29,7 +29,7 @@ const fellowshipFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 404, 404, 'Fellowship does not exist', err);
+    ResponseController.error(res, 404, 404, "Fellowship does not exist", err);
   }
 
   req.fellowship = fellowship;
@@ -42,16 +42,16 @@ const fellowshipPermission = async (req, res, next) => {
 
     const { permissions } = await userFindAll(email);
 
-    await handlePermission(req, permissions, 'fellowship');
+    await handlePermission(req, permissions, "fellowship");
   } catch (err) {
     const apilog = {
-      name: 'fellowshipPermission',
-      refid: randString('FELLOWSHIP'),
+      name: "fellowshipPermission",
+      refid: randString("FELLOWSHIP"),
       reqbody: JSON.stringify(req.body),
       resbody: JSON.stringify(err),
       httpstatuscode: 403,
       statuscode: 403,
-      message: 'You do not have enough permissions',
+      message: "You do not have enough permissions",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -59,7 +59,13 @@ const fellowshipPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    return ResponseController.error(res, 403, 403, 'You do not have enough permissions', err);
+    ResponseController.error(
+      res,
+      403,
+      403,
+      "You do not have enough permissions",
+      err
+    );
   }
 
   next();

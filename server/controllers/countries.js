@@ -1,7 +1,9 @@
-import ResponseController from '@helpers/response';
-import models from '@models';
+import { v4 } from "uuid";
+import ResponseController from "@helpers/response";
+import models from "@models";
+import randString from "@helpers/utilities";
 
-const { Country } = models;
+const { Country, ApiLogs } = models;
 
 /**
  * Country Controller
@@ -18,9 +20,50 @@ class CountryController {
    * @memberof CountryController
    */
   static async getAll(req, res) {
-    const payload = await Country.findAll();
+    const apilog = {
+      name: `${CountryController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${CountryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CountryController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
 
-    return ResponseController.success(res, 200, 200, 'Countries retrieved successfully', payload);
+    try {
+      const payload = await Country.findAll();
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CountryController.parameters} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CountryController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CountryController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -32,11 +75,50 @@ class CountryController {
    * @memberof CountryController
    */
   static async getById(req, res) {
-    const { country } = req;
-    const { id } = country;
-    const payload = await Country.findOne({ where: { id } });
+    const { country: payload } = req;
 
-    return ResponseController.success(res, 200, 200, 'Country retrieved successfully', payload);
+    const apilog = {
+      name: `${CountryController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${CountryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CountryController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CountryController.parameter} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CountryController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CountryController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -48,11 +130,52 @@ class CountryController {
    * @memberof CountryController
    */
   static async getByName(req, res) {
-    const { country } = req;
-    const { name } = country;
-    const payload = await Country.findOne({ where: { name } });
+    const apilog = {
+      name: `${CountryController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${CountryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CountryController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
 
-    return ResponseController.success(res, 200, 200, 'Country retrieved successfully', payload);
+    try {
+      const { country } = req;
+      const { name } = country;
+      const payload = await Country.findOne({ where: { name } });
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CountryController.parameter} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CountryController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CountryController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 }
 

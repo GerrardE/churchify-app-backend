@@ -15,6 +15,7 @@ import countryRouter from './countries';
 import stateRouter from './states';
 import cityRouter from './cities';
 import dashboardRouter from './dashboard';
+import apilogRouter from './apilogs';
 
 const apiRouter = express.Router();
 
@@ -36,5 +37,6 @@ apiRouter.use('/countries', countryRouter);
 apiRouter.use('/states', stateRouter);
 apiRouter.use('/cities', cityRouter);
 apiRouter.use('/dashboard', dashboardRouter);
+apiRouter.use('/apilogs', apilogRouter);
 
 export default apiRouter;

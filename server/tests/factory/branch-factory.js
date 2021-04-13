@@ -4,16 +4,15 @@ import models from '@models';
 const { Branch } = models;
 
 const createTestBranch = async ({
-  userid, zoneid, name, address, city, state, country, notes
+  zoneid, name, address, city, state, country, notes
 }) => {
   const newBranch = await Branch.create({
-    userid: userid || faker.random.uuid(),
-    zoneid: zoneid || faker.random.number(),
+    zoneid: zoneid || 1,
     name: name || faker.random.alphaNumeric(6),
     address: address || faker.random.alphaNumeric(6),
-    city: city || 6,
-    state: state || 32,
-    country: country || 161,
+    city: city || 1,
+    state: state || 1,
+    country: country || 1,
     notes: notes || faker.random.alphaNumeric(6)
   });
 
