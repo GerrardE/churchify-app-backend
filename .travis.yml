@@ -9,11 +9,6 @@ cache:
 global:
   - export NODE_ENV=test
 
-addons:
-  postgresql: "9.6"
-services:
-  - postgresql
-
 env:
   global:
     - CC_TEST_REPORTER_ID=b9ac81adddde6a79f50181296a3cb7afb9113b60deb543242857e745fab6111b
@@ -25,13 +20,11 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-  - psql -c "create user gerrard with password 'testdb';" -U postgres
-  - psql -c 'create database testdb;' -U postgres
-  - npm run build
+  - yarn build
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
-  - npm run coverage
+  - yarn coverage
 script:
-  - npm run test
+  - yarn test
