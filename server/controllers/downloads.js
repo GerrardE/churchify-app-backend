@@ -59,8 +59,8 @@ class DownloadController {
 
       ResponseController.success(
         res,
-        200,
-        200,
+        201,
+        201,
         `${DownloadController.parameter} created successfully`,
         payload
       );
