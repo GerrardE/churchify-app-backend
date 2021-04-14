@@ -39,6 +39,30 @@ describe("FELLOWSHIP CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
+  it("should handle error on GETALL FELLOWSHIPS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await fellowships.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET FELLOWSHIP ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await fellowships.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
   it("should handle error on DELETE FELLOWSHIP", async () => {
     const mock = sinon.spy();
     const res = {

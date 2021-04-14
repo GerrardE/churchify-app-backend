@@ -39,6 +39,30 @@ describe("CONFIG CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
+  it("should handle error on GETALL CONFIGS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await configs.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET CONFIG ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await configs.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
   it("should handle error on DELETE CONFIG", async () => {
     const mock = sinon.spy();
     const res = {

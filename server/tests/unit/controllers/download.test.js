@@ -39,6 +39,30 @@ describe("DOWNLOAD CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
+  it("should handle error on GETALL DOWNLOADS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await downloads.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET DOWNLOAD ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await downloads.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
   it("should handle error on DELETE DOWNLOAD", async () => {
     const mock = sinon.spy();
     const res = {

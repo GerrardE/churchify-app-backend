@@ -39,6 +39,30 @@ describe("CATEGORY CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
+  it("should handle error on GETALL CATEGORIES ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await categories.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET CATEGORY ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await categories.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
   it("should handle error on DELETE CATEGORY", async () => {
     const mock = sinon.spy();
     const res = {

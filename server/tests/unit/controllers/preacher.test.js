@@ -39,6 +39,30 @@ describe("PREACHER CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
+  it("should handle error on GETALL PREACHERS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await preachers.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET PREACHER ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await preachers.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
   it("should handle error on DELETE PREACHER", async () => {
     const mock = sinon.spy();
     const res = {

@@ -124,7 +124,7 @@ class ConfigController {
         res,
         200,
         200,
-        `${ConfigController.parameter} retrieved successfully`,
+        `${ConfigController.parameters} retrieved successfully`,
         payload
       );
     } catch (err) {
