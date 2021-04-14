@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Attendance = sequelize.define('Attendance', {
+  const Attendance = sequelize.define("Attendance", {
     userid: {
       type: DataTypes.UUID,
       allowNull: false
@@ -57,23 +57,23 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Attendance.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'activity'
+      foreignKey: "id",
+      as: "activity"
     });
 
     Attendance.hasMany(Event, {
-      foreignKey: 'id',
-      as: 'events'
+      foreignKey: "id",
+      as: "events"
     });
 
     Attendance.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'branchattendance'
+      foreignKey: "id",
+      as: "branchattendance"
     });
 
     Attendance.belongsTo(Zone, {
-      foreignKey: 'id',
-      as: 'zoneattendance'
+      foreignKey: "id",
+      as: "zoneattendance"
     });
   };
 

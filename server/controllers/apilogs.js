@@ -1,7 +1,7 @@
-import models from '@models';
-import ResponseController from '@helpers/response';
-import randString from '@helpers/utilities';
-import { v4 } from 'uuid';
+import models from "@models";
+import ResponseController from "@helpers/response";
+import randString from "@helpers/utilities";
+import { v4 } from "uuid";
 
 const { ApiLogs } = models;
 
@@ -25,14 +25,14 @@ class ApiLogsController {
       name: `${ApiLogsController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ApiLogsController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ApiLogsController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -82,14 +82,14 @@ class ApiLogsController {
       name: `${ApiLogsController.parameters.toLowerCase()}.getById`,
       refid: randString(`${ApiLogsController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ApiLogsController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -136,14 +136,14 @@ class ApiLogsController {
       name: `${ApiLogsController.parameters.toLowerCase()}.update`,
       refid: randString(`${ApiLogsController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ApiLogsController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -197,14 +197,14 @@ class ApiLogsController {
       name: `${ApiLogsController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ApiLogsController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ApiLogsController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -242,7 +242,7 @@ class ApiLogsController {
   }
 }
 
-ApiLogsController.parameter = 'ApiLog';
-ApiLogsController.parameters = 'ApiLogs';
+ApiLogsController.parameter = "ApiLog";
+ApiLogsController.parameters = "ApiLogs";
 
 export default ApiLogsController;

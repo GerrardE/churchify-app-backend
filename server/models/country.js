@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Country = sequelize.define('Country', {
+  const Country = sequelize.define("Country", {
     name: DataTypes.STRING,
     iso3: DataTypes.STRING,
     iso2: DataTypes.STRING,
@@ -21,13 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Country.hasMany(City, {
-      foreignKey: 'id',
-      as: 'country_cities'
+      foreignKey: "id",
+      as: "country_cities"
     });
 
     Country.hasMany(State, {
-      foreignKey: 'id',
-      as: 'country_states'
+      foreignKey: "id",
+      as: "country_states"
     });
   };
 

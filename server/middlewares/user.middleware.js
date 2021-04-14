@@ -4,7 +4,9 @@ import handlePermission from "@helpers/permission";
 import ResponseController from "@helpers/response";
 import models from "@models";
 
-const { User, Role, Permission, ApiLogs } = models;
+const {
+  User, Role, Permission, ApiLogs
+} = models;
 
 const userFindAll = async (email) => {
   const user = await User.findOne({

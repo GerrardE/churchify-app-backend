@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const City = sequelize.define('City', {
+  const City = sequelize.define("City", {
     name: DataTypes.STRING,
     state_id: DataTypes.INTEGER,
     state_code: DataTypes.STRING,
@@ -17,13 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     City.belongsTo(Country, {
-      foreignKey: 'id',
-      as: 'cities_country'
+      foreignKey: "id",
+      as: "cities_country"
     });
 
     City.belongsTo(State, {
-      foreignKey: 'id',
-      as: 'cities_state'
+      foreignKey: "id",
+      as: "cities_state"
     });
   };
   return City;

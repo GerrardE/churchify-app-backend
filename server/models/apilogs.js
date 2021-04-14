@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const ApiLogs = sequelize.define('ApiLogs', {
+  const ApiLogs = sequelize.define("ApiLogs", {
     name: DataTypes.STRING,
     refid: DataTypes.STRING,
     reqbody: DataTypes.TEXT,

@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import { config } from 'dotenv';
+import bcrypt from "bcryptjs";
+import { config } from "dotenv";
 
 config();
 
@@ -8,7 +8,7 @@ const SALT_ROUNDS = +salt;
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'User',
+    "User",
     {
       id: {
         type: DataTypes.UUID,
@@ -90,55 +90,55 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     User.hasMany(Training, {
-      foreignKey: 'id',
-      as: 'trainings'
+      foreignKey: "id",
+      as: "trainings"
     });
 
     User.hasMany(Membership, {
-      foreignKey: 'id',
-      as: 'memberships'
+      foreignKey: "id",
+      as: "memberships"
     });
 
     User.hasMany(Group, {
-      foreignKey: 'id',
-      as: 'groups'
+      foreignKey: "id",
+      as: "groups"
     });
 
     User.hasMany(Freport, {
-      foreignKey: 'id',
-      as: 'freports'
+      foreignKey: "id",
+      as: "freports"
     });
 
     User.hasMany(Event, {
-      foreignKey: 'id',
-      as: 'events'
+      foreignKey: "id",
+      as: "events"
     });
 
     User.hasMany(Download, {
-      foreignKey: 'id',
-      as: 'downloads'
+      foreignKey: "id",
+      as: "downloads"
     });
 
     User.belongsTo(Fellowship, {
-      foreignKey: 'id',
-      as: 'fellowship'
+      foreignKey: "id",
+      as: "fellowship"
     });
 
     User.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'member'
+      foreignKey: "id",
+      as: "member"
     });
 
     User.belongsToMany(Role, {
-      through: 'UserRole',
-      as: 'roles',
-      foreignKey: 'userid'
+      through: "UserRole",
+      as: "roles",
+      foreignKey: "userid"
     });
   };
 
   User.hashPassword = async (user) => {
     const hash = await bcrypt.hash(user.dataValues.password, SALT_ROUNDS);
-    await user.setDataValue('password', hash);
+    await user.setDataValue("password", hash);
   };
 
   return User;

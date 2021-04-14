@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Membership = sequelize.define('Membership', {
+  const Membership = sequelize.define("Membership", {
     userid: {
       type: DataTypes.UUID,
       allowNull: false
@@ -50,13 +50,13 @@ module.exports = (sequelize, DataTypes) => {
     const { Branch, User } = models;
 
     Membership.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'user_memberships'
+      foreignKey: "id",
+      as: "user_memberships"
     });
 
     Membership.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'membership'
+      foreignKey: "id",
+      as: "membership"
     });
   };
   return Membership;

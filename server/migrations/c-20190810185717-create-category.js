@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Categories', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable("Categories", {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -11,8 +11,8 @@ module.exports = {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'Users',
-        key: 'id'
+        model: "Users",
+        key: "id"
       }
     },
 
@@ -38,5 +38,5 @@ module.exports = {
     }
   }),
 
-  down: queryInterface => queryInterface.dropTable('Categories')
+  down: (queryInterface) => queryInterface.dropTable("Categories")
 };

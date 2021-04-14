@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Groups', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable("Groups", {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -11,8 +11,8 @@ module.exports = {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
-        model: 'Users',
-        key: 'id'
+        model: "Users",
+        key: "id"
       }
     },
 
@@ -25,8 +25,8 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'Zones',
-        key: 'id'
+        model: "Zones",
+        key: "id"
       }
     },
 
@@ -34,8 +34,8 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'Branches',
-        key: 'id'
+        model: "Branches",
+        key: "id"
       }
     },
 
@@ -75,5 +75,5 @@ module.exports = {
     }
   }),
 
-  down: queryInterface => queryInterface.dropTable('Groups')
+  down: (queryInterface) => queryInterface.dropTable("Groups")
 };

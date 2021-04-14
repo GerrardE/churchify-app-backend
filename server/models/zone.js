@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Zone = sequelize.define('Zone', {
+  const Zone = sequelize.define("Zone", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,13 +23,13 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Zone.hasMany(Branch, {
-      foreignKey: 'id',
-      as: 'branches'
+      foreignKey: "id",
+      as: "branches"
     });
 
     Zone.hasMany(Attendance, {
-      foreignKey: 'zoneid',
-      as: 'zoneattendance'
+      foreignKey: "zoneid",
+      as: "zoneattendance"
     });
   };
 

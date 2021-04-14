@@ -15,10 +15,13 @@
     "migrate:undo:all": "sequelize db:migrate:undo:all",
     "migrate:undo": "sequelize db:migrate:undo",
     "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
+    "deploy:test:sh": "chmod +x bin/deploy.sh && bin/deploy.test.sh",
+    "deploy": "npm i && npm run config && npm run build && chmod +x bin/deploy.sh && bin/deploy.sh",
     "clean": "rm -rf dist",
+    "lint": "eslint --fix --ext .js .",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "pretest": "cross-env NODE_ENV=test yarn refreshdb",
     "check": "yarn refreshdb && nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit",
+    "pretest": "cross-env NODE_ENV=test yarn refreshdb && chmod +x bin/deploy.test.sh && bin/deploy.test.sh",
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
   },
   "repository": {

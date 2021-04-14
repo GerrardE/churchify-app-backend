@@ -1,6 +1,6 @@
-import faker from 'faker';
-import models from '@models';
-import { createToken } from '../../middlewares/Token';
+import faker from "faker";
+import models from "@models";
+import { createToken } from "../../middlewares/Token";
 
 const { User } = models;
 

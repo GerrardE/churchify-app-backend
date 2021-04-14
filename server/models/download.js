@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Download = sequelize.define('Download', {
+  const Download = sequelize.define("Download", {
     userid: {
       type: DataTypes.UUID,
       allowNull: false
@@ -36,13 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     const { User, Category } = models;
 
     Download.belongsTo(Category, {
-      foreignKey: 'id',
-      as: 'download'
+      foreignKey: "id",
+      as: "download"
     });
 
     Download.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'downloads'
+      foreignKey: "id",
+      as: "downloads"
     });
   };
 

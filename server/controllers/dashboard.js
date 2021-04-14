@@ -1,9 +1,9 @@
 /* eslint-disable no-await-in-loop */
-import { v4 } from 'uuid';
-import sequelize from 'sequelize';
-import ResponseController from '@helpers/response';
-import models from '@models';
-import randString from '@helpers/utilities';
+import { v4 } from "uuid";
+import sequelize from "sequelize";
+import ResponseController from "@helpers/response";
+import models from "@models";
+import randString from "@helpers/utilities";
 
 const { ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class DashboardController {
       name: `${DashboardController.parameters.toLowerCase()}.getStatistics`,
       refid: randString(`${DashboardController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
-      message: 'Statistics retrieved successfully',
+      message: "Statistics retrieved successfully",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -109,9 +109,9 @@ class DashboardController {
           attributes: [
             [
               sequelize.literal(
-                'COALESCE(children, 0) + COALESCE(women, 0) + COALESCE(men, 0)'
+                "COALESCE(children, 0) + COALESCE(women, 0) + COALESCE(men, 0)"
               ),
-              'total',
+              "total",
             ],
           ],
         });
@@ -124,8 +124,8 @@ class DashboardController {
           },
           attributes: [
             [
-              sequelize.literal('COALESCE(adults, 0) + COALESCE(children, 0)'),
-              'total',
+              sequelize.literal("COALESCE(adults, 0) + COALESCE(children, 0)"),
+              "total",
             ],
           ],
         });
@@ -160,14 +160,14 @@ class DashboardController {
         res,
         200,
         200,
-        'Statistics retrieved successfully',
+        "Statistics retrieved successfully",
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = 'Statistics could not be retrieved';
+      apilog.message = "Statistics could not be retrieved";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -175,13 +175,13 @@ class DashboardController {
         res,
         400,
         400,
-        'Statistics could not be retrieved',
+        "Statistics could not be retrieved",
         err
       );
     }
   }
 }
 
-DashboardController.parameter = 'Dashboard';
+DashboardController.parameter = "Dashboard";
 
 export default DashboardController;

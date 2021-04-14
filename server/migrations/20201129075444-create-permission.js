@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Permissions', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable("Permissions", {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -25,5 +25,5 @@ module.exports = {
     },
   }),
 
-  down: queryInterface => queryInterface.dropTable('Permissions'),
+  down: (queryInterface) => queryInterface.dropTable("Permissions"),
 };

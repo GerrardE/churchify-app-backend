@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Permission = sequelize.define(
-    'Permission',
+    "Permission",
     {
       name: {
         type: DataTypes.STRING,
@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     const { Role } = models;
 
     Permission.belongsToMany(Role, {
-      through: 'PermissionRole',
-      as: 'roles',
-      foreignKey: 'permissionid'
+      through: "PermissionRole",
+      as: "roles",
+      foreignKey: "permissionid"
     });
   };
   return Permission;

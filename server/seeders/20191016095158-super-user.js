@@ -1,6 +1,6 @@
-import bcrypt from 'bcryptjs';
-import faker from 'faker';
-import { config } from 'dotenv';
+import bcrypt from "bcryptjs";
+import faker from "faker";
+import { config } from "dotenv";
 
 config();
 
@@ -10,12 +10,12 @@ const SALT_ROUNDS = +salt;
 const password = bcrypt.hashSync(process.env.SUPER_ADMIN_PASSWORD, SALT_ROUNDS);
 
 module.exports = {
-  up: (queryInterface) => queryInterface.bulkInsert('Users', [{
+  up: (queryInterface) => queryInterface.bulkInsert("Users", [{
     id: faker.random.uuid(),
-    firstname: 'Gerrard',
-    lastname: 'Ezeugwa',
-    phone: '08137519688',
-    email: 'admin@projectchurchify.com',
+    firstname: "Gerrard",
+    lastname: "Ezeugwa",
+    phone: "08137519688",
+    email: "admin@projectchurchify.com",
     zoneid: 1,
     branchid: 2,
     city: 77002,
@@ -26,5 +26,5 @@ module.exports = {
     updatedAt: new Date()
   }], {}),
 
-  down: (queryInterface) => queryInterface.bulkDelete('Users', null, {})
+  down: (queryInterface) => queryInterface.bulkDelete("Users", null, {})
 };

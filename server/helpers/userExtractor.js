@@ -8,7 +8,7 @@ const userExtractor = (user, token) => {
     email, id, firstname, lastname
   } = user;
 
-  let role = 'guest';
+  let role = "guest";
   let permissions = [];
 
   if (user.roles && user.roles.length > 0) {

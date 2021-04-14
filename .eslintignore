@@ -1,0 +1,5 @@
+dist
+bin
+docs
+.nyc_output
+node_modules

@@ -1,9 +1,9 @@
-import { v4 } from 'uuid';
-import randString from '@helpers/utilities';
-import validationResponse from '@validations/validationResponse';
-import ResponseController from '@helpers/response';
-import validZone from '@validations/zone';
-import models from '@models';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import ResponseController from "@helpers/response";
+import validZone from "@validations/zone";
+import models from "@models";
 
 const { Zone, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class ZoneController {
       name: `${ZoneController.parameters.toLowerCase()}.create`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
       message: `${ZoneController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -43,10 +43,10 @@ class ZoneController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Zone.create({ ...req.body });
@@ -68,7 +68,7 @@ class ZoneController {
       apilog.statuscode = 400;
       apilog.message = `${ZoneController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === 'unique violation') {
+      if (err.errors && err.errors[0].type === "unique violation") {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
@@ -76,7 +76,7 @@ class ZoneController {
           res,
           400,
           400,
-          'unique violation',
+          "unique violation",
           validationResponse(err)
         );
       }
@@ -107,14 +107,14 @@ class ZoneController {
       name: `${ZoneController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ZoneController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -164,14 +164,14 @@ class ZoneController {
       name: `${ZoneController.parameters.toLowerCase()}.getById`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ZoneController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -218,14 +218,14 @@ class ZoneController {
       name: `${ZoneController.parameters.toLowerCase()}.update`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ZoneController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -235,10 +235,10 @@ class ZoneController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { zone } = req;
@@ -248,7 +248,7 @@ class ZoneController {
 
       const payload = await Zone.findAll();
 
-      apilog.resbody = '';
+      apilog.resbody = "";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -291,14 +291,14 @@ class ZoneController {
       name: `${ZoneController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${ZoneController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -335,7 +335,7 @@ class ZoneController {
   }
 }
 
-ZoneController.parameter = 'Zone';
-ZoneController.parameters = 'Zones';
+ZoneController.parameter = "Zone";
+ZoneController.parameters = "Zones";
 
 export default ZoneController;

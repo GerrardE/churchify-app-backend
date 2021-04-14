@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const UserRole = sequelize.define(
-    'UserRole',
+    "UserRole",
     {
       userid: {
         type: DataTypes.UUID,
@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     const { Role, User } = models;
 
     UserRole.belongsTo(Role, {
-      foreignKey: 'roleid'
+      foreignKey: "roleid"
     });
 
     UserRole.belongsTo(User, {
-      foreignKey: 'userid'
+      foreignKey: "userid"
     });
   };
 

@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Cities', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable("Cities", {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -13,8 +13,8 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'States',
-        key: 'id'
+        model: "States",
+        key: "id"
       }
     },
     state_code: {
@@ -24,8 +24,8 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'Countries',
-        key: 'id'
+        model: "Countries",
+        key: "id"
       }
     },
     country_code: {
@@ -52,5 +52,5 @@ module.exports = {
       type: Sequelize.DATE,
     },
   }),
-  down: queryInterface => queryInterface.dropTable('Cities'),
+  down: (queryInterface) => queryInterface.dropTable("Cities"),
 };

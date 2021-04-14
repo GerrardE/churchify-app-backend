@@ -1,9 +1,9 @@
-import { v4 } from 'uuid';
-import randString from '@helpers/utilities';
-import validationResponse from '@validations/validationResponse';
-import validRole from '@validations/role';
-import models from '@models';
-import ResponseController from '@helpers/response';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import validRole from "@validations/role";
+import models from "@models";
+import ResponseController from "@helpers/response";
 
 const { Role, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.create`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
       message: `${RoleController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -43,10 +43,10 @@ class RoleController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Role.create({ ...req.body });
@@ -68,7 +68,7 @@ class RoleController {
       apilog.statuscode = 400;
       apilog.message = `${RoleController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === 'unique violation') {
+      if (err.errors && err.errors[0].type === "unique violation") {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
@@ -101,15 +101,15 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.assignpermissions`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
       message:
-        'Permission(s) assigned successfully, Please logout and login again',
+        "Permission(s) assigned successfully, Please logout and login again",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -125,14 +125,14 @@ class RoleController {
         res,
         201,
         201,
-        'Permission(s) assigned successfully, Please logout and login again',
+        "Permission(s) assigned successfully, Please logout and login again",
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = 'Permission(s) could not be assigned';
+      apilog.message = "Permission(s) could not be assigned";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -140,7 +140,7 @@ class RoleController {
         res,
         400,
         400,
-        'Permission(s) could not be assigned',
+        "Permission(s) could not be assigned",
         err
       );
     }
@@ -159,15 +159,15 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.unassignpermissions`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message:
-        'Permission(s) unassigned successfully, Please logout and login again',
+        "Permission(s) unassigned successfully, Please logout and login again",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -183,14 +183,14 @@ class RoleController {
         res,
         200,
         200,
-        'Permission(s) unassigned successfully, Please logout and login again',
+        "Permission(s) unassigned successfully, Please logout and login again",
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = 'Permission(s) could not be unassigned';
+      apilog.message = "Permission(s) could not be unassigned";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -198,7 +198,7 @@ class RoleController {
         res,
         400,
         400,
-        'Permission(s) could not be unassigned',
+        "Permission(s) could not be unassigned",
         err
       );
     }
@@ -217,14 +217,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.assignRoles`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
-      message: 'Role(s) assigned successfully, Please logout and login again',
+      message: "Role(s) assigned successfully, Please logout and login again",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -240,14 +240,14 @@ class RoleController {
         res,
         201,
         201,
-        'Role(s) assigned successfully, Please logout and login again',
+        "Role(s) assigned successfully, Please logout and login again",
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = 'Role(s) could not be assigned';
+      apilog.message = "Role(s) could not be assigned";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -255,7 +255,7 @@ class RoleController {
         res,
         400,
         400,
-        'Role(s) could not be assigned',
+        "Role(s) could not be assigned",
         err
       );
     }
@@ -274,14 +274,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.unassignRoles`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: 'Role(s) unassigned successfully, Please logout and login again',
+      message: "Role(s) unassigned successfully, Please logout and login again",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -297,7 +297,7 @@ class RoleController {
         res,
         200,
         200,
-        'Role(s) unassigned successfully, Please logout and login again',
+        "Role(s) unassigned successfully, Please logout and login again",
         payload
       );
     } catch (err) {
@@ -312,7 +312,7 @@ class RoleController {
         res,
         400,
         400,
-        'Role(s) could not be unassigned',
+        "Role(s) could not be unassigned",
         err
       );
     }
@@ -331,14 +331,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${RoleController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -388,14 +388,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.getById`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${RoleController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -442,14 +442,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.update`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${RoleController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -459,10 +459,10 @@ class RoleController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { role } = req;
@@ -515,14 +515,14 @@ class RoleController {
       name: `${RoleController.parameters.toLowerCase()}.delete`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${RoleController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -561,7 +561,7 @@ class RoleController {
   }
 }
 
-RoleController.parameters = 'Roles';
-RoleController.parameter = 'Role';
+RoleController.parameters = "Roles";
+RoleController.parameter = "Role";
 
 export default RoleController;

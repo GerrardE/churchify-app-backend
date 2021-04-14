@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Event = sequelize.define('Event', {
+  const Event = sequelize.define("Event", {
     userid: {
       type: DataTypes.UUID,
       allowNull: false
@@ -36,13 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     const { Branch, User } = models;
 
     Event.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'user_events'
+      foreignKey: "id",
+      as: "user_events"
     });
 
     Event.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'branch_events'
+      foreignKey: "id",
+      as: "branch_events"
     });
   };
 

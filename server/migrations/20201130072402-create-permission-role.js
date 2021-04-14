@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('PermissionRoles', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable("PermissionRoles", {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -10,16 +10,16 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'Roles',
-        key: 'id'
+        model: "Roles",
+        key: "id"
       }
     },
     permissionid: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'Permissions',
-        key: 'id'
+        model: "Permissions",
+        key: "id"
       }
     },
     createdAt: {
@@ -32,5 +32,5 @@ module.exports = {
     },
   }),
 
-  down: queryInterface => queryInterface.dropTable('PermissionRoles'),
+  down: (queryInterface) => queryInterface.dropTable("PermissionRoles"),
 };

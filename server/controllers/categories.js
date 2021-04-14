@@ -1,9 +1,9 @@
-import { v4 } from 'uuid';
-import randString from '@helpers/utilities';
-import validationResponse from '@validations/validationResponse';
-import validCategory from '@validations/category';
-import models from '@models';
-import ResponseController from '@helpers/response';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import validCategory from "@validations/category";
+import models from "@models";
+import ResponseController from "@helpers/response";
 
 const { Category, ApiLogs } = models;
 
@@ -26,14 +26,14 @@ class CategoryController {
       name: `${CategoryController.parameters.toLowerCase()}.create`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 201,
       statuscode: 201,
       message: `${CategoryController.parameter} created successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
     try {
       const { errors, isValid } = validCategory(req.body);
@@ -42,10 +42,10 @@ class CategoryController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -72,7 +72,7 @@ class CategoryController {
       apilog.statuscode = 400;
       apilog.message = `${CategoryController.parameter} could not be created`;
 
-      if (err.errors && err.errors[0].type === 'unique violation') {
+      if (err.errors && err.errors[0].type === "unique violation") {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
@@ -104,14 +104,14 @@ class CategoryController {
       name: `${CategoryController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CategoryController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -161,14 +161,14 @@ class CategoryController {
       name: `${CategoryController.parameters.toLowerCase()}.getById`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CategoryController.parameter} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -215,14 +215,14 @@ class CategoryController {
       name: `${CategoryController.parameters.toLowerCase()}.update`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CategoryController.parameter} updated successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -232,10 +232,10 @@ class CategoryController {
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = 'Error: invalid input';
+        apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, 'Error: invalid input', errors);
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { category } = req;
@@ -291,14 +291,14 @@ class CategoryController {
       name: `${CategoryController.parameters.toLowerCase()}.delete`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
-      resbody: '',
+      resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
       message: `${CategoryController.parameter} deleted successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
-      reqendtime: '',
+      reqendtime: "",
     };
 
     try {
@@ -336,7 +336,7 @@ class CategoryController {
   }
 }
 
-CategoryController.parameter = 'Category';
-CategoryController.parameters = 'Categories';
+CategoryController.parameter = "Category";
+CategoryController.parameters = "Categories";
 
 export default CategoryController;

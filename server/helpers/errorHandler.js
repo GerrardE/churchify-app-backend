@@ -1,4 +1,4 @@
-import logger from './logger';
+import logger from "./logger";
 
 /**
  * Handlers uncaught errors in the app
@@ -17,10 +17,10 @@ const errorHandler = (error, request, response, next) => {
   logger.error({
     request: request.originalUrl,
     message: error.message,
-    stack: process.env.NODE_ENV !== 'production' && error.stack
+    stack: process.env.NODE_ENV !== "production" && error.stack
   });
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     return response.json({
       errors: {
         global: error.message,

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Group = sequelize.define('Group', {
+  const Group = sequelize.define("Group", {
     userid: {
       type: DataTypes.UUID,
       allowNull: false
@@ -50,13 +50,13 @@ module.exports = (sequelize, DataTypes) => {
     const { Branch, User } = models;
 
     Group.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'user_group'
+      foreignKey: "id",
+      as: "user_group"
     });
 
     Group.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'groups'
+      foreignKey: "id",
+      as: "groups"
     });
   };
 

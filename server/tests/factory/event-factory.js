@@ -1,5 +1,5 @@
-import faker from 'faker';
-import models from '@models';
+import faker from "faker";
+import models from "@models";
 
 const { Event } = models;
 
