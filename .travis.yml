@@ -10,7 +10,8 @@ global:
   - export NODE_ENV=test
 
 addons:
-  postgresql: "9.6"
+  postgresql: "12.1"
+
 services:
   - postgresql
 
