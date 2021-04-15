@@ -1,12 +1,12 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import sinon from "sinon";
-import apilogs from "@controllers/apilogs";
-import { apilogFinder, apilogPermission } from "@middlewares/apilog.middleware";
+import permissions from "@controllers/permissions";
+import { permissionFinder, permissionPermission } from "@middlewares/permission.middleware";
 
 chai.use(chaiHttp);
 
-describe("APILOG CONTROLLER TESTS", () => {
+describe("PERMISSION CONTROLLER TESTS", () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -15,7 +15,7 @@ describe("APILOG CONTROLLER TESTS", () => {
     sandbox.restore();
   });
 
-  it("should handle error on UPDATE APILOG", async () => {
+  it("should handle error on CREATE PERMISSION", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -23,11 +23,11 @@ describe("APILOG CONTROLLER TESTS", () => {
       })
     };
 
-    await apilogs.update({}, res);
+    await permissions.create({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it("should handle error on GETALL APILOGS ===========> ", async () => {
+  it("should handle error on UPDATE PERMISSION", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -35,11 +35,11 @@ describe("APILOG CONTROLLER TESTS", () => {
       })
     };
 
-    await apilogs.getAll({}, res);
+    await permissions.update({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it("should handle error on GET APILOG ===========> ", async () => {
+  it("should handle error on GETALL PERMISSIONS ===========> ", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -47,11 +47,11 @@ describe("APILOG CONTROLLER TESTS", () => {
       })
     };
 
-    await apilogs.getById({}, res);
+    await permissions.getAll({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it("should handle error on DELETE APILOG", async () => {
+  it("should handle error on GET PERMISSION ===========> ", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -59,16 +59,28 @@ describe("APILOG CONTROLLER TESTS", () => {
       })
     };
 
-    await apilogs.delete({}, res);
+    await permissions.getById({}, res);
     sinon.assert.calledOnce(mock);
   });
 
-  it("should handle error on FIND apilog", async () => {
+  it("should handle error on DELETE PERMISSION", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await permissions.delete({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on FIND PERMISSION", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
       params: {
-        id: 100000
+        id: 1001111111111
       }
     };
 
@@ -78,11 +90,11 @@ describe("APILOG CONTROLLER TESTS", () => {
       })
     };
 
-    await apilogFinder(req, res, next);
+    await permissionFinder(req, res, next);
     sinon.assert.calledOnce(mock);
   });
 
-  it("should handle error on APILOG PERMISSION", async () => {
+  it("should handle error on PERMISSION PERMISSION", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -100,7 +112,7 @@ describe("APILOG CONTROLLER TESTS", () => {
       })
     };
 
-    await apilogPermission(req, res, next);
+    await permissionPermission(req, res, next);
     sinon.assert.calledOnce(mock);
   });
 });

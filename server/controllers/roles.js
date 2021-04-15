@@ -204,119 +204,119 @@ class RoleController {
     }
   }
 
-  /**
-   * @static
-   * @param {*} req - Request object
-   * @param {*} res - Response object
-   * @param {*} next - The next middleware
-   * @return {json} Returns json object
-   * @memberof RoleController
-   */
-  static async assignRoles(req, res) {
-    const apilog = {
-      name: `${RoleController.parameters.toLowerCase()}.assignRoles`,
-      refid: randString(`${RoleController.parameter.toUpperCase()}`),
-      reqbody: JSON.stringify(req.body),
-      resbody: "",
-      httpstatuscode: 201,
-      statuscode: 201,
-      message: "Role(s) assigned successfully, Please logout and login again",
-      apiref: v4(),
-      url: `${req.method} ~ ${req.originalUrl}`,
-      reqstarttime: Date.now(),
-      reqendtime: "",
-    };
+  // /**
+  //  * @static
+  //  * @param {*} req - Request object
+  //  * @param {*} res - Response object
+  //  * @param {*} next - The next middleware
+  //  * @return {json} Returns json object
+  //  * @memberof RoleController
+  //  */
+  // static async assignRoles(req, res) {
+  //   const apilog = {
+  //     name: `${RoleController.parameters.toLowerCase()}.assignRoles`,
+  //     refid: randString(`${RoleController.parameter.toUpperCase()}`),
+  //     reqbody: JSON.stringify(req.body),
+  //     resbody: "",
+  //     httpstatuscode: 201,
+  //     statuscode: 201,
+  //     message: "Role(s) assigned successfully, Please logout and login again",
+  //     apiref: v4(),
+  //     url: `${req.method} ~ ${req.originalUrl}`,
+  //     reqstarttime: Date.now(),
+  //     reqendtime: "",
+  //   };
 
-    try {
-      const { role } = req;
+  //   try {
+  //     const { role } = req;
 
-      const payload = await role.addRoles(req.body.Role);
+  //     const payload = await role.addRoles(req.body.Role);
 
-      apilog.resbody = JSON.stringify(payload);
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
+  //     apilog.resbody = JSON.stringify(payload);
+  //     apilog.reqendtime = Date.now();
+  //     await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
-        res,
-        201,
-        201,
-        "Role(s) assigned successfully, Please logout and login again",
-        payload
-      );
-    } catch (err) {
-      apilog.resbody = JSON.stringify(err);
-      apilog.httpstatuscode = 400;
-      apilog.statuscode = 400;
-      apilog.message = "Role(s) could not be assigned";
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
+  //     ResponseController.success(
+  //       res,
+  //       201,
+  //       201,
+  //       "Role(s) assigned successfully, Please logout and login again",
+  //       payload
+  //     );
+  //   } catch (err) {
+  //     apilog.resbody = JSON.stringify(err);
+  //     apilog.httpstatuscode = 400;
+  //     apilog.statuscode = 400;
+  //     apilog.message = "Role(s) could not be assigned";
+  //     apilog.reqendtime = Date.now();
+  //     await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
-        res,
-        400,
-        400,
-        "Role(s) could not be assigned",
-        err
-      );
-    }
-  }
+  //     ResponseController.error(
+  //       res,
+  //       400,
+  //       400,
+  //       "Role(s) could not be assigned",
+  //       err
+  //     );
+  //   }
+  // }
 
-  /**
-   * @static
-   * @param {*} req - Request object
-   * @param {*} res - Response object
-   * @param {*} next - The next middleware
-   * @return {json} Returns json object
-   * @memberof RoleController
-   */
-  static async unassignRoles(req, res) {
-    const apilog = {
-      name: `${RoleController.parameters.toLowerCase()}.unassignRoles`,
-      refid: randString(`${RoleController.parameter.toUpperCase()}`),
-      reqbody: JSON.stringify(req.body),
-      resbody: "",
-      httpstatuscode: 200,
-      statuscode: 200,
-      message: "Role(s) unassigned successfully, Please logout and login again",
-      apiref: v4(),
-      url: `${req.method} ~ ${req.originalUrl}`,
-      reqstarttime: Date.now(),
-      reqendtime: "",
-    };
+  // /**
+  //  * @static
+  //  * @param {*} req - Request object
+  //  * @param {*} res - Response object
+  //  * @param {*} next - The next middleware
+  //  * @return {json} Returns json object
+  //  * @memberof RoleController
+  //  */
+  // static async unassignRoles(req, res) {
+  //   const apilog = {
+  //     name: `${RoleController.parameters.toLowerCase()}.unassignRoles`,
+  //     refid: randString(`${RoleController.parameter.toUpperCase()}`),
+  //     reqbody: JSON.stringify(req.body),
+  //     resbody: "",
+  //     httpstatuscode: 200,
+  //     statuscode: 200,
+  //     message: "Role(s) unassigned successfully, Please logout and login again",
+  //     apiref: v4(),
+  //     url: `${req.method} ~ ${req.originalUrl}`,
+  //     reqstarttime: Date.now(),
+  //     reqendtime: "",
+  //   };
 
-    try {
-      const { role } = req;
+  //   try {
+  //     const { role } = req;
 
-      const payload = await role.removeRoles(req.body.Role);
+  //     const payload = await role.removeRoles(req.body.Role);
 
-      apilog.resbody = JSON.stringify(payload);
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
+  //     apilog.resbody = JSON.stringify(payload);
+  //     apilog.reqendtime = Date.now();
+  //     await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
-        res,
-        200,
-        200,
-        "Role(s) unassigned successfully, Please logout and login again",
-        payload
-      );
-    } catch (err) {
-      apilog.resbody = JSON.stringify(err);
-      apilog.httpstatuscode = 400;
-      apilog.statuscode = 400;
-      apilog.message = `${RoleController.parameter} could not be retrieved`;
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
+  //     ResponseController.success(
+  //       res,
+  //       200,
+  //       200,
+  //       "Role(s) unassigned successfully, Please logout and login again",
+  //       payload
+  //     );
+  //   } catch (err) {
+  //     apilog.resbody = JSON.stringify(err);
+  //     apilog.httpstatuscode = 400;
+  //     apilog.statuscode = 400;
+  //     apilog.message = `${RoleController.parameter} could not be retrieved`;
+  //     apilog.reqendtime = Date.now();
+  //     await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
-        res,
-        400,
-        400,
-        "Role(s) could not be unassigned",
-        err
-      );
-    }
-  }
+  //     ResponseController.error(
+  //       res,
+  //       400,
+  //       400,
+  //       "Role(s) could not be unassigned",
+  //       err
+  //     );
+  //   }
+  // }
 
   /**
    * Get all Roles

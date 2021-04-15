@@ -179,4 +179,7 @@ class CountryController {
   }
 }
 
+CountryController.parameter = "Country";
+CountryController.parameters = "Country";
+
 export default CountryController;
