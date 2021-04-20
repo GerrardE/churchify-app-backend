@@ -15,7 +15,7 @@
     "migrate:undo:all": "sequelize db:migrate:undo:all",
     "migrate:undo": "sequelize db:migrate:undo",
     "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "deploy:test:sh": "chmod +x bin/deploy.sh && bin/deploy.test.sh",
+    "deploy:test:sh": "chmod +x bin/deploy.test.sh && bin/deploy.test.sh",
     "deploy": "npm i && npm run config && npm run build && chmod +x bin/deploy.sh && bin/deploy.sh",
     "clean": "rm -rf dist",
     "lint": "eslint --fix --ext .js .",
