@@ -6,23 +6,21 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "pm2": "pm2 start process.yml --no-daemon",
-    "start:dist": "cross-env NODE_ENV=production && nodemon ./dist/index.js",
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
-    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist",
     "heroku-postbuild": "yarn build",
+    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json cd build && zip -r projectchurchifyapi.zip . && cd ..",
     "seed": "sequelize db:seed:all",
     "migrate": "sequelize db:migrate",
     "migrate:undo:all": "sequelize db:migrate:undo:all",
     "migrate:undo": "sequelize db:migrate:undo",
     "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "deploy:test:sh": "chmod +x bin/deploy.test.sh && bin/deploy.test.sh",
-    "deploy": "npm i && npm run config && npm run build && chmod +x bin/deploy.sh && bin/deploy.sh",
+    "deploy": "yarn && yarn build && chmod +x bin/deploy.prod.sh && bin/deploy.prod.sh && yarn start",
     "clean": "rm -rf dist",
     "lint": "eslint --fix --ext .js .",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "check": "yarn refreshdb && nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit",
+    "deploy:test:sh": "chmod +x bin/deploy.test.sh && chmod +x docs/testdata/*.sql && bin/deploy.test.sh",
     "pretest": "cross-env NODE_ENV=test yarn refreshdb && chmod +x bin/deploy.test.sh && bin/deploy.test.sh",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 10000 ./server/tests/**/*.test.js --exit"
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 100000 ./server/tests/**/*.test.js --exit"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,8 @@ const validPreacher = (data) => {
   const errors = {};
   data.firstname = !isEmpty(data.firstname) ? data.firstname : "";
   data.lastname = !isEmpty(data.lastname) ? data.lastname : "";
+  data.phone = !isEmpty(data.phone) ? data.phone : "";
+  data.email = !isEmpty(data.email) ? data.email : "";
   data.country = !isEmpty(data.country) ? data.country : "";
   data.state = !isEmpty(data.state) ? data.state : "";
   data.address = !isEmpty(data.address) ? data.address : "";
@@ -30,6 +32,23 @@ const validPreacher = (data) => {
     errors.lastname = "lastname field is required";
   }
 
+  // phone validation
+  if (!validator.isLength(data.phone, { min: 5, max: 15 })) {
+    errors.phone = "phone must be between 5 and 15 characters";
+  }
+
+  if (isEmpty(data.phone)) {
+    errors.phone = "phone field is required";
+  }
+
+  // Email validations
+  if (!validator.isEmail(data.email)) {
+    errors.email = "Email is invalid";
+  }
+
+  if (isEmpty(data.email)) {
+    errors.email = "Email field is required";
+  }
   // country validations
   if (isEmpty(data.country)) {
     errors.country = "country field is required";

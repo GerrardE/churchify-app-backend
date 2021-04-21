@@ -9,6 +9,8 @@ const validAttendance = (data) => {
   data.eventid = !isEmpty(data.eventid) ? data.eventid : "";
   data.preacherid = !isEmpty(data.preacherid) ? data.preacherid : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
+  data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
+  data.date = !isEmpty(data.date) ? data.date : "";
   data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // children validations
@@ -39,6 +41,16 @@ const validAttendance = (data) => {
   // branch validations
   if (isEmpty(data.branchid)) {
     errors.branch = "branch field is required";
+  }
+
+  // zone validations
+  if (isEmpty(data.zoneid)) {
+    errors.zone = "zone field is required";
+  }
+
+  // date validations
+  if (isEmpty(data.date)) {
+    errors.date = "date field is required";
   }
 
   // notes validations

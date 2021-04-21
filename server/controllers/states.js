@@ -45,7 +45,7 @@ class StateController {
         res,
         200,
         200,
-        `${StateController.parameters} retrieved successfully`,
+        `${StateController.parameter} retrieved successfully`,
         payload
       );
     } catch (err) {
@@ -80,13 +80,13 @@ class StateController {
     const payload = await State.findAll({ where: { country_id: id } });
 
     const apilog = {
-      name: `${StateController.parameters.toLowerCase()}.getById`,
+      name: `${StateController.parameters.toLowerCase()}.getByCountryId`,
       refid: randString(`${StateController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: `${StateController.parameter} retrieved successfully`,
+      message: `${StateController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),

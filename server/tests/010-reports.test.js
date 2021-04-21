@@ -1,11 +1,13 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import createTestEvent from "./factory/event-factory";
+import createTestPreacher from "./factory/preacher-factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, event, preachr;
 
 describe("REPORT TESTS", () => {
   describe("SUBMIT MEMBERSHIP REPORT ***", () => {
@@ -41,7 +43,9 @@ describe("REPORT TESTS", () => {
             tithers: "12",
             newmembers: "11",
             notes: "good report",
-            branchid: "1"
+            branchid: "1",
+            date: "2020-12-04T15:12:13.758Z",
+            zoneid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -81,19 +85,26 @@ describe("REPORT TESTS", () => {
   });
 
   describe("SUBMIT ATTENDANCE REPORT ***", () => {
+    before(async () => {
+      const userid = user.id;
+      event = await createTestEvent({ userid });
+      preachr = await createTestPreacher({ userid });
+    });
     it("should return success on submit an attendance ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/reports/attendances")
+          .post("/api/v1/reports/attendance")
           .set({ Authorization: user.token })
           .send({
             children: "12",
             women: "12",
             men: "11",
-            eventid: "1",
-            preacherid: "1",
+            eventid: event.id,
+            preacherid: preachr.id,
             notes: "A very good note",
-            branchid: "1"
+            branchid: "1",
+            date: "2020-12-04T15:12:13.758Z",
+            zoneid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -109,22 +120,20 @@ describe("REPORT TESTS", () => {
     it("should return validation error on submit an attendance ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/reports/attendances")
+          .post("/api/v1/reports/attendance")
           .set({ Authorization: user.token })
           .send({
             children: "12",
             women: "12",
             men: "11",
-            eventid: "1",
+            eventid: event.id,
             preacherid: "1",
-            notes: "",
-            branchid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.notes).to.eql("notes field is required");
+            expect(res.body.errors.branch).to.eql("branch field is required");
             done();
           });
       } catch (err) {
@@ -143,7 +152,9 @@ describe("REPORT TESTS", () => {
             trainees: "23",
             converts: "1",
             notes: "Good training report",
-            branchid: "1"
+            branchid: "1",
+            date: "2020-12-04T15:12:13.758Z",
+            zoneid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -164,8 +175,6 @@ describe("REPORT TESTS", () => {
           .send({
             trainees: "23",
             converts: "1",
-            notes: "",
-            branchid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
@@ -191,7 +200,9 @@ describe("REPORT TESTS", () => {
             special: "4",
             project: "2",
             notes: "God report",
-            branchid: "1"
+            branchid: "1",
+            date: "2020-12-04T15:12:13.758Z",
+            zoneid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -241,7 +252,9 @@ describe("REPORT TESTS", () => {
             cyf: "12",
             rcf: "7",
             branchid: "1",
-            notes: "Nice group report"
+            notes: "Nice group report",
+            date: "2020-12-04T15:12:13.758Z",
+            zoneid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -290,8 +303,11 @@ describe("REPORT TESTS", () => {
             newcells: "1",
             totalcells: "11",
             attendance: "2",
-            fellowshipid: "1",
-            notes: "Good job on the report"
+            fellowshipid: "2",
+            notes: "Good job on the report",
+            date: "2020-12-04T15:12:13.758Z",
+            zoneid: "1",
+            branchid: "1"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);

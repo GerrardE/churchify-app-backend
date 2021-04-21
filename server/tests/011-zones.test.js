@@ -1,13 +1,17 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import createTestZone from "./factory/zone-factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, zone;
 
 describe("ZONE TESTS", () => {
+  before(async () => {
+    zone = await createTestZone({});
+  });
   describe("CREATE ZONE ***", () => {
     it("should return success on zone test login ===========> ", (done) => {
       try {
@@ -30,7 +34,7 @@ describe("ZONE TESTS", () => {
         throw err.message;
       }
     });
-    it("should return success on crete zone ===========> ", (done) => {
+    it("should return success on create zone ===========> ", (done) => {
       try {
         chai.request(index)
           .post("/api/v1/zones")
@@ -124,7 +128,7 @@ describe("ZONE TESTS", () => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Zones retrieved successfully");
+            expect(res.body.message).to.eql("Zone retrieved successfully");
             done();
           });
       } catch (err) {
@@ -161,7 +165,6 @@ describe("ZONE TESTS", () => {
           .put("/api/v1/zones/1")
           .set({ Authorization: user.token })
           .send({
-            country: "1",
             notes: "Trem HQ"
           })
           .end((err, res) => {
@@ -181,7 +184,7 @@ describe("ZONE TESTS", () => {
     it("should return success on delete a zone ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/zones/2")
+          .delete(`/api/v1/zones/${zone.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

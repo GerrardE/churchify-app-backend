@@ -60,7 +60,7 @@ class CountryController {
         res,
         400,
         400,
-        `${CountryController.parameter} could not be retrieved`,
+        `${CountryController.parameters} could not be retrieved`,
         err
       );
     }
@@ -131,7 +131,7 @@ class CountryController {
    */
   static async getByName(req, res) {
     const apilog = {
-      name: `${CountryController.parameters.toLowerCase()}.getById`,
+      name: `${CountryController.parameters.toLowerCase()}.getByName`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
@@ -145,8 +145,7 @@ class CountryController {
     };
 
     try {
-      const { country } = req;
-      const { name } = country;
+      const { name } = req.params;
       const payload = await Country.findOne({ where: { name } });
 
       apilog.resbody = JSON.stringify(payload);
@@ -180,6 +179,6 @@ class CountryController {
 }
 
 CountryController.parameter = "Country";
-CountryController.parameters = "Country";
+CountryController.parameters = "Countries";
 
 export default CountryController;

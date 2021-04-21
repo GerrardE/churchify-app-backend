@@ -38,6 +38,8 @@ describe("PREACHERS TESTS", () => {
           .send({
             firstname: "Ugo",
             lastname: "Eze",
+            email: "ugo@gmail.com",
+            phone: "08137776789",
             country: "1",
             state: "1",
             address: "Lagos",
@@ -85,23 +87,25 @@ describe("PREACHERS TESTS", () => {
     it("should handle unique validation error on create preacher ===========> ", (done) => {
       try {
         chai.request(index)
-        .post("/api/v1/preachers")
-        .set({ Authorization: user.token })
-        .send({
-          firstname: "U",
-          lastname: "Eze",
-          country: "1",
-          state: "1",
-          address: "Lagos",
-          city: "1",
-          branchid: "1",
-          notes: "A good coach"
+          .post("/api/v1/preachers")
+          .set({ Authorization: user.token })
+          .send({
+            firstname: "Ugo",
+            email: "ugo@gmail.com",
+            phone: "08137776789",
+            lastname: "Eze",
+            country: "1",
+            state: "1",
+            address: "Lagos",
+            city: "1",
+            branchid: "1",
+            notes: "A good coach"
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.name).to.eql("name has already been taken");
+            expect(res.body.message.email).to.eql("email has already been taken");
             done();
           });
       } catch (err) {
@@ -116,7 +120,7 @@ describe("PREACHERS TESTS", () => {
         chai.request(index)
           .get("/api/v1/preachers")
           .set({ Authorization: user.token })
-          .end((err, res) => {
+          .end((_err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
@@ -135,11 +139,11 @@ describe("PREACHERS TESTS", () => {
         chai.request(index)
           .get("/api/v1/preachers/1")
           .set({ Authorization: user.token })
-          .end((err, res) => {
+          .end((_err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Preachers retrieved successfully");
+            expect(res.body.message).to.eql("Preacher retrieved successfully");
             done();
           });
       } catch (err) {
@@ -162,7 +166,9 @@ describe("PREACHERS TESTS", () => {
             address: "Lagos",
             city: "1",
             branchid: "1",
-            notes: "A good coach"
+            notes: "A good coach",
+            email: "ugo@gmail.com",
+            phone: "08137776789",
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);

@@ -121,11 +121,14 @@ INSERT INTO public."Permissions" VALUES (42, 'can:post:role', 'can post role', '
 INSERT INTO public."Permissions" VALUES (43, 'can:get:role', 'can get role', '2020-12-13 07:00:17.856-06', '2020-12-13 07:00:17.856-06');
 INSERT INTO public."Permissions" VALUES (44, 'can:delete:role', 'can delete role', '2020-12-13 07:00:43.509-06', '2020-12-13 07:00:43.509-06');
 
+INSERT INTO public."Permissions" VALUES (45, 'can:get:apilog', 'can put role', '2020-12-13 06:59:53.851-06', '2020-12-13 06:59:53.851-06');
+INSERT INTO public."Permissions" VALUES (46, 'can:delete:apilog', 'can delete role', '2020-12-13 07:00:43.509-06', '2020-12-13 07:00:43.509-06');
+
 --
 -- Name: Permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Permissions_id_seq"', 45, true);
+SELECT pg_catalog.setval('public."Permissions_id_seq"', 46, true);
 
 
 --

@@ -123,67 +123,6 @@ class ApiLogsController {
   }
 
   /**
-   * Update a apilogs
-   * @static
-   * @param {*} req - Request object
-   * @param {*} res - Response object
-   * @param {*} next - The next middleware
-   * @return {json} Returns json object
-   * @memberof ApiLogsController
-   */
-  static async update(req, res) {
-    const apilogg = {
-      name: `${ApiLogsController.parameters.toLowerCase()}.update`,
-      refid: randString(`${ApiLogsController.parameter.toUpperCase()}`),
-      reqbody: JSON.stringify(req.body),
-      resbody: "",
-      httpstatuscode: 200,
-      statuscode: 200,
-      message: `${ApiLogsController.parameter} updated successfully`,
-      apiref: v4(),
-      url: `${req.method} ~ ${req.originalUrl}`,
-      reqstarttime: Date.now(),
-      reqendtime: "",
-    };
-
-    try {
-      const { apilog } = req;
-      const { id } = apilog;
-
-      await ApiLogs.update(req.body, { returning: true, where: { id } });
-
-      const payload = await ApiLogs.findAll();
-
-      apilogg.resbody = JSON.stringify(payload);
-      apilogg.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilogg });
-
-      ResponseController.success(
-        res,
-        200,
-        200,
-        `${ApiLogsController.parameter} updated successfully`,
-        payload
-      );
-    } catch (err) {
-      apilogg.resbody = JSON.stringify(err);
-      apilogg.httpstatuscode = 400;
-      apilogg.statuscode = 400;
-      apilogg.message = `${ApiLogsController.parameter} could not be updated`;
-      apilogg.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilogg });
-
-      ResponseController.error(
-        res,
-        400,
-        400,
-        `${ApiLogsController.parameter} could not be updated`,
-        err
-      );
-    }
-  }
-
-  /**
    * Delete a apilogs
    * @static
    * @param {*} req - Request object
@@ -193,7 +132,7 @@ class ApiLogsController {
    * @memberof ApiLogsController
    */
   static async delete(req, res) {
-    const apilog = {
+    const apilogg = {
       name: `${ApiLogsController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ApiLogsController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
@@ -208,13 +147,14 @@ class ApiLogsController {
     };
 
     try {
-      const { apilogs } = req;
-      const { id } = apilogs;
+      const { apilog } = req;
+      const { id } = apilog;
       await ApiLogs.destroy({ where: { id } });
+
       const payload = await ApiLogs.findAll();
 
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
+      apilogg.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilogg });
 
       ResponseController.success(
         res,
@@ -224,12 +164,12 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      apilog.resbody = JSON.stringify(err);
-      apilog.httpstatuscode = 400;
-      apilog.statuscode = 400;
-      apilog.message = `${ApiLogsController.parameter} could not be deleted`;
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
+      apilogg.resbody = JSON.stringify(err);
+      apilogg.httpstatuscode = 400;
+      apilogg.statuscode = 400;
+      apilogg.message = `${ApiLogsController.parameter} could not be deleted`;
+      apilogg.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilogg });
 
       ResponseController.error(
         res,
@@ -242,7 +182,7 @@ class ApiLogsController {
   }
 }
 
-ApiLogsController.parameter = "ApiLog";
-ApiLogsController.parameters = "ApiLogs";
+ApiLogsController.parameter = "Apilog";
+ApiLogsController.parameters = "Apilogs";
 
 export default ApiLogsController;

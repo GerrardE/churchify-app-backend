@@ -13,10 +13,10 @@ const createTestUser = async ({
   firstname, lastname, phone, email, zoneid, branchid, city, state, country, password
 }) => {
   const newUser = await User.create({
-    id: faker.random.uuid(),
+    id: faker.datatype.uuid(),
     firstname: firstname || faker.random.alphaNumeric(6),
     lastname: lastname || faker.random.alphaNumeric(6),
-    phone: phone || faker.random.number(),
+    phone: phone || faker.datatype.number(),
     email: email || faker.internet.email(),
     zoneid: zoneid || 1,
     branchid: branchid || 1,

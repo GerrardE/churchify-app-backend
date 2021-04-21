@@ -1,0 +1,623 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Deployment configurations for projectchurchifyapi
+
+# Parameters are like the environment variables
+Parameters:
+  TestSalt:
+    NoEcho: "true"
+    Description: The api salt
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  TestSuperAdminPassword:
+    NoEcho: "true"
+    Description: The api superadmin password
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  TestSecretKey:
+    NoEcho: "true"
+    Description: The api secret key
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+ 
+  Loglevel:
+    NoEcho: "true"
+    Description: The error log level
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  Salt:
+    NoEcho: "true"
+    Description: The api salt
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  SuperAdminPassword:
+    NoEcho: "true"
+    Description: The api superadmin password
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  SecretKey:
+    NoEcho: "true"
+    Description: The api secret key
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+ 
+  TestDBName:
+    NoEcho: "true"
+    Description: The test database name
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  TestDBPassword:
+    NoEcho: "true"
+    Description: The test database password
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  TestDBHost:
+    NoEcho: "true"
+    Description: The test database host
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  TestDBPort:
+    NoEcho: "true"
+    Description: The test database host
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+
+  DBName:
+    NoEcho: "true"
+    Description: The database name
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  DBUsername:
+    NoEcho: "true"
+    Description: The database admin account username
+    Type: String
+    MinLength: "1"
+    MaxLength: "16"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+  DBPassword:
+    NoEcho: "true"
+    Description: The database admin account password
+    Type: String
+    MinLength: "8"
+    MaxLength: "41"
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription:
+      must begin with a letter and contain only alphanumeric
+      characters.
+
+  GitSourceRepo:
+    Type: String
+    Description: GitHub source repository - must contain a Dockerfile and buildspec.yml in the base
+    Default: churchify-app-backend
+    MinLength: 1
+    MaxLength: 100
+    ConstraintDescription: GitHub repository name
+
+  GitBranch:
+    Type: String
+    Default: master
+    Description: GitHub git repository branch - change triggers a new build
+    MinLength: 1
+    MaxLength: 100
+    ConstraintDescription: GitHub repository branch name is required
+
+  GitHubToken:
+    Type: String
+    NoEcho: true
+    Description: GitHub API or personal access token - see https://github.com/blog/1509-personal-api-tokens
+    MinLength: 3
+    MaxLength: 100
+    ConstraintDescription: GitHub personal access token is required
+
+  GitHubUser:
+    Type: String
+    Default: GerrardE
+    Description: GitHub username or organization
+    MinLength: 3
+    MaxLength: 100
+    ConstraintDescription: GitHub username or organization is required
+
+  OperatorEmail:
+    Description: Email address to notify if there are any operational issues
+    Type: String
+    AllowedPattern: "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)"
+    ConstraintDescription: must be a valid email address.
+
+Mappings:
+  Region2Principal:
+    us-east-1:
+      EC2Principal: ec2.amazonaws.com
+      OpsWorksPrincipal: opsworks.amazonaws.com
+Conditions:
+  Is-EC2-VPC:
+    Fn::Or:
+      - Fn::Equals:
+          - Ref: AWS::Region
+          - eu-central-1
+      - Fn::Equals:
+          - Ref: AWS::Region
+          - cn-north-1
+  Is-EC2-Classic:
+    Fn::Not:
+      - Condition: Is-EC2-VPC
+# Resources include all aws services required to run the project
+Resources:
+  # Production Database
+  Database:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName:
+        Ref: DBName
+      AllocatedStorage: "20"
+      DBInstanceClass: db.t2.micro
+      Engine: postgres
+      EngineVersion: 12.5
+      MasterUsername:
+        Ref: DBUsername
+      MasterUserPassword:
+        Ref: DBPassword
+      PubliclyAccessible: true
+    DeletionPolicy: Snapshot # | Delete | Retain
+
+  # Codepipeline S3 bucket
+  CodePipelineArtifactBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: projectchurchifyapi-codepipeline-artifact-bucket
+
+  # Code build service role
+  CodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - ssm:GetParameters
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+              - Resource: !Sub arn:aws:s3:::${CodePipelineArtifactBucket}/*
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectAcl
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                  - s3:GetObjectVersion
+    DependsOn:
+      - CodePipelineArtifactBucket
+
+  # Codebuild project
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: projectchurchifyapi-project
+      Artifacts:
+        Type: CODEPIPELINE
+      Source:
+        BuildSpec: buildspec.yml
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
+        EnvironmentVariables:
+          - Name: REPOSITORY_NAME
+            Value: !Ref GitSourceRepo
+          - Name: REPOSITORY_BRANCH
+            Value: !Ref GitBranch
+          - Name: TEST_POSTGRES_DB
+            Value: !Ref TestDBName
+          - Name: TEST_POSTGRES_USER
+            Value: !Ref TestDBName
+          - Name: TEST_POSTGRES_PASSWORD
+            Value: !Ref TestDBPassword
+          - Name: TEST_POSTGRES_HOST
+            Value: !Ref TestDBHost
+          - Name: TEST_POSTGRES_PORT
+            Value: !Ref TestDBPort
+          - Name: LOG_LEVEL
+            Value: !Ref Loglevel
+          - Name: SALT
+            Value: !Ref TestSalt
+          - Name: SECRET_KEY
+            Value: !Ref TestSecretKey
+          - Name: SUPER_ADMIN_PASSWORD
+            Value: !Ref TestSuperAdminPassword
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+
+  # Codepipeline service role
+  CodePipelineServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: codepipeline-access
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                  - codecommit:GetBranch
+                  - codecommit:GetCommit
+                  - codecommit:UploadArchive
+                  - codecommit:GetUploadArchiveStatus
+                  - codecommit:CancelUploadArchive
+                  - iam:PassRole
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:GetBucketVersioning
+              - Resource:
+                  - arn:aws:s3:::codepipeline*
+                  - arn:aws:s3:::elasticbeanstalk*
+                Effect: Allow
+                Action:
+                  - s3:PutObject
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - codedeploy:CreateDeployment
+                  - codedeploy:GetApplicationRevision
+                  - codedeploy:GetDeployment
+                  - codedeploy:GetDeploymentConfig
+                  - codedeploy:RegisterApplicationRevision
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - elasticbeanstalk:CreateApplicationVersion
+                  - elasticbeanstalk:DescribeApplicationVersions
+                  - elasticbeanstalk:DescribeEnvironments
+                  - elasticbeanstalk:DescribeEvents
+                  - elasticbeanstalk:UpdateEnvironment
+                  - autoscaling:DescribeAutoScalingGroups
+                  - autoscaling:DescribeLaunchConfigurations
+                  - autoscaling:DescribeScalingActivities
+                  - autoscaling:ResumeProcesses
+                  - autoscaling:SuspendProcesses
+                  - cloudformation:GetTemplate
+                  - cloudformation:DescribeStackResource
+                  - cloudformation:DescribeStackResources
+                  - cloudformation:DescribeStackEvents
+                  - cloudformation:DescribeStacks
+                  - cloudformation:UpdateStack
+                  - ec2:DescribeInstances
+                  - ec2:DescribeImages
+                  - ec2:DescribeAddresses
+                  - ec2:DescribeSubnets
+                  - ec2:DescribeVpcs
+                  - ec2:DescribeSecurityGroups
+                  - ec2:DescribeKeyPairs
+                  - elasticloadbalancing:*
+                  - rds:DescribeDBInstances
+                  - rds:DescribeOrderableDBInstanceOptions
+                  - sns:ListSubscriptionsByTopic
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - lambda:invokefunction
+                  - lambda:listfunctions
+              - Resource: arn:aws:s3:::elasticbeanstalk*
+                Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:GetBucketPolicy
+                  - s3:GetObjectAcl
+                  - s3:PutObjectAcl
+                  - s3:DeleteObject
+              - Resource: !Sub arn:aws:s3:::${CodePipelineArtifactBucket}/*
+                Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:GetBucketVersioning
+    DependsOn:
+      - CodePipelineArtifactBucket
+
+  # Codepipeline
+  CodePipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      RoleArn: !GetAtt CodePipelineServiceRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref CodePipelineArtifactBucket
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: Source
+              ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Version: 1
+                Provider: GitHub
+              Configuration:
+                Owner: !Ref GitHubUser
+                Repo: !Ref GitSourceRepo
+                Branch: !Ref GitBranch
+                OAuthToken: !Ref GitHubToken
+              OutputArtifacts:
+                - Name: SourceArtifact
+              RunOrder: 1
+
+        - Name: Build
+          Actions:
+            - Name: Build
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration:
+                ProjectName: !Ref CodeBuildProject
+              InputArtifacts:
+                - Name: SourceArtifact
+              OutputArtifacts:
+                - Name: BuildArtifact
+              RunOrder: 1
+
+        - Name: Deploy
+          Actions:
+            - Name: Deploy
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: ElasticBeanstalk
+              InputArtifacts:
+                - Name: BuildArtifact
+              Configuration:
+                ApplicationName:
+                  Ref: EBApplication
+                EnvironmentName:
+                  Ref: EBEnvironment
+              RunOrder: 1
+    DependsOn:
+      - CodeBuildProject
+      - EBApplication
+      - EBEnvironment
+
+  AlarmTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - Endpoint:
+            Ref: OperatorEmail
+          Protocol: email
+
+  # ----- Elasticbeanstalk Configurations -----
+    # For the EB app to be created successfully, we have to specify an existing zipped api file to be deployed
+  # ----- EB => Elasticbeanstalk -----
+
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: RDS allows ingress from EC2 instances in this group.
+      SecurityGroupIngress: []
+
+  DBEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Condition: Is-EC2-VPC
+    Properties:
+      GroupDescription: Open database for access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: "5432"
+          ToPort: "5432"
+          SourceSecurityGroupName:
+            Ref: InstanceSecurityGroup
+
+  DBSecurityGroup:
+    Type: AWS::RDS::DBSecurityGroup
+    Condition: Is-EC2-Classic
+    Properties:
+      DBSecurityGroupIngress:
+        EC2SecurityGroupName:
+          Ref: InstanceSecurityGroup
+      GroupDescription: database access
+
+  # EB Web server role
+  EBWebServerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - Fn::FindInMap:
+                    - Region2Principal
+                    - Ref: AWS::Region
+                    - EC2Principal
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+
+  # EB Web server role policy
+  EBWebServerRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: EBWebServerRole
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            NotAction: iam:*
+            Resource: "*"
+      Roles:
+        - Ref: EBWebServerRole
+
+  # EB Web server instance profile
+  EBWebServerInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - Ref: EBWebServerRole
+
+  # EB application instance
+  EBApplication:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      Description: Projectchurchifyapi Elastic Beanstalk Application
+
+  # EB application version
+  EBApplicationVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      Description: Version 1.0
+      ApplicationName:
+        Ref: EBApplication
+      SourceBundle:
+        S3Bucket: cf-templates-1g2crcm0o4oj1-us-east-1 # make sure to upload projectchurchifyapi zip file first
+        S3Key: projectchurchifyapi.zip
+
+  # EB configuration template
+  EBConfigurationTemplate:
+    Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+    Properties:
+      ApplicationName:
+        Ref: EBApplication
+      Description: Projectchurchifyapi Application Template
+      SolutionStackName: 64bit Amazon Linux 2 v5.3.1 running Node.js 12
+      OptionSettings:
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: POSTGRES_USER
+          Value: !Ref DBUsername
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: POSTGRES_PASSWORD
+          Value: !Ref DBPassword
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: POSTGRES_DB
+          Value: !Ref DBName
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: PROD_PORT
+          Value: ""
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: SECRET_KEY
+          Value: !Ref SecretKey
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: SALT
+          Value: !Ref Salt
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: SUPER_ADMIN_PASSWORD
+          Value: !Ref SuperAdminPassword
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: LOG_LEVEL
+          Value: !Ref Loglevel
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: POSTGRES_HOST
+          Value: !GetAtt Database.Endpoint.Address
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: POSTGRES_PORT
+          Value: !GetAtt Database.Endpoint.Port
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: IamInstanceProfile
+          Value: !Ref EBWebServerInstanceProfile
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: SecurityGroups
+          Value: !Ref InstanceSecurityGroup
+    DependsOn:
+      - Database
+  # EB environment
+  EBEnvironment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      Description: Elastic Beanstalk Environment
+      ApplicationName:
+        Ref: EBApplication
+      TemplateName:
+        Ref: EBConfigurationTemplate
+      VersionLabel:
+        Ref: EBApplicationVersion
+  
+Outputs:
+  StackName:
+    Description: "Stack name"
+    Value: !Sub "${AWS::StackName}"
+  InstanceName:
+    Description: "The name of the database instance"
+    Value: !Ref Database
+    Export:
+      Name: !Sub "${AWS::StackName}-Database"
+  DNSName:
+    Description: "The connection endpoint for the database."
+    Value: !GetAtt "Database.Endpoint.Address"
+    Export:
+      Name: !Sub "${AWS::StackName}-DNSName"

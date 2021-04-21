@@ -1,11 +1,12 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import createTestEvent from "./factory/event-factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, event;
 
 describe("EVENTS TESTS", () => {
   describe("CREATE EVENT ***", () => {
@@ -182,10 +183,14 @@ describe("EVENTS TESTS", () => {
   });
 
   describe("DELETE EVENT ***", () => {
+    before(async () => {
+      const userid = user.id;
+      event = await createTestEvent({ userid });
+    });
     it("should return success on delete event ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/events/1")
+          .delete(`/api/v1/events/${event.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

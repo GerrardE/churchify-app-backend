@@ -7,6 +7,8 @@ const validMembership = (data) => {
   data.children = !isEmpty(data.children) ? data.children : "";
   data.tithers = !isEmpty(data.tithers) ? data.tithers : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
+  data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
+  data.date = !isEmpty(data.date) ? data.date : "";
   data.newmembers = !isEmpty(data.newmembers) ? data.newmembers : "";
   data.notes = !isEmpty(data.notes) ? data.notes : "";
 
@@ -42,6 +44,16 @@ const validMembership = (data) => {
   // branch validations
   if (isEmpty(data.branchid)) {
     errors.branch = "branch field is required";
+  }
+
+  // zone validations
+  if (isEmpty(data.zoneid)) {
+    errors.zone = "zone field is required";
+  }
+
+  // date validations
+  if (isEmpty(data.date)) {
+    errors.date = "date field is required";
   }
 
   return {

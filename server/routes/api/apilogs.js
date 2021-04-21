@@ -7,7 +7,6 @@ const apilogRouter = express.Router();
 
 apilogRouter.get("/", verifyToken, apilogPermission, apilogs.getAll);
 apilogRouter.get("/:id", verifyToken, apilogFinder, apilogPermission, apilogs.getById);
-apilogRouter.put("/:id", verifyToken, apilogFinder, apilogPermission, apilogs.update);
 apilogRouter.delete("/:id", verifyToken, apilogFinder, apilogPermission, apilogs.delete);
 
 export default apilogRouter;

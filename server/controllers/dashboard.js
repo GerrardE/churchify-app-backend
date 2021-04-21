@@ -183,5 +183,6 @@ class DashboardController {
 }
 
 DashboardController.parameter = "Dashboard";
+DashboardController.parameters = "Dashboards";
 
 export default DashboardController;

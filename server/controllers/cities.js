@@ -82,7 +82,7 @@ class CityController {
       resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: `${CityController.parameter} retrieved successfully`,
+      message: `${CityController.parameters} retrieved successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -109,7 +109,7 @@ class CityController {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = `${CityController.parameter} could not be retrieved`;
+      apilog.message = `${CityController.parameters} could not be retrieved`;
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -117,7 +117,7 @@ class CityController {
         res,
         400,
         400,
-        `${CityController.parameter} could not be retrieved`,
+        `${CityController.parameters} could not be retrieved`,
         err
       );
     }
