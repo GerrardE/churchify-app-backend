@@ -1,8 +1,11 @@
-import validationResponse from '@validations/validationResponse';
-import validCategory from '@validations/category';
-import models from '@models';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import validCategory from "@validations/category";
+import models from "@models";
+import ResponseController from "@helpers/response";
 
-const { Category } = models;
+const { Category, ApiLogs } = models;
 
 /**
  * Category Controller
@@ -19,39 +22,72 @@ class CategoryController {
    * @memberof CategoryController
    */
   static async create(req, res) {
+    const apilog = {
+      name: `${CategoryController.parameters.toLowerCase()}.create`,
+      refid: randString(`${CategoryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 201,
+      statuscode: 201,
+      message: `${CategoryController.parameter} created successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
     try {
       const { errors, isValid } = validCategory(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
       const payload = await Category.create({
-        userId, ...req.body
+        userid,
+        ...req.body,
       });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Category created successfully',
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${CategoryController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
-      if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CategoryController.parameter} could not be created`;
+
+      if (err.errors && err.errors[0].type === "unique violation") {
+        apilog.message = JSON.stringify(validationResponse(err));
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Category creation unsuccessful'
-      });
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be created`,
+        err
+      );
     }
   }
 
@@ -64,13 +100,105 @@ class CategoryController {
    * @memberof CategoryController
    */
   static async getAll(req, res) {
-    const payload = await Category.findAll();
+    const apilog = {
+      name: `${CategoryController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${CategoryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CategoryController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Categories retrieved successfully',
-      payload
-    });
+    try {
+      const payload = await Category.findAll();
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameters} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CategoryController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameters} could not be retrieved`,
+        err
+      );
+    }
+  }
+
+  /**
+   * Get a category
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof CategoryController
+   */
+  static async getById(req, res) {
+    const { category: payload } = req;
+
+    const apilog = {
+      name: `${CategoryController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${CategoryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CategoryController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameter} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CategoryController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -83,32 +211,69 @@ class CategoryController {
    * @memberof CategoryController
    */
   static async update(req, res) {
+    const apilog = {
+      name: `${CategoryController.parameters.toLowerCase()}.update`,
+      refid: randString(`${CategoryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CategoryController.parameter} updated successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const { errors, isValid } = validCategory(req.body);
+      const { errors, isValid } = validCategory(req.body, true);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { category } = req;
-      const { userId, id } = category;
+      const { userid, id } = category;
 
-      await Category.update(req.body, { returning: true, where: { id, userId } });
+      await Category.update(req.body, {
+        returning: true,
+        where: { id, userid },
+      });
 
       const payload = await Category.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Category updated successfully',
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Category could not be updated'
-      });
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CategoryController.parameter} could not be updated`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -122,24 +287,56 @@ class CategoryController {
    * @memberof CategoryController
    */
   static async delete(req, res) {
+    const apilog = {
+      name: `${CategoryController.parameters.toLowerCase()}.delete`,
+      refid: randString(`${CategoryController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CategoryController.parameter} deleted successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { category } = req;
-      const { id, userId } = category;
-      await Category.destroy({ where: { id, userId } });
+      const { id, userid } = category;
+      await Category.destroy({ where: { id, userid } });
       const payload = await Category.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Category deleted successfully',
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${CategoryController.parameter} deleted successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Category could not be deleted'
-      });
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CategoryController.parameter} could not be deleted`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${CategoryController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+CategoryController.parameter = "Category";
+CategoryController.parameters = "Categories";
 
 export default CategoryController;

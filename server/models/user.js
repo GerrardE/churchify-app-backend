@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import { config } from 'dotenv';
+import bcrypt from "bcryptjs";
+import { config } from "dotenv";
 
 config();
 
@@ -8,7 +8,7 @@ const SALT_ROUNDS = +salt;
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'User',
+    "User",
     {
       id: {
         type: DataTypes.UUID,
@@ -17,24 +17,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
 
-      role: {
+      firstname: {
         type: DataTypes.STRING,
-        allowNull: true // change to false
-      },
-
-      firstName: {
-        type: DataTypes.CITEXT,
         allowNull: false
       },
 
-      lastName: {
-        type: DataTypes.CITEXT,
+      lastname: {
+        type: DataTypes.STRING,
         allowNull: false
       },
 
       phone: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
       },
 
       email: {
@@ -43,13 +38,28 @@ module.exports = (sequelize, DataTypes) => {
         unique: true
       },
 
-      branchId: {
+      zoneid: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+
+      branchid: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+
+      city: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+
+      state: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
 
       country: {
-        type: DataTypes.CITEXT,
+        type: DataTypes.INTEGER,
         allowNull: false
       },
 
@@ -60,8 +70,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate: user => User.hashPassword(user),
-        beforeUpdate: user => User.hashPassword(user)
+        beforeCreate: (user) => User.hashPassword(user),
+        beforeUpdate: (user) => User.hashPassword(user)
       }
     }
   );
@@ -75,53 +85,60 @@ module.exports = (sequelize, DataTypes) => {
       Freport,
       Group,
       Membership,
-      Training
+      Training,
+      Role
     } = models;
 
     User.hasMany(Training, {
-      foreignKey: 'id',
-      as: 'trainings'
+      foreignKey: "id",
+      as: "trainings"
     });
 
     User.hasMany(Membership, {
-      foreignKey: 'id',
-      as: 'memberships'
+      foreignKey: "id",
+      as: "memberships"
     });
 
     User.hasMany(Group, {
-      foreignKey: 'id',
-      as: 'groups'
+      foreignKey: "id",
+      as: "groups"
     });
 
     User.hasMany(Freport, {
-      foreignKey: 'id',
-      as: 'freports'
+      foreignKey: "id",
+      as: "freports"
     });
 
     User.hasMany(Event, {
-      foreignKey: 'id',
-      as: 'events'
+      foreignKey: "id",
+      as: "events"
     });
 
     User.hasMany(Download, {
-      foreignKey: 'id',
-      as: 'downloads'
+      foreignKey: "id",
+      as: "downloads"
     });
 
     User.belongsTo(Fellowship, {
-      foreignKey: 'id',
-      as: 'fellowship'
+      foreignKey: "id",
+      as: "fellowship"
     });
 
     User.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'member'
+      foreignKey: "id",
+      as: "member"
+    });
+
+    User.belongsToMany(Role, {
+      through: "UserRole",
+      as: "roles",
+      foreignKey: "userid"
     });
   };
 
   User.hashPassword = async (user) => {
     const hash = await bcrypt.hash(user.dataValues.password, SALT_ROUNDS);
-    await user.setDataValue('password', hash);
+    await user.setDataValue("password", hash);
   };
 
   return User;

@@ -1,8 +1,11 @@
-import validationResponse from '@validations/validationResponse';
-import validFellowship from '@validations/fellowship';
-import models from '@models';
+import { v4 } from "uuid";
+import randString from "@helpers/utilities";
+import validationResponse from "@validations/validationResponse";
+import validFellowship from "@validations/fellowship";
+import models from "@models";
+import ResponseController from "@helpers/response";
 
-const { Fellowship } = models;
+const { Fellowship, ApiLogs } = models;
 
 /**
  * Fellowship Controller
@@ -19,40 +22,73 @@ class FellowshipController {
    * @memberof FellowshipController
    */
   static async create(req, res) {
+    const apilog = {
+      name: `${FellowshipController.parameters.toLowerCase()}.create`,
+      refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 201,
+      statuscode: 201,
+      message: `${FellowshipController.parameter} created successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { errors, isValid } = validFellowship(req.body);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
-      const { id: userId } = req.decoded;
+      const { id: userid } = req.decoded;
 
-      const payload = await Fellowship.create({ userId, ...req.body });
+      const payload = await Fellowship.create({ userid, ...req.body });
 
-      res.status(201).json({
-        status: 201,
-        message: 'Fellowship created successfully',
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        201,
+        201,
+        `${FellowshipController.parameter} created successfully`,
         payload
-      });
+      );
     } catch (err) {
-      if (err.errors && err.errors[0].type === 'unique violation') {
-        return res.status(400).json({
-          status: 400,
-          errors: validationResponse(err)
-        });
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${FellowshipController.parameter} could not be created`;
+
+      if (err.errors && err.errors[0].type === "unique violation") {
+        apilog.message = JSON.stringify(validationResponse(err));
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
-      res.status(400).json({
-        status: 400,
-        errors: 'Fellowship creation unsuccessful'
-      });
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${FellowshipController.parameter} creation unsuccessful`,
+        err
+      );
     }
   }
-
 
   /**
    * Get all Fellowships
@@ -63,13 +99,105 @@ class FellowshipController {
    * @memberof FellowshipController
    */
   static async getAll(req, res) {
-    const payload = await Fellowship.findAll();
+    const apilog = {
+      name: `${FellowshipController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${FellowshipController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
 
-    return res.status(200).json({
-      status: 200,
-      message: 'Fellowships retrieved successfully',
-      payload
-    });
+    try {
+      const payload = await Fellowship.findAll();
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${FellowshipController.parameters} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${FellowshipController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${FellowshipController.parameters} could not be retrieved`,
+        err
+      );
+    }
+  }
+
+  /**
+   * Get a fellowship
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof FellowshipController
+   */
+  static async getById(req, res) {
+    const { fellowship: payload } = req;
+
+    const apilog = {
+      name: `${FellowshipController.parameters.toLowerCase()}.getById`,
+      refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${FellowshipController.parameter} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${FellowshipController.parameter} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${FellowshipController.parameter} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        400,
+        400,
+        `${FellowshipController.parameter} could not be retrieved`,
+        err
+      );
+    }
   }
 
   /**
@@ -82,32 +210,69 @@ class FellowshipController {
    * @memberof FellowshipController
    */
   static async update(req, res) {
+    const apilog = {
+      name: `${FellowshipController.parameters.toLowerCase()}.update`,
+      refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${FellowshipController.parameter} updated successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
-      const { errors, isValid } = validFellowship(req.body);
+      const { errors, isValid } = validFellowship(req.body, true);
       // Check Validation
       if (!isValid) {
-        return res.status(400).json({
-          status: 400,
-          errors
-        });
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = "Error: invalid input";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { fellowship } = req;
-      const { userId, id } = fellowship;
+      const { userid, id } = fellowship;
 
-      await fellowship.update(req.body, { returning: true, where: { id, userId } });
+      await fellowship.update(req.body, {
+        returning: true,
+        where: { id, userid },
+      });
 
       const payload = await Fellowship.findAll();
-      res.status(200).json({
-        status: 200,
-        message: 'Fellowship updated successfully',
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${FellowshipController.parameter} updated successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Fellowship could not be updated'
-      });
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${FellowshipController.parameter} could not be updated`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        `${FellowshipController.parameter} could not be updated`,
+        err
+      );
     }
   }
 
@@ -121,24 +286,56 @@ class FellowshipController {
    * @memberof FellowshipController
    */
   static async delete(req, res) {
+    const apilog = {
+      name: `${FellowshipController.parameters.toLowerCase()}.delete`,
+      refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${FellowshipController.parameter} deleted successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
     try {
       const { fellowship } = req;
-      const { id, userId } = Fellowship;
-      await fellowship.destroy({ where: { id, userId } });
+      const { id, userid } = Fellowship;
+      await fellowship.destroy({ where: { id, userid } });
       const payload = await Fellowship.findAll();
 
-      res.status(200).json({
-        status: 200,
-        message: 'Fellowship deleted successfully',
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        200,
+        200,
+        `${FellowshipController.parameter} deleted successfully`,
         payload
-      });
+      );
     } catch (err) {
-      return res.status(400).json({
-        status: 400,
-        errors: 'Fellowship could not be deleted'
-      });
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${FellowshipController.parameter} could not be deleted`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(
+        res,
+        400,
+        400,
+        `${FellowshipController.parameter} could not be deleted`,
+        err
+      );
     }
   }
 }
+
+FellowshipController.parameter = "Fellowship";
+FellowshipController.parameters = "Fellowships";
 
 export default FellowshipController;

@@ -1,6 +1,6 @@
-import faker from 'faker';
-import models from '@models';
-import { createToken } from '../../middlewares/Token';
+import faker from "faker";
+import models from "@models";
+import { createToken } from "../../middlewares/Token";
 
 const { User } = models;
 
@@ -10,16 +10,19 @@ const generateToken = async (userDetails) => {
 };
 
 const createTestUser = async ({
-  firstName, lastName, phone, email, branchId, country, password
+  firstname, lastname, phone, email, zoneid, branchid, city, state, country, password
 }) => {
   const newUser = await User.create({
-    id: faker.random.uuid(),
-    firstName: firstName || faker.random.alphaNumeric(6),
-    lastName: lastName || faker.random.alphaNumeric(6),
-    phone: phone || faker.random.number(),
+    id: faker.datatype.uuid(),
+    firstname: firstname || faker.random.alphaNumeric(6),
+    lastname: lastname || faker.random.alphaNumeric(6),
+    phone: phone || faker.datatype.number(),
     email: email || faker.internet.email(),
-    branchId: branchId || faker.random.number(),
-    country: country || faker.address.country(),
+    zoneid: zoneid || 1,
+    branchid: branchid || 1,
+    city: city || 1,
+    state: state || 1,
+    country: country || 1,
     password: password || faker.internet.password()
   });
 

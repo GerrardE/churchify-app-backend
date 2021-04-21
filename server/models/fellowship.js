@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Fellowship = sequelize.define('Fellowship', {
-    userId: {
+  const Fellowship = sequelize.define("Fellowship", {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -16,27 +16,27 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-
     address: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
+    city: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     state: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -46,13 +46,13 @@ module.exports = (sequelize, DataTypes) => {
     const { Branch, User } = models;
 
     Fellowship.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'fellowships'
+      foreignKey: "id",
+      as: "fellowships"
     });
 
     Fellowship.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'user_fellowship'
+      foreignKey: "id",
+      as: "user_fellowship"
     });
   };
 

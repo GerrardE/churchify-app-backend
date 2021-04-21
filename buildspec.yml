@@ -1,0 +1,32 @@
+---
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo Initializing...
+      - pip install --upgrade pip
+      - pip install --upgrade awscli
+
+  pre_build:
+    commands:
+      - echo Installing source api dependencies...
+      - yarn
+      - echo Source api dependencies installed.
+
+  build:
+    commands:
+      - echo Testing source api...
+      - yarn test
+      - echo Building source api...
+      - yarn build
+
+  post_build:
+    commands:
+      - echo "Build completed"
+
+artifacts:
+  files:
+    - dist/projectchurchifyapi.zip

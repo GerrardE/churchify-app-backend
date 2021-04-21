@@ -1,27 +1,27 @@
-import validator from 'validator';
-import isEmpty from '../middlewares/isEmpty';
+import validator from "validator";
+import isEmpty from "../middlewares/isEmpty";
 
-const validCategory = (data) => {
+const validCategory = (data, isEdit = false) => {
   const errors = {};
-  data.name = !isEmpty(data.name) ? data.name : '';
-  data.description = !isEmpty(data.description) ? data.description : '';
+  data.name = !isEmpty(data.name) ? data.name : "";
+  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // name validations
-  if (!validator.isLength(data.name, { min: 2, max: 20 })) {
-    errors.name = 'name must be between 2 and 20 characters';
+  if (!validator.isLength(data.name, { min: 2, max: 20 }) && !isEdit) {
+    errors.name = "name must be between 2 and 20 characters";
   }
 
-  if (validator.isEmpty(data.name)) {
-    errors.name = 'name field is required';
+  if (isEmpty(data.name) && !isEdit) {
+    errors.name = "name field is required";
   }
 
-  // description validations
-  if (!validator.isLength(data.description, { min: 5, max: 200 })) {
-    errors.description = 'description must be between 5 and 200 characters';
+  // notes validations
+  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
+    errors.notes = "notes must be between 5 and 200 characters";
   }
 
-  if (validator.isEmpty(data.description)) {
-    errors.description = 'description field is required';
+  if (isEmpty(data.notes)) {
+    errors.notes = "notes field is required";
   }
 
   return {

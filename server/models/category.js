@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Category = sequelize.define('Category', {
-    userId: {
+  const Category = sequelize.define("Category", {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -21,13 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     const { User, Download } = models;
 
     Category.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'category'
+      foreignKey: "id",
+      as: "category"
     });
 
     Category.hasMany(Download, {
-      foreignKey: 'id',
-      as: 'download'
+      foreignKey: "id",
+      as: "download"
     });
   };
 

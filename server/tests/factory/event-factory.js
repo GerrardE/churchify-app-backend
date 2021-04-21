@@ -1,18 +1,19 @@
-import faker from 'faker';
-import models from '@models';
+import faker from "faker";
+import models from "@models";
 
 const { Event } = models;
 
 const createTestEvent = async ({
-  userId, branchId, name, month, year, description
+  userid, branchid, name, date, address, notes, zoneid
 }) => {
   const newEvent = await Event.create({
-    userId: userId || faker.random.uuid(),
-    branchId: branchId || faker.random.number(),
+    userid: userid || faker.datatype.uuid(),
+    branchid: branchid || 1,
+    zoneid: zoneid || 1,
     name: name || faker.random.alphaNumeric(6),
-    month: month || faker.random.word(),
-    year: year || faker.random.number(4),
-    description: description || faker.random.alphaNumeric(6)
+    address: address || faker.random.alphaNumeric(6),
+    date: date || Date.now(),
+    notes: notes || faker.random.alphaNumeric(6)
   });
 
   return (newEvent);

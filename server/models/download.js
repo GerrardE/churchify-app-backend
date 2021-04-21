@@ -1,23 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-  const Download = sequelize.define('Download', {
-    userId: {
+  const Download = sequelize.define("Download", {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    categoryId: {
+    categoryid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    month: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-
-    year: {
-      type: DataTypes.STRING,
-      allowNull: true
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false
     },
 
     url: {
@@ -31,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -41,13 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     const { User, Category } = models;
 
     Download.belongsTo(Category, {
-      foreignKey: 'id',
-      as: 'download'
+      foreignKey: "id",
+      as: "download"
     });
 
     Download.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'downloads'
+      foreignKey: "id",
+      as: "downloads"
     });
   };
 

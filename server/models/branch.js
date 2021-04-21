@@ -1,22 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
-  const Branch = sequelize.define('Branch', {
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: true
-    },
-
-    zoneId: {
+  const Branch = sequelize.define("Branch", {
+    zoneid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
 
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
     city: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
@@ -26,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     state: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
@@ -36,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -48,38 +43,38 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Branch.hasMany(User, {
-      foreignKey: 'id',
-      as: 'members'
+      foreignKey: "id",
+      as: "members"
     });
 
     Branch.hasMany(Fellowship, {
-      foreignKey: 'id',
-      as: 'fellowships'
+      foreignKey: "id",
+      as: "fellowships"
     });
 
     Branch.hasMany(Activity, {
-      foreignKey: 'id',
-      as: 'activities'
+      foreignKey: "id",
+      as: "activities"
     });
 
     Branch.hasMany(Membership, {
-      foreignKey: 'id',
-      as: 'membership'
+      foreignKey: "id",
+      as: "membership"
     });
 
     Branch.hasMany(Training, {
-      foreignKey: 'id',
-      as: 'training'
+      foreignKey: "id",
+      as: "training"
     });
 
     Branch.hasMany(Attendance, {
-      foreignKey: 'id',
-      as: 'attendance'
+      foreignKey: "branchid",
+      as: "branchattendance"
     });
 
     Branch.belongsTo(Zone, {
-      foreignKey: 'id',
-      as: 'branches'
+      foreignKey: "id",
+      as: "branches"
     });
   };
 

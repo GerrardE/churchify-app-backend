@@ -1,12 +1,12 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import sinon from 'sinon';
-import preachers from '@controllers/preachers';
-import { preacherFinder, preacherPermission } from '@middlewares/preacherFinder';
+import chai from "chai";
+import chaiHttp from "chai-http";
+import sinon from "sinon";
+import preachers from "@controllers/preachers";
+import { preacherFinder, preacherPermission } from "@middlewares/preacher.middleware";
 
 chai.use(chaiHttp);
 
-describe('PREACHER CONTROLLER TESTS', () => {
+describe("PREACHER CONTROLLER TESTS", () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -15,7 +15,7 @@ describe('PREACHER CONTROLLER TESTS', () => {
     sandbox.restore();
   });
 
-  it('should handle error on CREATE PREACHER', async () => {
+  it("should handle error on CREATE PREACHER", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -27,7 +27,7 @@ describe('PREACHER CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on UPDATE PREACHER', async () => {
+  it("should handle error on UPDATE PREACHER", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -39,7 +39,31 @@ describe('PREACHER CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on DELETE PREACHER', async () => {
+  it("should handle error on GETALL PREACHERS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await preachers.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET PREACHER ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await preachers.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on DELETE PREACHER", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -51,7 +75,7 @@ describe('PREACHER CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on FIND PREACHER', async () => {
+  it("should handle error on FIND PREACHER", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -70,7 +94,7 @@ describe('PREACHER CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on PREACHER PERMISSION', async () => {
+  it("should handle error on PREACHER PERMISSION", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -78,7 +102,7 @@ describe('PREACHER CONTROLLER TESTS', () => {
         id: 1
       },
       decoded: {
-        id: '4ccefe52-303f-49e1-af34-cc9975a5c57f'
+        id: "4ccefe52-303f-49e1-af34-cc9975a5c57f"
       }
     };
 

@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Event = sequelize.define('Event', {
-    userId: {
+  const Event = sequelize.define("Event", {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -16,17 +16,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    month: {
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+
+    address: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    year: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -36,13 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     const { Branch, User } = models;
 
     Event.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'user_events'
+      foreignKey: "id",
+      as: "user_events"
     });
 
     Event.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'branch_events'
+      foreignKey: "id",
+      as: "branch_events"
     });
   };
 

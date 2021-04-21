@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Preacher = sequelize.define('Preacher', {
-    userId: {
+  const Preacher = sequelize.define("Preacher", {
+    userid: {
       type: DataTypes.UUID,
       allowNull: false
     },
 
-    branchId: {
+    branchid: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -20,27 +20,38 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+
     address: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
     city: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
     state: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -52,13 +63,13 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Preacher.belongsTo(User, {
-      foreignKey: 'id',
-      as: 'preachers'
+      foreignKey: "id",
+      as: "preachers"
     });
 
     Preacher.belongsTo(Branch, {
-      foreignKey: 'id',
-      as: 'preacher'
+      foreignKey: "id",
+      as: "preacher"
     });
   };
   return Preacher;

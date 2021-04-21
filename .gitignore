@@ -4,7 +4,10 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+yarn.lock
+./bin/deploy.test.sh
+package-lock.json
+dist
 # Runtime data
 pids
 *.pid

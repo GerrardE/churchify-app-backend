@@ -1,12 +1,12 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import sinon from 'sinon';
-import categories from '@controllers/categories';
-import { categoryFinder, categoryPermission } from '@middlewares/categoryFinder';
+import chai from "chai";
+import chaiHttp from "chai-http";
+import sinon from "sinon";
+import categories from "@controllers/categories";
+import { categoryFinder, categoryPermission } from "@middlewares/category.middleware";
 
 chai.use(chaiHttp);
 
-describe('CATEGORY CONTROLLER TESTS', () => {
+describe("CATEGORY CONTROLLER TESTS", () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -15,7 +15,7 @@ describe('CATEGORY CONTROLLER TESTS', () => {
     sandbox.restore();
   });
 
-  it('should handle error on CREATE CATEGORY', async () => {
+  it("should handle error on CREATE CATEGORY", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -27,7 +27,7 @@ describe('CATEGORY CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on UPDATE CATEGORY', async () => {
+  it("should handle error on UPDATE CATEGORY", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -39,7 +39,31 @@ describe('CATEGORY CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on DELETE CATEGORY', async () => {
+  it("should handle error on GETALL CATEGORIES ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await categories.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET CATEGORY ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await categories.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on DELETE CATEGORY", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -51,12 +75,12 @@ describe('CATEGORY CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on FIND CATEGORY', async () => {
+  it("should handle error on FIND CATEGORY", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
       params: {
-        id: 5
+        id: 500
       }
     };
 
@@ -70,7 +94,7 @@ describe('CATEGORY CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on CATEGORY PERMISSION', async () => {
+  it("should handle error on CATEGORY PERMISSION", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -78,7 +102,7 @@ describe('CATEGORY CONTROLLER TESTS', () => {
         id: 1
       },
       decoded: {
-        id: '4ccefe52-303f-49e1-af34-cc9975a5c57f'
+        id: "4ccefe52-303f-49e1-af34-cc9975a5c57f"
       }
     };
 

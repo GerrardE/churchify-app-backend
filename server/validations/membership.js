@@ -1,47 +1,59 @@
-import validator from 'validator';
-import isEmpty from '../middlewares/isEmpty';
+import validator from "validator";
+import isEmpty from "../middlewares/isEmpty";
 
 const validMembership = (data) => {
   const errors = {};
-  data.adults = !isEmpty(data.adults) ? data.adults : '';
-  data.children = !isEmpty(data.children) ? data.children : '';
-  data.tithers = !isEmpty(data.tithers) ? data.tithers : '';
-  data.branchId = !isEmpty(data.branchId) ? data.branchId : '';
-  data.newMembers = !isEmpty(data.newMembers) ? data.newMembers : '';
-  data.notes = !isEmpty(data.notes) ? data.notes : '';
+  data.adults = !isEmpty(data.adults) ? data.adults : "";
+  data.children = !isEmpty(data.children) ? data.children : "";
+  data.tithers = !isEmpty(data.tithers) ? data.tithers : "";
+  data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
+  data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
+  data.date = !isEmpty(data.date) ? data.date : "";
+  data.newmembers = !isEmpty(data.newmembers) ? data.newmembers : "";
+  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // adult validations
-  if (validator.isEmpty(data.adults)) {
-    errors.adults = 'adults field is required';
+  if (isEmpty(data.adults)) {
+    errors.adults = "adults field is required";
   }
 
   // children validations
-  if (validator.isEmpty(data.children)) {
-    errors.children = 'children field is required';
+  if (isEmpty(data.children)) {
+    errors.children = "children field is required";
   }
 
   // tithers validations
-  if (validator.isEmpty(data.tithers)) {
-    errors.tithers = 'tithers field is required';
+  if (isEmpty(data.tithers)) {
+    errors.tithers = "tithers field is required";
   }
 
-  // newMembers validations
-  if (validator.isEmpty(data.newMembers)) {
-    errors.newMembers = 'newMembers field is required';
+  // newmembers validations
+  if (isEmpty(data.newmembers)) {
+    errors.newmembers = "newmembers field is required";
   }
 
   // notes validations
   if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = 'notes must be between 5 and 200 characters';
+    errors.notes = "notes must be between 5 and 200 characters";
   }
 
-  if (validator.isEmpty(data.notes)) {
-    errors.notes = 'notes field is required';
+  if (isEmpty(data.notes)) {
+    errors.notes = "notes field is required";
   }
 
   // branch validations
-  if (validator.isEmpty(data.branchId)) {
-    errors.branch = 'branch field is required';
+  if (isEmpty(data.branchid)) {
+    errors.branch = "branch field is required";
+  }
+
+  // zone validations
+  if (isEmpty(data.zoneid)) {
+    errors.zone = "zone field is required";
+  }
+
+  // date validations
+  if (isEmpty(data.date)) {
+    errors.date = "date field is required";
   }
 
   return {

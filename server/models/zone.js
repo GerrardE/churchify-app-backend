@@ -1,21 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
-  const Zone = sequelize.define('Zone', {
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: true
-    },
-
+  const Zone = sequelize.define("Zone", {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
     },
 
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
 
-    description: {
+    notes: {
       type: DataTypes.STRING,
       allowNull: false
     }
@@ -23,12 +19,17 @@ module.exports = (sequelize, DataTypes) => {
 
   Zone.associate = (models) => {
     const {
-      Branch
+      Branch, Attendance
     } = models;
 
     Zone.hasMany(Branch, {
-      foreignKey: 'id',
-      as: 'branches'
+      foreignKey: "id",
+      as: "branches"
+    });
+
+    Zone.hasMany(Attendance, {
+      foreignKey: "zoneid",
+      as: "zoneattendance"
     });
   };
 

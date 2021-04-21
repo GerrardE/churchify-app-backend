@@ -1,12 +1,12 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import sinon from 'sinon';
-import downloads from '@controllers/downloads';
-import { downloadFinder, downloadPermission } from '@middlewares/downloadFinder';
+import chai from "chai";
+import chaiHttp from "chai-http";
+import sinon from "sinon";
+import downloads from "@controllers/downloads";
+import { downloadFinder, downloadPermission } from "@middlewares/download.middleware";
 
 chai.use(chaiHttp);
 
-describe('DOWNLOAD CONTROLLER TESTS', () => {
+describe("DOWNLOAD CONTROLLER TESTS", () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -15,7 +15,7 @@ describe('DOWNLOAD CONTROLLER TESTS', () => {
     sandbox.restore();
   });
 
-  it('should handle error on CREATE DOWNLOAD', async () => {
+  it("should handle error on CREATE DOWNLOAD", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -27,7 +27,7 @@ describe('DOWNLOAD CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on UPDATE DOWNLOAD', async () => {
+  it("should handle error on UPDATE DOWNLOAD", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -39,7 +39,31 @@ describe('DOWNLOAD CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on DELETE DOWNLOAD', async () => {
+  it("should handle error on GETALL DOWNLOADS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await downloads.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET DOWNLOAD ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await downloads.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on DELETE DOWNLOAD", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -51,7 +75,7 @@ describe('DOWNLOAD CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on FIND DOWNLOAD', async () => {
+  it("should handle error on FIND DOWNLOAD", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -70,7 +94,7 @@ describe('DOWNLOAD CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on DOWNLOAD PERMISSION', async () => {
+  it("should handle error on DOWNLOAD PERMISSION", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -78,7 +102,7 @@ describe('DOWNLOAD CONTROLLER TESTS', () => {
         id: 1
       },
       decoded: {
-        id: '4ccefe52-303f-49e1-af34-cc9975a5c57f'
+        id: "4ccefe52-303f-49e1-af34-cc9975a5c57f"
       }
     };
 

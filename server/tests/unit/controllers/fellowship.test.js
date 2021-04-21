@@ -1,12 +1,12 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import sinon from 'sinon';
-import fellowships from '@controllers/fellowships';
-import { fellowshipFinder, fellowshipPermission } from '@middlewares/fellowshipFinder';
+import chai from "chai";
+import chaiHttp from "chai-http";
+import sinon from "sinon";
+import fellowships from "@controllers/fellowships";
+import { fellowshipFinder, fellowshipPermission } from "@middlewares/fellowship.middleware";
 
 chai.use(chaiHttp);
 
-describe('FELLOWSHIP CONTROLLER TESTS', () => {
+describe("FELLOWSHIP CONTROLLER TESTS", () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -15,7 +15,7 @@ describe('FELLOWSHIP CONTROLLER TESTS', () => {
     sandbox.restore();
   });
 
-  it('should handle error on CREATE FELLOWSHIP', async () => {
+  it("should handle error on CREATE FELLOWSHIP", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -27,7 +27,7 @@ describe('FELLOWSHIP CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on UPDATE FELLOWSHIP', async () => {
+  it("should handle error on UPDATE FELLOWSHIP", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -39,7 +39,31 @@ describe('FELLOWSHIP CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on DELETE FELLOWSHIP', async () => {
+  it("should handle error on GETALL FELLOWSHIPS ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await fellowships.getAll({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on GET FELLOWSHIP ===========> ", async () => {
+    const mock = sinon.spy();
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await fellowships.getById({}, res);
+    sinon.assert.calledOnce(mock);
+  });
+
+  it("should handle error on DELETE FELLOWSHIP", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -51,7 +75,7 @@ describe('FELLOWSHIP CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on FIND FELLOWSHIP', async () => {
+  it("should handle error on FIND FELLOWSHIP", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -70,7 +94,7 @@ describe('FELLOWSHIP CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on FELLOWSHIP PERMISSION', async () => {
+  it("should handle error on FELLOWSHIP PERMISSION", async () => {
     const next = sinon.spy();
     const mock = sinon.spy();
     const req = {
@@ -78,7 +102,7 @@ describe('FELLOWSHIP CONTROLLER TESTS', () => {
         id: 1
       },
       decoded: {
-        id: '4ccefe52-303f-49e1-af34-cc9975a5c57f'
+        id: "4ccefe52-303f-49e1-af34-cc9975a5c57f"
       }
     };
 

@@ -1,11 +1,11 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import sinon from 'sinon';
-import reports from '@controllers/reports';
+import chai from "chai";
+import chaiHttp from "chai-http";
+import sinon from "sinon";
+import reports from "@controllers/reports";
 
 chai.use(chaiHttp);
 
-describe('REPORT CONTROLLER TESTS', () => {
+describe("REPORT CONTROLLER TESTS", () => {
   let sandbox = null;
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -14,7 +14,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sandbox.restore();
   });
 
-  it('should handle error on SUBMIT MEMBERSHIP REPORT', async () => {
+  it("should handle error on SUBMIT MEMBERSHIP REPORT", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -26,7 +26,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT ATTENDANCE', async () => {
+  it("should handle error on SUBMIT ATTENDANCE", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -38,7 +38,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT TRAINING REPORT', async () => {
+  it("should handle error on SUBMIT TRAINING REPORT", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -50,7 +50,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT ACTIVITY REPORT', async () => {
+  it("should handle error on SUBMIT ACTIVITY REPORT", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -62,7 +62,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT GROUP REPORT', async () => {
+  it("should handle error on SUBMIT GROUP REPORT", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -74,7 +74,7 @@ describe('REPORT CONTROLLER TESTS', () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it('should handle error on SUBMIT FELLOWSHIP REPORT', async () => {
+  it("should handle error on SUBMIT FELLOWSHIP REPORT", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({

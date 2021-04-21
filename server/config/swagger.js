@@ -1,27 +1,27 @@
-import swaggerJsdoc from 'swagger-jsdoc';
-import { config } from 'dotenv';
+import swaggerJsdoc from "swagger-jsdoc";
+import { config } from "dotenv";
 
 // Initialize dotenv
 config();
 
 // deine host url
-const host = process.env.HOST_NAME || 'localhost:5000';
+const host = process.env.HOST_NAME || "localhost:5000";
 
 // Swagger Definitions
 const swaggerDefinition = {
   info: {
-    title: 'Churchify-App',
-    version: '1.0.0',
-    description: 'Churchify-App is a church management application.',
+    title: "Churchify-App",
+    version: "1.0.0",
+    description: "Churchify-App is a church management application.",
   },
   host,
-  basePath: '/api/v1'
+  basePath: "/api/v1"
 };
 
 // Options for the swagger docs
 const options = {
   swaggerDefinition,
-  apis: ['/swagger.yaml']
+  apis: ["/swagger.yaml"]
 };
 
 // Initialize swagger-jsdoc

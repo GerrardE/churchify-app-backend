@@ -1,12 +1,12 @@
-const isTestEnvironment = process.env.NODE_ENV === 'test';
+const isTestEnvironment = process.env.NODE_ENV === "test";
 
 export const up = (queryInterface) => {
   if (isTestEnvironment) {
-    return new Promise(resolve => resolve(1));
+    return new Promise((resolve) => resolve(1));
   }
   return queryInterface
     .sequelize
-    .query('CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;');
+    .query("CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;");
 };
 
-export const down = () => new Promise(resolve => resolve(1));
+export const down = () => new Promise((resolve) => resolve(1));
