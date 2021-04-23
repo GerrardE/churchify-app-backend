@@ -23,8 +23,9 @@ export const test = {
 export const production = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD || "",
-  database: process.env.POSTGRES_DATABASE,
+  database: process.env.POSTGRES_DB,
   host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
   // use_env_variable: 'DATABASE_URL',
   dialect: "postgres",
   dialectOptions: {

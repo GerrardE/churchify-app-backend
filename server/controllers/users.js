@@ -10,7 +10,7 @@ import ResponseController from "@helpers/response";
 import models from "@models";
 
 const {
-  User, Role, Permission, ApiLogs
+  User, Role, Permission, ApiLogs, Branch, Zone
 } = models;
 
 /**
@@ -191,6 +191,16 @@ class UserController {
         phone: user.phone,
         email: user.email,
       };
+
+      user.zone = await Zone.findOne({
+        where: { id: user.zoneid },
+        attributes: ["id", "name"]
+      });
+
+      user.branch = await Branch.findOne({
+        where: { id: user.branchid },
+        attributes: ["id", "name"]
+      });
 
       const token = createToken(payload);
 

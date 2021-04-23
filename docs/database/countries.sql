@@ -1,83 +1,9 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: Countries; Type: TABLE; Schema: public; Owner: postgres
---
-
--- CREATE TABLE public."Countries" (
---     id integer NOT NULL,
---     name character varying(255),
---     iso3 character varying(255),
---     iso2 character varying(255),
---     phonecode character varying(255),
---     capital character varying(255),
---     currency character varying(255),
---     native character varying(255),
---     region character varying(255),
---     subregion character varying(255),
---     emoji character varying(255),
---     "emojiU" character varying(255),
---     flag integer,
---     "wikiDataId" character varying(255),
---     "createdAt" timestamp with time zone NOT NULL,
---     "updatedAt" timestamp with time zone NOT NULL
--- );
-
-
-ALTER TABLE public."Countries" OWNER TO postgres;
-
---
--- Name: Countries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
--- CREATE SEQUENCE public."Countries_id_seq"
---     AS integer
---     START WITH 1
---     INCREMENT BY 1
---     NO MINVALUE
---     NO MAXVALUE
---     CACHE 1;
-
-
-ALTER TABLE public."Countries_id_seq" OWNER TO postgres;
-
---
--- Name: Countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
 
 ALTER SEQUENCE public."Countries_id_seq" OWNED BY public."Countries".id;
 
 
---
--- Name: Countries id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
 ALTER TABLE ONLY public."Countries" ALTER COLUMN id SET DEFAULT nextval('public."Countries_id_seq"'::regclass);
 
-
---
--- Data for Name: Countries; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 INSERT INTO public."Countries" VALUES (1, 'Afghanistan', 'AFG', 'AF', '93', 'Kabul', 'AFN', 'افغانستان', 'Asia', 'Southern Asia', '🇦🇫', 'U+1F1E6 U+1F1EB', 1, 'Q889', '2018-07-20 20:11:03-05', '2020-10-25 14:35:15-05');
 INSERT INTO public."Countries" VALUES (2, 'Aland Islands', 'ALA', 'AX', '+358-18', 'Mariehamn', 'EUR', 'Åland', 'Europe', 'Northern Europe', '🇦🇽', 'U+1F1E6 U+1F1FD', 1, NULL, '2018-07-20 20:11:03-05', '2020-10-25 14:35:15-05');
@@ -329,23 +255,4 @@ INSERT INTO public."Countries" VALUES (247, 'Zimbabwe', 'ZWE', 'ZW', '263', 'Har
 INSERT INTO public."Countries" VALUES (248, 'Kosovo', 'XKX', 'XK', '383', 'Pristina', 'EUR', 'Republika e Kosovës', 'Europe', 'Eastern Europe', '🇽🇰', 'U+1F1FD U+1F1F0', 1, 'Q1246', '2020-08-15 15:33:50-05', '2020-10-25 14:35:15-05');
 INSERT INTO public."Countries" VALUES (249, 'Curaçao', 'CUW', 'CW', '599', 'Willemstad', 'ANG', 'Curaçao', 'Americas', 'Caribbean', '🇨🇼', 'U+1F1E8 U+1F1FC', 1, 'Q25279', '2020-10-25 14:54:20-05', '2020-10-25 14:54:32-05');
 
-
---
--- Name: Countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
 SELECT pg_catalog.setval('public."Countries_id_seq"', 250, false);
-
-
---
--- Name: Countries Countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
--- ALTER TABLE ONLY public."Countries"
---     ADD CONSTRAINT "Countries_pkey" PRIMARY KEY (id);
-
-
---
--- PostgreSQL database dump complete
---
-

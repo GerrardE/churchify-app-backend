@@ -5,7 +5,7 @@
 
 const userExtractor = (user, token) => {
   const {
-    email, id, firstname, lastname
+    email, id, firstname, lastname, branch, zone,
   } = user;
 
   let role = "guest";
@@ -21,6 +21,8 @@ const userExtractor = (user, token) => {
     firstname,
     lastname,
     email,
+    branch,
+    zone,
     token,
     role,
     permissions,

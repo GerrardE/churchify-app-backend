@@ -21,7 +21,7 @@ const apiRouter = express.Router();
 
 apiRouter.get("/", (req, res) => res.status(200).send("Welcome to the Churchify-App API"));
 
-apiRouter.use("/", userRouter);
+apiRouter.use("/users", userRouter);
 apiRouter.use("/roles", roleRouter);
 apiRouter.use("/permissions", permissionRouter);
 apiRouter.use("/zones", zoneRouter);

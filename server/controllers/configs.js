@@ -114,7 +114,9 @@ class ConfigController {
     };
 
     try {
-      const payload = await Config.findAll();
+      const payload = await Config.findAll({
+        order: [["id", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

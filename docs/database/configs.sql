@@ -1,24 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 12.5
--- Dumped by pg_dump version 12.1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Data for Name: Configs; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 INSERT INTO public."Configs" VALUES (1, 'categories', 'setting', '{"{\"field\": \"userid\", \"datatype\": \"uuid\", \"required\": true}","{\"field\": \"name\", \"unique\": true, \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"name is required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}","{\"field\": \"notes\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"notes are required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}"}', '2020-11-18 12:27:30.835+00', '2020-11-18 12:27:30.835+00');
 INSERT INTO public."Configs" VALUES (3, 'zones', 'setting', '{"{\"field\": \"userid\", \"datatype\": \"uuid\", \"required\": true}","{\"field\": \"name\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"name is required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}","{\"field\": \"country\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"country is required\"}}","{\"field\": \"notes\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"notes are required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}"}', '2020-11-18 12:29:44.897+00', '2020-11-18 12:29:44.897+00');
@@ -39,14 +18,4 @@ INSERT INTO public."Configs" VALUES (15, 'users', 'setting', '{"{\"field\": \"co
 INSERT INTO public."Configs" VALUES (18, 'users:admin:update', 'setting', '{"{\"field\": \"firstname\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"firstname is required\", \"minLength\": {\"value\": 2, \"message\": \"min. of 2 characters required\"}}}","{\"field\": \"lastname\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"lastname is required\", \"minLength\": {\"value\": 2, \"message\": \"min. of 2 characters required\"}}}","{\"field\": \"phone\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"phone is required\", \"maxLength\": {\"value\": 20, \"message\": \"max. of 20 digits required\"}, \"minLength\": {\"value\": 3, \"message\": \"min. of 3 digits required\"}}}","{\"field\": \"email\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"email is required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}","{\"field\": \"password\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"password is required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}"}', '2021-02-09 10:04:22.047+00', '2021-02-09 10:04:22.047+00');
 
 
---
--- Name: Configs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public."Configs_id_seq"', 18, true);
-
-
---
--- PostgreSQL database dump complete
---
-
+SELECT pg_catalog.setval('public."Configs_id_seq"', 19, true);
