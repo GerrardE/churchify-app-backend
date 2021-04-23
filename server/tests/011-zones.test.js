@@ -16,7 +16,7 @@ describe("ZONE TESTS", () => {
     it("should return success on zone test login ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signin")
+          .post("/api/v1/users/auth/signin")
           .send({
             email: "ezeugwajuliet@gmail.com",
             password: "testpass"
