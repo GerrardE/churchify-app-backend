@@ -26,6 +26,8 @@ Below are the features of churchify-app-backend at this point
 - Users with permissions can be able to hit an api endpoint and CRUD events <br>
 - Users with permissions can be able to hit an api endpoint and CRUD categories <br>
 - Users with permissions can be able to hit an api endpoint and CRUD downloads <br>
+- Users with permissions can be able to hit an api endpoint and CRUD configurations <br>
+- Users with permissions can be able to see apilogs <br>
 
 ## Installation
 1. Clone this repository below:
@@ -47,12 +49,7 @@ npm install
    - `docs/database/countries.sql`
    - `docs/database/states.sql`
    - `docs/database/cities.sql`
-   - `docs/database/zones.sql`
-   - `docs/database/roles.sql`
-   - `docs/database/userroles.sql`
-   - `docs/database/permissions.sql`
    - `docs/database/configs.sql`
-   - `docs/database/branches.sql`
 
 6. Setup your `.env` using the `.env.example` format
 
