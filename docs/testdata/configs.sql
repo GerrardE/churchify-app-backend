@@ -26,10 +26,4 @@ INSERT INTO public."Configs" VALUES (18, 'users:admin:update', 'setting', '{"{\"
 -- Name: Configs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Configs_id_seq"', 18, true);
-
-
---
--- PostgreSQL database dump complete
---
-
+SELECT pg_catalog.setval('public."Configs_id_seq"', 19, true);
