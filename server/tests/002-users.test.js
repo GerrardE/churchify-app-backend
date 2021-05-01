@@ -13,7 +13,7 @@ describe("USER TESTS", () => {
     it("should return success on sign up ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signup")
+          .post("/api/v1/users/auth/signup")
           .send({
             firstname: "Test",
             lastname: "User",
@@ -42,7 +42,7 @@ describe("USER TESTS", () => {
     it("should handle validation error ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signup")
+          .post("/api/v1/users/auth/signup")
           .send({
             firstname: "Test",
             lastname: "User",
@@ -66,7 +66,7 @@ describe("USER TESTS", () => {
     it("should handle unique validation error ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signup")
+          .post("/api/v1/users/auth/signup")
           .send({
             firstname: "Test",
             lastname: "User",
@@ -96,7 +96,7 @@ describe("USER TESTS", () => {
     it("should return success on LOGIN ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signin")
+          .post("/api/v1/users/auth/signin")
           .send({
             email: "ezeugwajuliet@gmail.com",
             password: "testpass"
@@ -117,7 +117,7 @@ describe("USER TESTS", () => {
     it("should return invalid PASSWORD ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signin")
+          .post("/api/v1/users/auth/signin")
           .send({
             email: "test@gmail.com",
             password: "testpas"
@@ -136,7 +136,7 @@ describe("USER TESTS", () => {
     it("should return invalid EMAIL ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signin")
+          .post("/api/v1/users/auth/signin")
           .send({
             email: "tests@gmail.com",
             password: "testpass"
@@ -155,7 +155,7 @@ describe("USER TESTS", () => {
     it("should handle VALIDATION ERROR ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signin")
+          .post("/api/v1/users/auth/signin")
           .send({
             email: "test@gmailcom",
             password: "testpass"
@@ -348,7 +348,7 @@ describe("USER TESTS", () => {
     it("should return success on user assign role ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/roles")
+          .post("/api/v1/users/roles")
           .set({ Authorization: user.token })
           .send({
             role: 3,
@@ -371,7 +371,7 @@ describe("USER TESTS", () => {
     it("should return success on user unassign role ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/roles")
+          .delete("/api/v1/users/roles")
           .set({ Authorization: user.token })
           .send({
             role: 3,

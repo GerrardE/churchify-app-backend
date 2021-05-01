@@ -17,21 +17,13 @@ Parameters:
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   TestSecretKey:
     NoEcho: "true"
     Description: The api secret key
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
- 
+
   Loglevel:
     NoEcho: "true"
     Description: The error log level
@@ -50,51 +42,31 @@ Parameters:
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   SecretKey:
     NoEcho: "true"
     Description: The api secret key
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
- 
+
   TestDBName:
     NoEcho: "true"
     Description: The test database name
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   TestDBPassword:
     NoEcho: "true"
     Description: The test database password
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   TestDBHost:
     NoEcho: "true"
     Description: The test database host
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   TestDBPort:
     NoEcho: "true"
     Description: The test database host
@@ -108,30 +80,18 @@ Parameters:
     Type: String
     MinLength: "1"
     MaxLength: "64"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   DBUsername:
     NoEcho: "true"
     Description: The database admin account username
     Type: String
     MinLength: "1"
     MaxLength: "16"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
   DBPassword:
     NoEcho: "true"
     Description: The database admin account password
     Type: String
     MinLength: "8"
     MaxLength: "41"
-    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
-    ConstraintDescription:
-      must begin with a letter and contain only alphanumeric
-      characters.
 
   GitSourceRepo:
     Type: String
@@ -463,7 +423,7 @@ Resources:
           Protocol: email
 
   # ----- Elasticbeanstalk Configurations -----
-    # For the EB app to be created successfully, we have to specify an existing zipped api file to be deployed
+  # For the EB app to be created successfully, we have to specify an existing zipped api file to be deployed
   # ----- EB => Elasticbeanstalk -----
 
   InstanceSecurityGroup:
@@ -606,7 +566,7 @@ Resources:
         Ref: EBConfigurationTemplate
       VersionLabel:
         Ref: EBApplicationVersion
-  
+
 Outputs:
   StackName:
     Description: "Stack name"

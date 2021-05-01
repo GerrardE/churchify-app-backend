@@ -13,9 +13,3 @@ INSERT INTO public."Roles" VALUES (3, 'guest', 'guest role', '2021-12-01 09:25:2
 --
 
 SELECT pg_catalog.setval('public."Roles_id_seq"', 4, true);
-
-
---
--- PostgreSQL database dump complete
---
-

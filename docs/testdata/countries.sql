@@ -10,17 +10,3 @@ INSERT INTO public."Countries" VALUES (1, 'Andorra', 'AND', 'AD', '1', 'Andorra 
 --
 
 SELECT pg_catalog.setval('public."Countries_id_seq"', 2, false);
-
-
---
--- Name: Countries Countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
--- ALTER TABLE ONLY public."Countries"
---     ADD CONSTRAINT "Countries_pkey" PRIMARY KEY (id);
-
-
---
--- PostgreSQL database dump complete
---
-

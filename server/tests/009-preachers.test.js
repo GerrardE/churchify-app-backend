@@ -12,7 +12,7 @@ describe("PREACHERS TESTS", () => {
     it("should return success on preacher test login ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/auth/signin")
+          .post("/api/v1/users/auth/signin")
           .send({
             email: "ezeugwajuliet@gmail.com",
             password: "testpass"

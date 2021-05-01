@@ -56,9 +56,3 @@ INSERT INTO public."PermissionRoles" VALUES (46, 1, 46, '2021-02-05 03:22:13.982
 --
 
 SELECT pg_catalog.setval('public."PermissionRoles_id_seq"', 45, true);
-
-
---
--- PostgreSQL database dump complete
---
-

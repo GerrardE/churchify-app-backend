@@ -264,6 +264,30 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      name: "can:post:download",
+      notes: "can post download",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:download",
+      notes: "can put download",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:download",
+      notes: "can get download",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:download",
+      notes: "can delete download",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ], {}),
 
   down: (queryInterface) => queryInterface.bulkDelete("Permissions", null, {})

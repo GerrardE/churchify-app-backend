@@ -10,9 +10,3 @@ INSERT INTO public."UserRoles" (id, userid, roleid, "createdAt", "updatedAt") VA
 --
 
 SELECT pg_catalog.setval('public."UserRoles_id_seq"', 2, true);
-
-
---
--- PostgreSQL database dump complete
---
-

@@ -65,26 +65,4 @@ INSERT INTO public."Permissions" VALUES (46, 'can:delete:apilog', 'can delete ro
 -- Name: Permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Permissions_id_seq"', 46, true);
-
-
---
--- Name: Permissions Permissions_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
--- ALTER TABLE ONLY public."Permissions"
---     ADD CONSTRAINT "Permissions_name_key" UNIQUE (name);
-
-
---
--- Name: Permissions Permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
--- ALTER TABLE ONLY public."Permissions"
---     ADD CONSTRAINT "Permissions_pkey" PRIMARY KEY (id);
-
-
---
--- PostgreSQL database dump complete
---
-
+SELECT pg_catalog.setval('public."Permissions_id_seq"', 47, true);

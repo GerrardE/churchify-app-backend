@@ -5,7 +5,9 @@ import validRole from "@validations/role";
 import models from "@models";
 import ResponseController from "@helpers/response";
 
-const { Role, ApiLogs } = models;
+const {
+  Role, ApiLogs, PermissionRole, Permission
+} = models;
 
 /**
  * Role Controller
@@ -382,7 +384,7 @@ class RoleController {
    * @memberof RoleController
    */
   static async getById(req, res) {
-    const { role: payload } = req;
+    const { role } = req;
 
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.getById`,
@@ -399,6 +401,24 @@ class RoleController {
     };
 
     try {
+      const payload = await Role.findOne({
+        where: {
+          id: role.id,
+        },
+        attributes: ["id", "name"],
+        include: [
+          {
+            attributes: ["id", "name"],
+            model: Permission,
+            as: "permissions",
+            through: {
+              attributes: [],
+              model: PermissionRole,
+            },
+          },
+        ],
+      });
+
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
