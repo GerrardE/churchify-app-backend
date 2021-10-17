@@ -344,4 +344,78 @@ describe("REPORT TESTS", () => {
       }
     });
   });
+
+  describe("GENERATE REPORT BY ZONE ***", () => {
+    it("should return success on generate a zone attendance report ===========> ", (done) => {
+      try {
+        chai.request(index)
+          .post("/api/v1/reports/attendances/zones")
+          .set({ Authorization: user.token })
+          .send({"eventid":"1","zoneid":"1","from":"2021-05-17","to":"2021-10-17"})
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("payload");
+            expect(res.body.message).to.eql("Zone attendance retrieved 2021-05-17-2021-10-17 successfully");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+    it("should return error on generate a zone attendance report ===========> ", (done) => {
+      try {
+        chai.request(index)
+          .post("/api/v1/reports/attendances/zones")
+          .set({ Authorization: user.token })
+          .send({"eventid":"1","zoneid":"1","from":"","to":""})
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("errors");
+            expect(res.body.message).to.eql("Zone attendance could not be retrieved");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+  });
+
+  describe("GENERATE REPORT BY BRANCH ***", () => {
+    it("should return success on generate a branch attendance report ===========> ", (done) => {
+      try {
+        chai.request(index)
+          .post("/api/v1/reports/attendances/branches")
+          .set({ Authorization: user.token })
+          .send({"eventid":"1","branchid":"1","from":"2021-06-17","to":"2021-10-20"})
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("payload");
+            expect(res.body.message).to.eql("Branch attendance retrieved 2021-06-17-2021-10-20 successfully");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+    it("should return error on generate a branch attendance report ===========> ", (done) => {
+      try {
+        chai.request(index)
+          .post("/api/v1/reports/attendances/branches")
+          .set({ Authorization: user.token })
+          .send({"eventid":"1","branchid":"1","from":"","to":""})
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("errors");
+            expect(res.body.message).to.eql("Branch attendance could not be retrieved");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+  });
 });

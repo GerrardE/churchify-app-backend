@@ -1,6 +1,5 @@
 import { v4 } from "uuid";
 import randString from "@helpers/utilities";
-import sequelize from "sequelize";
 import validMembership from "@validations/membership";
 import validAttendance from "@validations/attendance";
 import validTraining from "@validations/training";
@@ -17,9 +16,8 @@ const {
   Activity,
   Group,
   Freport,
-  Zone,
-  Branch,
   ApiLogs,
+  sequelize,
 } = models;
 
 const today = new Date();
@@ -103,7 +101,7 @@ class ReportController {
         400,
         400,
         "Membership report submission failed",
-        err
+        apilog.resbody
       );
     }
   }
@@ -178,7 +176,7 @@ class ReportController {
         400,
         400,
         "Attendance submission failed",
-        err
+        apilog.resbody
       );
     }
   }
@@ -195,7 +193,7 @@ class ReportController {
     const { from, to, eventid = 1, zoneid = 1 } = req.body;
 
     const apilog = {
-      name: `${ReportController.parameters.toLowerCase()}.getZoneAttendanceByDate`,
+      name: `${ReportController.parameters.toLowerCase()}.getZoneAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
@@ -256,7 +254,7 @@ class ReportController {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Attendance could not be retrieved";
+      apilog.message = "Zone attendance could not be retrieved";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -264,8 +262,8 @@ class ReportController {
         res,
         400,
         400,
-        "Attendance could not be retrieved",
-        err
+        "Zone attendance could not be retrieved",
+        apilog.resbody
       );
     }
   }
@@ -282,7 +280,7 @@ class ReportController {
     const { from, to, eventid = 1, branchid = 1 } = req.body;
 
     const apilog = {
-      name: `${ReportController.parameters.toLowerCase()}.getBranchAttendanceByDate`,
+      name: `${ReportController.parameters.toLowerCase()}.getBranchAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
@@ -354,7 +352,7 @@ class ReportController {
         400,
         400,
         "Branch attendance could not be retrieved",
-        err
+        apilog.resbody
       );
     }
   }
@@ -439,7 +437,7 @@ class ReportController {
         400,
         400,
         "Synod attendance could not be retrieved",
-        err
+        apilog.resbody
       );
     }
   }
@@ -593,7 +591,7 @@ class ReportController {
         400,
         400,
         "Training report submission failed",
-        err
+        apilog.resbody
       );
     }
   }
@@ -668,7 +666,7 @@ class ReportController {
         400,
         400,
         "Activity report submission failed",
-        err
+        apilog.resbody
       );
     }
   }
@@ -743,7 +741,7 @@ class ReportController {
         400,
         400,
         "Group report submission failed",
-        err
+        apilog.resbody
       );
     }
   }
@@ -818,7 +816,7 @@ class ReportController {
         400,
         400,
         "Fellowship report submission failed",
-        err
+        apilog.resbody
       );
     }
   }
