@@ -14,7 +14,7 @@ reportRouter.post("/freport", verifyToken, trim, reports.freport);
 
 // GENERATE ATTENDANCE
 reportRouter.post("/synodattendance", verifyToken, trim, reports.getSynodAttendance);
-reportRouter.post("/attendances", verifyToken, trim, reports.getZoneAttendance);
+reportRouter.post("/attendances/zones", verifyToken, trim, reports.getZoneAttendance);
 reportRouter.post("/attendances/branches", verifyToken, trim, reports.getBranchAttendance);
 
 export default reportRouter;

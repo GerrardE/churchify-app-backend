@@ -192,58 +192,66 @@ class ReportController {
    * @memberof ReportController
    */
   static async getZoneAttendance(req, res) {
+    const { from, to, eventid = 1, zoneid = 1 } = req.body;
+
     const apilog = {
-      name: `${ReportController.parameters.toLowerCase()}.getZoneAttendance`,
+      name: `${ReportController.parameters.toLowerCase()}.getZoneAttendanceByDate`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: "Attendance retrieved successfully",
+      message: `Zone attendance retrieved ${from}-${to} successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
       reqendtime: "",
     };
 
-    const { day: d = day, year: y = year } = req.body;
+    const eventquery = `select id, name from "Events" where id=${Number(
+      eventid
+    )}`;
+
+    const zonequery = `select id, name from "Zones" where id=${Number(zoneid)}`;
+
+    const attendancequery = `select 
+  eventid,
+  zoneid,
+  avg_children, avg_men, avg_women, TO_CHAR(attmonth, 'Month') 
+  as month, total from 
+    (
+      SELECT
+      ROUND(AVG(a.children), 2) as avg_children, 
+      ROUND(AVG(a.men), 2) as avg_men, 
+      ROUND(AVG(a.women), 2) as avg_women, 
+      ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+      a.eventid, a.zoneid as zoneid,
+      DATE_TRUNC('month', a.date) as attmonth
+      from "Attendances" a
+      LEFT JOIN "Events" on "Events".id=a.eventid, "Events" e
+      GROUP BY 
+      a.eventid, attmonth, a.zoneid 
+      ORDER BY attmonth ASC
+    ) as x 
+  WHERE x.attmonth >= '${from}' AND x.attmonth <= '${to}'
+  AND eventid=${Number(eventid)} AND zoneid=${Number(zoneid)}`;
 
     try {
-      const data = await Zone.findAll({
-        attributes: ["id", "name"],
-        include: [
-          {
-            model: Attendance,
-            as: "zoneattendance",
-            attributes: [
-              [
-                sequelize.literal(
-                  "COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)"
-                ),
-                "total",
-              ],
-            ],
-            where: {
-              day: d,
-              year: y,
-            },
-          },
-        ],
-      });
-
-      const payload = ReportController.format(data);
+      const event = await sequelize.query(eventquery);
+      const zone = await sequelize.query(zonequery);
+      const attendance = await sequelize.query(attendancequery);
+      const payload = {
+        range: `${from} to ${to}`,
+        event: event[0][0],
+        zone: zone[0][0],
+        attendance: attendance[0],
+      };
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
-        res,
-        200,
-        200,
-        "Attendance retrieved successfully",
-        payload
-      );
+      ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -271,62 +279,68 @@ class ReportController {
    * @memberof ReportController
    */
   static async getBranchAttendance(req, res) {
+    const { from, to, eventid = 1, branchid = 1 } = req.body;
+
     const apilog = {
-      name: `${ReportController.parameters.toLowerCase()}.getBranchAttendance`,
+      name: `${ReportController.parameters.toLowerCase()}.getBranchAttendanceByDate`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: "Branch attendance retrieved successfully",
+      message: `Branch attendance retrieved ${from}-${to} successfully`,
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
       reqendtime: "",
     };
 
-    const { day: d = day, month: m = month, year: y = year } = req.body;
+    const eventquery = `select id, name from "Events" where id=${Number(
+      eventid
+    )}`;
+
+    const branchquery = `select id, name from "Branches" where id=${Number(
+      branchid
+    )}`;
+
+    const attendancequery = `select 
+  eventid,
+  branchid,
+  avg_children, avg_men, avg_women, TO_CHAR(attmonth, 'Month') 
+  as month, total from 
+    (
+      SELECT
+      ROUND(AVG(a.children), 2) as avg_children, 
+      ROUND(AVG(a.men), 2) as avg_men, 
+      ROUND(AVG(a.women), 2) as avg_women, 
+      ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+      a.eventid, a.branchid as branchid,
+      DATE_TRUNC('month', a.date) as attmonth
+      from "Attendances" a
+      LEFT JOIN "Events" on "Events".id=a.eventid, "Events" e
+      GROUP BY 
+      a.eventid, attmonth, a.branchid 
+      ORDER BY attmonth ASC
+    ) as x 
+  WHERE x.attmonth >= '${from}' AND x.attmonth <= '${to}'
+  AND eventid=${Number(eventid)} AND branchid=${Number(branchid)}
+  `;
 
     try {
-      const data = await Branch.findAll({
-        attributes: ["id", "name"],
-        include: [
-          {
-            model: Attendance,
-            as: "branchattendance",
-            attributes: [
-              "men",
-              "women",
-              "children",
-              [
-                sequelize.literal(
-                  "COALESCE(men, 0) + COALESCE(women, 0) + COALESCE(children, 0)"
-                ),
-                "total",
-              ],
-            ],
-            where: {
-              day: d,
-              month: Number(m),
-              year: Number(y),
-            },
-          },
-        ],
-      });
-
-      const payload = ReportController.formatBranch(data);
-
+      const event = await sequelize.query(eventquery);
+      const branch = await sequelize.query(branchquery);
+      const attendance = await sequelize.query(attendancequery);
+      const payload = {
+        range: `${from} to ${to}`,
+        event: event[0][0],
+        branch: branch[0][0],
+        attendance: attendance[0],
+      };
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
-        res,
-        200,
-        200,
-        "Branch attendance retrieved successfully",
-        payload
-      );
+      ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -444,7 +458,8 @@ class ReportController {
 
       result.name = d.name;
 
-      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
+      const reducer = (accumulator, currentvalue) =>
+        accumulator + currentvalue.dataValues.total;
 
       result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
 
@@ -469,7 +484,8 @@ class ReportController {
 
       result.name = d.name;
 
-      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
+      const reducer = (accumulator, currentvalue) =>
+        accumulator + currentvalue.dataValues.total;
 
       result.zoneattendance = d.zoneattendance.reduce(reducer, 0);
 
@@ -492,7 +508,8 @@ class ReportController {
 
       result.name = d.name;
 
-      const reducer = (accumulator, currentvalue) => accumulator + currentvalue.dataValues.total;
+      const reducer = (accumulator, currentvalue) =>
+        accumulator + currentvalue.dataValues.total;
 
       result.men = d.branchattendance[0].men;
       result.women = d.branchattendance[0].women;
