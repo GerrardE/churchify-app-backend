@@ -8,7 +8,7 @@
     "pm2": "pm2 start ecosystem.config.js",
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
     "heroku-postbuild": "npm run build",
-    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json && cp .env dist/.env && cd dist && zip -r projectchurchifyapi.zip . && cd ..",
+    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json && cd dist && zip -r server.zip . && cd ..",
     "seed": "sequelize db:seed:all",
     "migrate": "sequelize db:migrate",
     "migrate:undo:all": "sequelize db:migrate:undo:all",
