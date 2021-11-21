@@ -13,7 +13,7 @@ import logger from "./logger";
 
 const errorHandler = (error, request, response, next) => {
   response.status(error.status || 500);
-
+console.log(error)
   logger.error({
     request: request.originalUrl,
     message: error.message,

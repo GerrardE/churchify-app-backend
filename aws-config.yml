@@ -1,0 +1,312 @@
+# ---
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Deployment configurations for projectchurchify
+
+# Parameters are like the environment variables
+Parameters:
+  Loglevel:
+    NoEcho: "true"
+    Description: The error log level
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  Salt:
+    NoEcho: "true"
+    Description: The api salt
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  SuperAdminPassword:
+    NoEcho: "true"
+    Description: The api superadmin password
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  SecretKey:
+    NoEcho: "true"
+    Description: The api secret key
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+
+  DBName:
+    Description: The database name
+    Type: String
+    MinLength: "1"
+    MaxLength: "64"
+  DBUsername:
+    Description: The database admin account username
+    Type: String
+    MinLength: "1"
+    MaxLength: "16"
+  DBPassword:
+    NoEcho: "true"
+    Description: The database admin account password
+    Type: String
+    MinLength: "8"
+    MaxLength: "41"
+
+  GitSourceRepo:
+    Type: String
+    Description: GitHub source repository - must contain a Dockerfile and buildspec.yml in the base
+    Default: churchify-app-backend
+    MinLength: 1
+    MaxLength: 100
+    ConstraintDescription: GitHub repository name
+
+  GitBranch:
+    Type: String
+    Default: master
+    Description: GitHub git repository branch - change triggers a new build
+    MinLength: 1
+    MaxLength: 100
+    ConstraintDescription: GitHub repository branch name is required
+
+  GitHubToken:
+    Type: String
+    NoEcho: true
+    Description: GitHub API or personal access token - see https://github.com/blog/1509-personal-api-tokens
+    MinLength: 3
+    MaxLength: 100
+    ConstraintDescription: GitHub personal access token is required
+
+  GitHubUser:
+    Type: String
+    Default: GerrardE
+    Description: GitHub username or organization
+    MinLength: 3
+    MaxLength: 100
+    ConstraintDescription: GitHub username or organization is required
+
+  OperatorEmail:
+    Description: Email address to notify if there are any operational issues
+    Type: String
+    AllowedPattern: "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)"
+    ConstraintDescription: must be a valid email address.
+
+  InstanceType:
+    Description: EC2 Instance type
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+    - t1.micro
+    - t2.nano
+    - t2.micro
+    - t2.small
+    - t2.medium
+    ConstraintDescription: Must be a valid EC2 instance type
+
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+
+  SSHLocation:
+    Description: The IP address range that can be used to SSH to the EC2 instances
+    Type: String
+    MinLength: '9'
+    MaxLength: '18'
+    Default: 0.0.0.0/0
+    AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+# ---
+Mappings:
+  AWSInstanceType2Arch:
+    t1.micro:
+      Arch: HVM64
+    t2.nano:
+      Arch: HVM64
+    t2.micro:
+      Arch: HVM64
+    t2.small:
+      Arch: HVM64
+    t2.medium:
+      Arch: HVM64
+  AWSInstanceType2NATArch:
+    t1.micro:
+      Arch: NATHVM64
+    t2.nano:
+      Arch: NATHVM64
+    t2.micro:
+      Arch: NATHVM64
+    t2.small:
+      Arch: NATHVM64
+    t2.medium:
+      Arch: NATHVM64
+  AWSRegionArch2AMI:
+    us-east-1:
+      HVM64: ami-032930428bf1abbff
+      HVMG2: ami-0aeb704d503081ea6
+    us-east-2:
+      HVM64: ami-027cab9a7bf0155df
+      HVMG2: NOT_SUPPORTED
+    us-west-1:
+      HVM64: ami-088c153f74339f34c
+      HVMG2: ami-0a7fc72dc0e51aa77
+    us-west-2:
+      HVM64: ami-01fee56b22f308154
+      HVMG2: ami-0fe84a5b4563d8f27
+  
+# Resources include all aws services required to run the project
+Resources:
+  # Production Database
+  Database:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName:
+        Ref: DBName
+      AllocatedStorage: "20"
+      DBInstanceClass: db.t2.micro
+      Engine: postgres
+      EngineVersion: 12.5
+      MasterUsername:
+        Ref: DBUsername
+      MasterUserPassword:
+        Ref: DBPassword
+      PubliclyAccessible: true
+    DeletionPolicy: Snapshot # | Delete | Retain
+
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType:
+        Ref: InstanceType
+      SecurityGroups:
+      - Ref: InstanceSecurityGroup
+      KeyName:
+        Ref: KeyName
+      ImageId:
+        Fn::FindInMap:
+        - AWSRegionArch2AMI
+        - Ref: AWS::Region
+        - Fn::FindInMap:
+          - AWSInstanceType2Arch
+          - Ref: InstanceType
+          - Arch
+      UserData:
+        Fn::Base64:
+          Fn::Join:
+          - ''
+          - - "#!/bin/bash\n"
+            - 'yum update -y'
+            - 'curl --silent --location https://rpm.nodesource.com/setup_12.x | bash -'
+            - 'yum install -y nodejs'
+            - 'yum install -y git'
+            - 'yum install -y nginx'
+            - 'npm install -g pm2'
+
+  IPAddress:
+    Type: 'AWS::EC2::EIP'
+
+  IPAssoc:
+    Type: 'AWS::EC2::EIPAssociation'
+    Properties:
+      InstanceId:
+        Ref: EC2Instance
+      EIP:
+        Ref: IPAddress
+# ---            
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable Postgres, SSH, NodeJS access
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp:
+          Ref: SSHLocation
+      - IpProtocol: tcp
+        FromPort: '5432'
+        ToPort: '5432'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '3000'
+        ToPort: '3000'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '8000'
+        ToPort: '8000'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '443'
+        ToPort: '443'
+        CidrIp: 0.0.0.0/0
+
+  AlarmTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - Endpoint:
+            Ref: OperatorEmail
+          Protocol: email
+
+# ---
+Outputs:
+  StackName:
+    Description: "Stack name"
+    Value: !Sub "${AWS::StackName}"
+  InstanceName:
+    Description: "The name of the database instance"
+    Value: !Ref Database
+    Export:
+      Name: !Sub "${AWS::StackName}-Database"
+  DNSName:
+    Description: "The connection endpoint for the database."
+    Value: !GetAtt "Database.Endpoint.Address"
+    Export:
+      Name: !Sub "${AWS::StackName}-DNSName"
+  
+  # EC2 properties
+  EC2InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value:
+      Ref: EC2Instance
+
+  EC2AZ:
+    Description: Availability Zone of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - AvailabilityZone
+
+  EC2PublicDNS:
+    Description: Public DNSName of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - PublicDnsName
+
+  EC2PublicIP:
+    Description: Public IP address of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - PublicIp
+     
+  EC2ServerURL:
+    Description: Server URL
+    Value:
+      Fn::Join:
+      - ''
+      - - http://
+        - Fn::GetAtt:
+          - EC2Instance
+          - PublicDnsName
+        - ":3000"
+
+  EC2ClientURL:
+    Description: Client URL
+    Value:
+      Fn::Join:
+      - ''
+      - - http://
+        - Fn::GetAtt:
+          - EC2Instance
+          - PublicDnsName
+        - ":8000"
