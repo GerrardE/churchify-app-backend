@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
+-- Dumped from database version 12.7
+-- Dumped by pg_dump version 12.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Data for Name: Configs; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Configs; Type: TABLE DATA; Schema: public; Owner: projectchurchify
 --
 
 INSERT INTO public."Configs" (id, name, type, config, "createdAt", "updatedAt") VALUES (1, 'categories', 'setting', '{"{\"field\": \"userid\", \"datatype\": \"uuid\", \"required\": true}","{\"field\": \"name\", \"unique\": true, \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"name is required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}","{\"field\": \"notes\", \"datatype\": \"string\", \"required\": true, \"validation\": {\"required\": \"notes are required\", \"minLength\": {\"value\": 5, \"message\": \"min. of 5 characters required\"}}}"}', '2020-11-18 12:27:30.835+00', '2020-11-18 12:27:30.835+00');
@@ -41,7 +41,7 @@ INSERT INTO public."Configs" (id, name, type, config, "createdAt", "updatedAt") 
 
 
 --
--- Name: Configs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Configs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: projectchurchify
 --
 
 SELECT pg_catalog.setval('public."Configs_id_seq"', 20, true);
