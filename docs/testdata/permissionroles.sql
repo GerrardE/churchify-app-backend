@@ -49,7 +49,14 @@ INSERT INTO public."PermissionRoles" VALUES (43, 1, 33, '2021-02-05 03:22:13.982
 INSERT INTO public."PermissionRoles" VALUES (44, 1, 29, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
 INSERT INTO public."PermissionRoles" VALUES (45, 1, 45, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
 INSERT INTO public."PermissionRoles" VALUES (46, 1, 46, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
-
+INSERT INTO public."PermissionRoles" VALUES (47, 1, 47, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (48, 1, 48, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (49, 1, 49, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (50, 1, 50, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (51, 1, 51, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (52, 1, 52, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (53, 1, 53, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
+INSERT INTO public."PermissionRoles" VALUES (54, 1, 54, '2021-02-05 03:22:13.982+00', '2021-02-05 03:22:13.982+00');
 
 --
 -- Name: PermissionRoles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
