@@ -6,6 +6,7 @@ const validTraining = (data) => {
   data.converts = !isEmpty(data.converts) ? data.converts : "";
   data.trainees = !isEmpty(data.trainees) ? data.trainees : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
+  data.trainingtypeid = !isEmpty(data.trainingtypeid) ? data.trainingtypeid : "";
   data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // trainees validations
@@ -21,6 +22,11 @@ const validTraining = (data) => {
   // branch validations
   if (isEmpty(data.branchid)) {
     errors.branch = "branch field is required";
+  }
+
+  // trainingtype validations
+  if (isEmpty(data.trainingtypeid)) {
+    errors.trainingtype = "trainingtype field is required";
   }
 
   // notes validations

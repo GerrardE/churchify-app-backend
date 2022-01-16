@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    activitytypeid: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     council: {
       type: DataTypes.INTEGER,
       allowNull: false

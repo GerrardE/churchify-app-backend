@@ -30,7 +30,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    cyf: {
+    gymcf: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    ywcf: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    yaf: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    teens: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

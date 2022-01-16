@@ -13,7 +13,7 @@ reportRouter.post("/group", verifyToken, trim, reports.group);
 reportRouter.post("/freport", verifyToken, trim, reports.freport);
 
 // GENERATE ATTENDANCE
-reportRouter.post("/synodattendance", verifyToken, trim, reports.getSynodAttendance);
+reportRouter.post("/attendances/global", verifyToken, trim, reports.getGlobalAttendance);
 reportRouter.post("/attendances/zones", verifyToken, trim, reports.getZoneAttendance);
 reportRouter.post("/attendances/branches", verifyToken, trim, reports.getBranchAttendance);
 

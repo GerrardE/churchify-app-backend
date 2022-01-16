@@ -189,6 +189,88 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
+  static async getGlobalAttendance(req, res) {
+    const { from, to, eventid = 1 } = req.body;
+
+    const apilog = {
+      name: `${ReportController.parameters.toLowerCase()}.getGlobalAttendance`,
+      refid: randString(`${ReportController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `Global attendance retrieved ${from}-${to} successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    const eventquery = `select id, name from "Events" where id=${Number(
+      eventid
+    )}`;
+
+    const attendancequery = `select 
+    eventid,
+    avg_children, avg_men, avg_women, TO_CHAR(attmonth, 'Month') 
+    as month, total from 
+      (
+        SELECT
+        ROUND(AVG(a.children), 2) as avg_children, 
+        ROUND(AVG(a.men), 2) as avg_men, 
+        ROUND(AVG(a.women), 2) as avg_women, 
+        ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+        a.eventid,
+        DATE_TRUNC('month', a.date) as attmonth
+        from "Attendances" a
+        LEFT JOIN "Events" on "Events".id=a.eventid, "Events" e
+        GROUP BY 
+        a.eventid, attmonth
+        ORDER BY attmonth ASC
+      ) as x
+  WHERE x.attmonth >= '${from}' AND x.attmonth <= '${to}'
+  AND eventid=${Number(eventid)}`;
+
+    try {
+      const event = await sequelize.query(eventquery);
+      const attendance = await sequelize.query(attendancequery);
+      const payload = {
+        range: `${from} to ${to}`,
+        event: event[0][0],
+        attendance: attendance[0],
+      };
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.success(res, 200, 200, apilog.message, payload);
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = "Global attendance could not be retrieved";
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      ResponseController.error(
+        res,
+        400,
+        400,
+        "Global attendance could not be retrieved",
+        apilog.resbody
+      );
+    }
+  }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof ReportController
+   */
   static async getZoneAttendance(req, res) {
     const { from, to, eventid = 1, zoneid = 1 } = req.body;
 
