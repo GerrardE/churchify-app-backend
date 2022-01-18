@@ -56,7 +56,6 @@ describe("USER TESTS", () => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.email).to.eql("Email is invalid");
             done();
           });
       } catch (err) {
