@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Branch.associate = (models) => {
     const {
-      User, Zone, Fellowship, Activity, Attendance, Membership, Training
+      User, Zone, Fellowship, Activity, Attendance, Membership, Training, ActivityType, TrainingType
     } = models;
 
     Branch.hasMany(User, {
@@ -75,6 +75,16 @@ module.exports = (sequelize, DataTypes) => {
     Branch.belongsTo(Zone, {
       foreignKey: "id",
       as: "branches"
+    });
+    
+    Branch.hasMany(TrainingType, {
+      foreignKey: "id",
+      as: "trainingtype"
+    });
+    
+    Branch.hasMany(ActivityType, {
+      foreignKey: "id",
+      as: "activitytype"
     });
   };
 

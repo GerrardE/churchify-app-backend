@@ -134,7 +134,7 @@ describe("USER CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
-  it("should handle error on UNASSIGN ROLE ===========> ", async () => {
+  it("should handle error on REASSIGN ROLE ===========> ", async () => {
     const mock = sinon.spy();
     const res = {
       status: () => ({
@@ -142,7 +142,7 @@ describe("USER CONTROLLER TESTS", () => {
       })
     };
 
-    await users.unassignrole({}, res);
+    await users.reassignrole({}, res);
     sinon.assert.calledOnce(mock);
   });
 });

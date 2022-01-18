@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    trainingtypeid: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     converts: {
       type: DataTypes.INTEGER,
       allowNull: false

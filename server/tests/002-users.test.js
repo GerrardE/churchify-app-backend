@@ -367,21 +367,22 @@ describe("USER TESTS", () => {
     });
   });
 
-  describe("USER UNASSIGN ROLE ***", () => {
-    it("should return success on user unassign role ===========> ", (done) => {
+  describe("USER REASSIGN ROLE ***", () => {
+    it("should return success on user reassign role ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/users/roles")
+          .put("/api/v1/users/role/reassign")
           .set({ Authorization: user.token })
           .send({
             role: 3,
-            id: guestuser.id
+            id: guestuser.id,
+            newrole: 2,
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.have.property("payload");
-            expect(res.body.payload).to.be.an("number");
-            expect(res.body.message).to.eql("Role unassigned successfully");
+            expect(res.body.payload).to.be.an("array");
+            expect(res.body.message).to.eql("Role reassigned successfully");
             done();
           });
       } catch (err) {

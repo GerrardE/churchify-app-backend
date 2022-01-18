@@ -16,6 +16,8 @@ import stateRouter from "./states";
 import cityRouter from "./cities";
 import dashboardRouter from "./dashboard";
 import apilogRouter from "./apilogs";
+import activityTypesRouter from "./activitytypes";
+import trainingTypesRouter from "./trainingtypes";
 
 const apiRouter = express.Router();
 
@@ -38,5 +40,7 @@ apiRouter.use("/states", stateRouter);
 apiRouter.use("/cities", cityRouter);
 apiRouter.use("/dashboard", dashboardRouter);
 apiRouter.use("/apilogs", apilogRouter);
+apiRouter.use("/activitytypes", activityTypesRouter);
+apiRouter.use("/trainingtypes", trainingTypesRouter);
 
 export default apiRouter;

@@ -61,6 +61,17 @@ INSERT INTO public."Permissions" VALUES (44, 'can:delete:role', 'can delete role
 INSERT INTO public."Permissions" VALUES (45, 'can:get:apilog', 'can put role', '2020-12-13 06:59:53.851-06', '2020-12-13 06:59:53.851-06');
 INSERT INTO public."Permissions" VALUES (46, 'can:delete:apilog', 'can delete role', '2020-12-13 07:00:43.509-06', '2020-12-13 07:00:43.509-06');
 
+
+INSERT INTO public."Permissions" VALUES (47, 'can:put:activitytype', 'can put activitytype', '2020-12-13 06:59:53.851-06', '2020-12-13 06:59:53.851-06');
+INSERT INTO public."Permissions" VALUES (48, 'can:post:activitytype', 'can post activitytype', '2020-12-13 07:00:06.287-06', '2020-12-13 07:00:06.287-06');
+INSERT INTO public."Permissions" VALUES (49, 'can:get:activitytype', 'can get activitytype', '2020-12-13 07:00:17.856-06', '2020-12-13 07:00:17.856-06');
+INSERT INTO public."Permissions" VALUES (50, 'can:delete:activitytype', 'can delete activitytype', '2020-12-13 07:00:43.509-06', '2020-12-13 07:00:43.509-06');
+
+INSERT INTO public."Permissions" VALUES (51, 'can:put:trainingtype', 'can put trainingtype', '2020-12-13 06:59:53.851-06', '2020-12-13 06:59:53.851-06');
+INSERT INTO public."Permissions" VALUES (52, 'can:post:trainingtype', 'can post trainingtype', '2020-12-13 07:00:06.287-06', '2020-12-13 07:00:06.287-06');
+INSERT INTO public."Permissions" VALUES (53, 'can:get:trainingtype', 'can get trainingtype', '2020-12-13 07:00:17.856-06', '2020-12-13 07:00:17.856-06');
+INSERT INTO public."Permissions" VALUES (54, 'can:delete:trainingtype', 'can delete trainingtype', '2020-12-13 07:00:43.509-06', '2020-12-13 07:00:43.509-06');
+
 --
 -- Name: Permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --

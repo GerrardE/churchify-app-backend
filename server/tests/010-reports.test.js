@@ -3,6 +3,8 @@ import chaiHttp from "chai-http";
 import index from "../index";
 import createTestEvent from "./factory/event-factory";
 import createTestPreacher from "./factory/preacher-factory";
+import createTestActivityType from "./factory/activitytypes-factory";
+import createTestTrainingType from "./factory/trainingtypes-factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -143,6 +145,11 @@ describe("REPORT TESTS", () => {
   });
 
   describe("SUBMIT TRAINING REPORT ***", () => {
+    before(async () => {
+      const userid = user.id;
+      await createTestActivityType({ userid });
+      await createTestTrainingType({ userid });
+    });
     it("should return success on submit a training report ===========> ", (done) => {
       try {
         chai.request(index)
@@ -153,6 +160,7 @@ describe("REPORT TESTS", () => {
             converts: "1",
             notes: "Good training report",
             branchid: "1",
+            trainingtypeid: "1",
             date: "2020-12-04T15:12:13.758Z",
             zoneid: "1"
           })
@@ -201,6 +209,7 @@ describe("REPORT TESTS", () => {
             project: "2",
             notes: "God report",
             branchid: "1",
+            activitytypeid: "1",
             date: "2020-12-04T15:12:13.758Z",
             zoneid: "1"
           })
@@ -249,7 +258,10 @@ describe("REPORT TESTS", () => {
           .send({
             cmf: "13",
             cwf: "1",
-            cyf: "12",
+            gymcf: "12",
+            ywcf: "12",
+            yaf: "12",
+            teens: "12",
             rcf: "7",
             branchid: "1",
             notes: "Nice group report",
@@ -337,6 +349,43 @@ describe("REPORT TESTS", () => {
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
             expect(res.body.errors.notes).to.eql("notes field is required");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+  });
+
+  describe("GENERATE GLOBAL REPORT ***", () => {
+    it("should return success on generate a global attendance report ===========> ", (done) => {
+      try {
+        chai.request(index)
+          .post("/api/v1/reports/attendances/global")
+          .set({ Authorization: user.token })
+          .send({"eventid":"1","from":"2021-05-17","to":"2021-10-17"})
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("payload");
+            expect(res.body.message).to.eql("Global attendance retrieved 2021-05-17-2021-10-17 successfully");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+    it("should return error on generate a global attendance report ===========> ", (done) => {
+      try {
+        chai.request(index)
+          .post("/api/v1/reports/attendances/global")
+          .set({ Authorization: user.token })
+          .send({"eventid":"1","from":"","to":""})
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("errors");
+            expect(res.body.message).to.eql("Global attendance could not be retrieved");
             done();
           });
       } catch (err) {
