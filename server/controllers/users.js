@@ -46,13 +46,14 @@ class UserController {
       const { errors, isValid } = validSignup(req.body);
       // Check Validation
       if (!isValid) {
+        const errorvals = JSON.stringify(Object.values(errors).join(", "));
         apilog.resbody = JSON.stringify(errors);
         apilog.httpstatuscode = 400;
         apilog.statuscode = 400;
-        apilog.message = "Error: invalid input";
+        apilog.message = errorvals;
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        ResponseController.error(res, 400, 400, errorvals, errors);
       }
 
       const user = await User.create(req.body);
