@@ -12,6 +12,6 @@ userRouter.put("/:id", verifyToken, userFinder, userPermission, users.updateUser
 userRouter.post("/auth/signup", trim, users.signup);
 userRouter.post("/auth/signin", trim, users.signin);
 userRouter.post("/roles", verifyToken, userPermission, users.assignrole);
-userRouter.delete("/roles", verifyToken, userPermission, users.unassignrole);
+userRouter.put("/role/reassign", verifyToken, userPermission, users.reassignrole);
 
 export default userRouter;

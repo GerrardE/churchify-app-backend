@@ -513,15 +513,15 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async unassignrole(req, res) {
+  static async reassignrole(req, res) {
     const apilog = {
-      name: `${UserController.parameters.toLowerCase()}.unassignrole`,
+      name: `${UserController.parameters.toLowerCase()}.reassignrole`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: "Role unassigned successfully",
+      message: "Role reassigned successfully",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -532,7 +532,9 @@ class UserController {
       const { id } = req.body;
       const user = await User.findOne({ where: { id } });
 
-      const payload = await user.removeRole(req.body.role);
+      await user.removeRole(req.body.role);
+
+      const payload = await user.addRole(req.body.newrole);
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -542,14 +544,14 @@ class UserController {
         res,
         200,
         200,
-        "Role unassigned successfully",
+        "Role reassigned successfully",
         payload
       );
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
-      apilog.message = "Role could not be unassigned";
+      apilog.message = "Role could not be reassigned";
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -557,7 +559,7 @@ class UserController {
         res,
         400,
         400,
-        "Role could not be unassigned",
+        "Role could not be reassigned",
         err
       );
     }
