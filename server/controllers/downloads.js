@@ -114,7 +114,9 @@ class DownloadController {
     };
 
     try {
-      const payload = await Download.findAll();
+      const payload = await Download.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -246,7 +248,9 @@ class DownloadController {
         where: { id, userid },
       });
 
-      const payload = await Download.findAll();
+      const payload = await Download.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -305,7 +309,9 @@ class DownloadController {
       const { download } = req;
       const { id, userid } = download;
       await Download.destroy({ where: { id, userid } });
-      const payload = await Download.findAll();
+      const payload = await Download.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

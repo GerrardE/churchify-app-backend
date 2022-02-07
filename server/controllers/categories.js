@@ -115,7 +115,9 @@ class CategoryController {
     };
 
     try {
-      const payload = await Category.findAll();
+      const payload = await Category.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -246,7 +248,9 @@ class CategoryController {
         where: { id, userid },
       });
 
-      const payload = await Category.findAll();
+      const payload = await Category.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -305,7 +309,9 @@ class CategoryController {
       const { category } = req;
       const { id, userid } = category;
       await Category.destroy({ where: { id, userid } });
-      const payload = await Category.findAll();
+      const payload = await Category.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

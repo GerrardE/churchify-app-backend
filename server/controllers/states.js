@@ -77,7 +77,9 @@ class StateController {
   static async getByCountryId(req, res) {
     const { state } = req;
     const { id } = state;
-    const payload = await State.findAll({ where: { country_id: id } });
+    const payload = await State.findAll({ where: { country_id: id },
+      order: [["name", "ASC"]]
+    });
 
     const apilog = {
       name: `${StateController.parameters.toLowerCase()}.getByCountryId`,

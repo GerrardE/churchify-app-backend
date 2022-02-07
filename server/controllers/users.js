@@ -265,6 +265,7 @@ class UserController {
             attributes: ["id", "name"],
           },
         ],
+        order: [["firstname", "ASC"]]
       });
 
       apilog.resbody = JSON.stringify(payload);

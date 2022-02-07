@@ -112,7 +112,9 @@ class PermissionController {
     };
 
     try {
-      const payload = await Permission.findAll();
+      const payload = await Permission.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -302,7 +304,9 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      const payload = await Permission.findAll();
+      const payload = await Permission.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       ResponseController.success(
         res,
