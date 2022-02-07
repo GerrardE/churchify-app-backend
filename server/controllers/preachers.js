@@ -5,7 +5,7 @@ import models from "@models";
 import ResponseController from "@helpers/response";
 import validationResponse from "@validations/validationResponse";
 
-const { Preacher, ApiLogs } = models;
+const { Preacher, ApiLogs, sequelize } = models;
 
 /**
  * Preacher Controller
@@ -114,7 +114,13 @@ class PreacherController {
     };
 
     try {
-      const payload = await Preacher.findAll();
+      const preacherquery = `select id, name, firstname, lastname, address, notes from (
+        select id, CONCAT(firstname, ' ', lastname) as name, firstname, 
+        lastname, address, notes 
+        from "Preachers"
+      ) as p order by name`
+
+      const { 0: payload } = await sequelize.query(preacherquery);
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -245,7 +251,9 @@ class PreacherController {
         where: { id, userid },
       });
 
-      const payload = await Preacher.findAll();
+      const payload = await Preacher.findAll({
+        order: [["firstname", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -304,7 +312,9 @@ class PreacherController {
       const { preacher } = req;
       const { id, userid } = preacher;
       await Preacher.destroy({ where: { id, userid } });
-      const payload = await Preacher.findAll();
+      const payload = await Preacher.findAll({
+        order: [["firstname", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

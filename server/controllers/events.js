@@ -114,7 +114,9 @@ class EventController {
     };
 
     try {
-      const payload = await Event.findAll();
+      const payload = await Event.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -242,7 +244,9 @@ class EventController {
 
       await Event.update(req.body, { returning: true, where: { id, userid } });
 
-      const payload = await Event.findAll();
+      const payload = await Event.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -301,7 +305,9 @@ class EventController {
       const { event } = req;
       const { id, userid } = event;
       await Event.destroy({ where: { id, userid } });
-      const payload = await Event.findAll();
+      const payload = await Event.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

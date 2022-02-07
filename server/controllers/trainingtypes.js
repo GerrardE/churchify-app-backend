@@ -116,7 +116,9 @@ class TrainingTypeController {
     };
 
     try {
-      const payload = await TrainingType.findAll();
+      const payload = await TrainingType.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -247,7 +249,9 @@ class TrainingTypeController {
         where: { id, userid },
       });
 
-      const payload = await TrainingType.findAll();
+      const payload = await TrainingType.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -306,7 +310,9 @@ class TrainingTypeController {
       const { trainingtype } = req;
       const { id, userid } = trainingtype;
       await TrainingType.destroy({ where: { id, userid } });
-      const payload = await TrainingType.findAll();
+      const payload = await TrainingType.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

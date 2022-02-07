@@ -116,7 +116,9 @@ class ActivityTypeController {
     };
 
     try {
-      const payload = await ActivityType.findAll();
+      const payload = await ActivityType.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -247,7 +249,9 @@ class ActivityTypeController {
         where: { id, userid },
       });
 
-      const payload = await ActivityType.findAll();
+      const payload = await ActivityType.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -306,7 +310,9 @@ class ActivityTypeController {
       const { activitytype } = req;
       const { id, userid } = activitytype;
       await ActivityType.destroy({ where: { id, userid } });
-      const payload = await ActivityType.findAll();
+      const payload = await ActivityType.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

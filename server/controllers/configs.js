@@ -115,7 +115,7 @@ class ConfigController {
 
     try {
       const payload = await Config.findAll({
-        order: [["id", "ASC"]]
+        order: [["createdAt", "DESC"]]
       });
 
       apilog.resbody = JSON.stringify(payload);
@@ -298,7 +298,9 @@ class ConfigController {
 
       await Config.update(req.body, { returning: true, where: { id } });
 
-      const payload = await Config.findAll();
+      const payload = await Config.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -356,7 +358,9 @@ class ConfigController {
       const { config } = req;
       const { id } = config;
       await Config.destroy({ where: { id } });
-      const payload = await Config.findAll();
+      const payload = await Config.findAll({
+        order: [["createdAt", "DESC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

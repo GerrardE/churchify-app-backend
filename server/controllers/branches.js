@@ -114,7 +114,9 @@ class BranchController {
     };
 
     try {
-      const payload = await Branch.findAll();
+      const payload = await Branch.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -303,7 +305,9 @@ class BranchController {
       const { branch } = req;
       const { id } = branch;
       await Branch.destroy({ where: { id } });
-      const payload = await Branch.findAll();
+      const payload = await Branch.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

@@ -88,7 +88,9 @@ class ApiLogsController {
       const { id } = apilog;
       await ApiLogs.destroy({ where: { id } });
 
-      const payload = await ApiLogs.findAll();
+      const payload = await ApiLogs.findAll({
+        order: [['createdAt', 'DESC']]
+      });
 
       ResponseController.success(
         res,

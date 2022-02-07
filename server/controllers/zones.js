@@ -118,7 +118,9 @@ class ZoneController {
     };
 
     try {
-      const payload = await Zone.findAll();
+      const payload = await Zone.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -246,7 +248,9 @@ class ZoneController {
 
       await Zone.update(req.body, { returning: true, where: { id } });
 
-      const payload = await Zone.findAll();
+      const payload = await Zone.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = "";
       apilog.reqendtime = Date.now();

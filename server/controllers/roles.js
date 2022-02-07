@@ -344,7 +344,9 @@ class RoleController {
     };
 
     try {
-      const payload = await Role.findAll();
+      const payload = await Role.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -490,7 +492,9 @@ class RoleController {
 
       await Role.update(req.body, { returning: true, where: { id } });
 
-      const payload = await Role.findAll();
+      const payload = await Role.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -549,7 +553,9 @@ class RoleController {
       const { role } = req;
       const { id } = role;
       await Role.destroy({ where: { id } });
-      const payload = await Role.findAll();
+      const payload = await Role.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

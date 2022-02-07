@@ -92,7 +92,10 @@ class CityController {
     try {
       const { state } = req;
       const { id } = state;
-      const payload = await City.findAll({ where: { state_id: id } });
+      const payload = await City.findAll({ 
+        where: { state_id: id },
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

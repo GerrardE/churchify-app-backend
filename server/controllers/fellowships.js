@@ -114,7 +114,9 @@ class FellowshipController {
     };
 
     try {
-      const payload = await Fellowship.findAll();
+      const payload = await Fellowship.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -245,7 +247,9 @@ class FellowshipController {
         where: { id, userid },
       });
 
-      const payload = await Fellowship.findAll();
+      const payload = await Fellowship.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -304,7 +308,9 @@ class FellowshipController {
       const { fellowship } = req;
       const { id, userid } = Fellowship;
       await fellowship.destroy({ where: { id, userid } });
-      const payload = await Fellowship.findAll();
+      const payload = await Fellowship.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

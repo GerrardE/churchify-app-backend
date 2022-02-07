@@ -35,7 +35,9 @@ class CountryController {
     };
 
     try {
-      const payload = await Country.findAll();
+      const payload = await Country.findAll({
+        order: [["name", "ASC"]]
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
