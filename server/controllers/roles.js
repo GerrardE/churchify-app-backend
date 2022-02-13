@@ -48,7 +48,7 @@ class RoleController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Role.create({ ...req.body });
@@ -57,7 +57,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class RoleController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -123,7 +123,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -138,7 +138,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -181,7 +181,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -196,7 +196,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -238,7 +238,7 @@ class RoleController {
   //     apilog.reqendtime = Date.now();
   //     await ApiLogs.create({ ...apilog });
 
-  //     ResponseController.success(
+  //     return ResponseController.success(
   //       res,
   //       201,
   //       201,
@@ -253,7 +253,7 @@ class RoleController {
   //     apilog.reqendtime = Date.now();
   //     await ApiLogs.create({ ...apilog });
 
-  //     ResponseController.error(
+  //     return ResponseController.error(
   //       res,
   //       400,
   //       400,
@@ -295,7 +295,7 @@ class RoleController {
   //     apilog.reqendtime = Date.now();
   //     await ApiLogs.create({ ...apilog });
 
-  //     ResponseController.success(
+  //     return ResponseController.success(
   //       res,
   //       200,
   //       200,
@@ -310,7 +310,7 @@ class RoleController {
   //     apilog.reqendtime = Date.now();
   //     await ApiLogs.create({ ...apilog });
 
-  //     ResponseController.error(
+  //     return ResponseController.error(
   //       res,
   //       400,
   //       400,
@@ -352,7 +352,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -367,7 +367,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -425,7 +425,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -440,7 +440,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -484,7 +484,7 @@ class RoleController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { role } = req;
@@ -500,7 +500,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -515,7 +515,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -561,7 +561,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -576,7 +576,7 @@ class RoleController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

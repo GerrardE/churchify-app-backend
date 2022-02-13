@@ -41,7 +41,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -56,7 +56,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -100,7 +100,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -115,7 +115,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

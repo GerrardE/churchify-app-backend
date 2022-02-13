@@ -5,13 +5,21 @@ import createTestEvent from "./factory/event-factory";
 import createTestPreacher from "./factory/preacher-factory";
 import createTestActivityType from "./factory/activitytypes-factory";
 import createTestTrainingType from "./factory/trainingtypes-factory";
+import setup from "./factory/setup";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user, event, preachr;
+let user, event, preachr, branch, zone, fellowship;
 
 describe("REPORT TESTS", () => {
+  before(async () => {
+    const setupData = await setup();
+
+    branch = setupData.branch;
+    zone = setupData.zone;
+    fellowship = setupData.fellowship;
+  });
   describe("SUBMIT MEMBERSHIP REPORT ***", () => {
     it("should return success on report test login ===========> ", (done) => {
       try {
@@ -322,6 +330,7 @@ describe("REPORT TESTS", () => {
             branchid: "1"
           })
           .end((err, res) => {
+            console.log(err, ">>>>>>>>>>>>>fell report")
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");

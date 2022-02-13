@@ -1,8 +1,11 @@
-const path = require('path');
+const path = require("path");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 module.exports = {
-    "config": path.resolve('./server/config/babelHook.js'),
-    "models-path": path.resolve('./server/models'),
-    "seeders-path": path.resolve('./server/seeders'),
-    "migrations-path": path.resolve('./server/migrations')
+    "config": path.resolve("./server/config/babelHook.js"),
+    "models-path": path.resolve("./server/models"),
+    "seeders-path": process.env.NODE_ENV == "test" ? path.resolve("./server/tests/seeders") : path.resolve("./server/seeders"),
+    "migrations-path": path.resolve("./server/migrations")
 };

@@ -47,7 +47,7 @@ class BranchController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Branch.create({ ...req.body });
@@ -56,7 +56,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class BranchController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -122,7 +122,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -137,7 +137,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -177,7 +177,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -192,7 +192,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -237,7 +237,7 @@ class BranchController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { branch } = req;
@@ -252,7 +252,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -267,7 +267,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -312,7 +312,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -327,7 +327,7 @@ class BranchController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

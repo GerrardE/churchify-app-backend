@@ -27,7 +27,7 @@ const configFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Config does not exist", err);
+    return ResponseController.error(res, 404, 404, "Config does not exist", err);
   }
 
   req.config = config;
@@ -56,7 +56,7 @@ const confFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Config does not exist", err);
+    return ResponseController.error(res, 404, 404, "Config does not exist", err);
   }
 
   req.config = config;

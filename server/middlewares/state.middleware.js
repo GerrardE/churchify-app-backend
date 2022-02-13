@@ -27,7 +27,7 @@ const stateFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "State does not exist", err);
+    return ResponseController.error(res, 404, 404, "State does not exist", err);
   }
 
   req.state = state;

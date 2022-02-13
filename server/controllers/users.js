@@ -130,7 +130,7 @@ class UserController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { email, password } = req.body;
@@ -158,7 +158,7 @@ class UserController {
         apilog.message = "Invalid email or password";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(
+        return ResponseController.error(
           res,
           400,
           400,
@@ -176,7 +176,7 @@ class UserController {
         apilog.message = "Invalid email or password";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(
+        return ResponseController.error(
           res,
           400,
           400,
@@ -209,7 +209,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -222,7 +222,7 @@ class UserController {
       apilog.statuscode = 400;
       apilog.message = "Login unsuccessful";
 
-      ResponseController.error(res, 400, 400, "Login unsuccessful", err);
+      return ResponseController.error(res, 400, 400, "Login unsuccessful", err);
     }
   }
 
@@ -272,7 +272,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -287,7 +287,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -346,7 +346,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -361,7 +361,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -404,7 +404,7 @@ class UserController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { user } = req;
@@ -415,7 +415,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -433,13 +433,13 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -482,7 +482,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -497,7 +497,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -542,7 +542,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -557,7 +557,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

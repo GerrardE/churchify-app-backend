@@ -46,7 +46,7 @@ class PreacherController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -57,7 +57,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class PreacherController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -126,7 +126,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -141,7 +141,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -181,7 +181,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -196,7 +196,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -240,7 +240,7 @@ class PreacherController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { preacher } = req;
@@ -259,7 +259,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -274,7 +274,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -319,7 +319,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -334,7 +334,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

@@ -29,7 +29,7 @@ const eventFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Event does not exist", err);
+    return ResponseController.error(res, 404, 404, "Event does not exist", err);
   }
 
   req.event = event;
@@ -59,7 +59,7 @@ const eventPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(
+    return ResponseController.error(
       res,
       403,
       403,

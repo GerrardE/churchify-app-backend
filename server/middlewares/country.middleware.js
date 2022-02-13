@@ -27,7 +27,7 @@ const countryFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Country does not exist", err);
+    return ResponseController.error(res, 404, 404, "Country does not exist", err);
   }
 
   req.country = country;

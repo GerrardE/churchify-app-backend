@@ -46,7 +46,7 @@ class ZoneController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Zone.create({ ...req.body });
@@ -55,7 +55,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -72,7 +72,7 @@ class ZoneController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(
+        return ResponseController.error(
           res,
           400,
           400,
@@ -84,7 +84,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -126,7 +126,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -141,7 +141,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -181,7 +181,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -196,7 +196,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -240,7 +240,7 @@ class ZoneController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { zone } = req;
@@ -256,7 +256,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -271,7 +271,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -313,7 +313,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -328,7 +328,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

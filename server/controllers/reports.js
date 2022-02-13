@@ -64,7 +64,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -81,7 +81,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -96,7 +96,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -139,7 +139,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -156,7 +156,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -171,7 +171,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -244,7 +244,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(res, 200, 200, apilog.message, payload);
+      return ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -253,7 +253,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -331,7 +331,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(res, 200, 200, apilog.message, payload);
+      return ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -340,7 +340,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -420,7 +420,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(res, 200, 200, apilog.message, payload);
+      return ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -429,7 +429,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -499,7 +499,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -514,7 +514,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -636,7 +636,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -653,7 +653,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -668,7 +668,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -711,7 +711,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -728,7 +728,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -743,7 +743,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -786,7 +786,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -803,7 +803,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -818,7 +818,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -861,7 +861,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -878,7 +878,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -886,6 +886,7 @@ class ReportController {
         payload
       );
     } catch (err) {
+      console.log(err, "freport>>>>>>>>>>>>>>>")
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
@@ -893,7 +894,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

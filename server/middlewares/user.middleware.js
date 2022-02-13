@@ -77,7 +77,7 @@ const userFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "User does not exist", err);
+    return ResponseController.error(res, 404, 404, "User does not exist", err);
   }
 
   req.user = user;
@@ -107,7 +107,7 @@ const userPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(
+    return ResponseController.error(
       res,
       403,
       403,

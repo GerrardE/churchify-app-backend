@@ -4,7 +4,7 @@ import { createToken } from "../../middlewares/Token";
 
 const { User } = models;
 
-const generateToken = async (userDetails) => {
+export const generateToken = async (userDetails) => {
   const token = await createToken(userDetails);
   return token;
 };
@@ -29,4 +29,4 @@ const createTestUser = async ({
   return (newUser);
 };
 
-export { createTestUser, generateToken };
+export default createTestUser;

@@ -25,7 +25,7 @@ class ApiLogsController {
         order: [["createdAt", "DESC"]]
       });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -33,7 +33,7 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -55,7 +55,7 @@ class ApiLogsController {
     const { apilog: payload } = req;
 
     try {
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -63,7 +63,7 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -92,7 +92,7 @@ class ApiLogsController {
         order: [['createdAt', 'DESC']]
       });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -100,7 +100,7 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

@@ -29,7 +29,7 @@ const activityTypeFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Activitytype does not exist", err);
+    return ResponseController.error(res, 404, 404, "Activitytype does not exist", err);
   }
 
   req.activitytype = activitytype;
@@ -59,7 +59,7 @@ const activityTypePermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(
+    return ResponseController.error(
       res,
       403,
       403,
