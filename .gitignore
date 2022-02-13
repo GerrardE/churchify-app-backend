@@ -5,7 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 yarn.lock
-bin/deploy.test.sh
+./bin/deploy.test.sh
 package-lock.json
 dist
 # Runtime data
@@ -63,3 +63,4 @@ typings/
 # next.js build output
 .next
 database_test.sqlite3
+bin/deploy.test.sh

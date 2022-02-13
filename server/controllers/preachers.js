@@ -21,7 +21,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.create`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -159,7 +159,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { preacher: payload } = req;
 
     const apilog = {
@@ -215,7 +215,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.update`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -293,7 +293,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.delete`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),

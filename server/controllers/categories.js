@@ -21,7 +21,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.create`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -99,7 +99,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -156,7 +156,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { category: payload } = req;
 
     const apilog = {
@@ -212,7 +212,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.update`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -290,7 +290,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.delete`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),

@@ -21,7 +21,7 @@ class TrainingTypeController {
    * @return {json} Returns json object
    * @memberof TrainingTypeController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${TrainingTypeController.parameters.toLowerCase()}.create`,
       refid: randString(`${TrainingTypeController.parameter.toUpperCase()}`),
@@ -100,7 +100,7 @@ class TrainingTypeController {
    * @return {json} Returns json object
    * @memberof TrainingTypeController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${TrainingTypeController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${TrainingTypeController.parameter.toUpperCase()}`),
@@ -157,7 +157,7 @@ class TrainingTypeController {
    * @return {json} Returns json object
    * @memberof TrainingTypeController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { trainingtype: payload } = req;
 
     const apilog = {
@@ -213,7 +213,7 @@ class TrainingTypeController {
    * @return {json} Returns json object
    * @memberof TrainingTypeController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${TrainingTypeController.parameters.toLowerCase()}.update`,
       refid: randString(`${TrainingTypeController.parameter.toUpperCase()}`),
@@ -291,7 +291,7 @@ class TrainingTypeController {
    * @return {json} Returns json object
    * @memberof TrainingTypeController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${TrainingTypeController.parameters.toLowerCase()}.delete`,
       refid: randString(`${TrainingTypeController.parameter.toUpperCase()}`),

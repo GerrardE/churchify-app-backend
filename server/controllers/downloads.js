@@ -21,7 +21,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.create`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -155,7 +155,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { download: payload } = req;
 
     const apilog = {
@@ -211,7 +211,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.update`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -290,7 +290,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.delete`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),

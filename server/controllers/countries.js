@@ -19,7 +19,7 @@ class CountryController {
    * @return {json} Returns json object
    * @memberof CountryController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${CountryController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
@@ -76,7 +76,7 @@ class CountryController {
    * @return {json} Returns json object
    * @memberof CountryController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { country: payload } = req;
 
     const apilog = {
@@ -131,7 +131,7 @@ class CountryController {
    * @return {json} Returns json object
    * @memberof CountryController
    */
-  static async getByName(req, res) {
+  static async getByName(req, res, next) {
     const apilog = {
       name: `${CountryController.parameters.toLowerCase()}.getByName`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),

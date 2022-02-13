@@ -21,7 +21,7 @@ class FellowshipController {
    * @return {json} Returns json object
    * @memberof FellowshipController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${FellowshipController.parameters.toLowerCase()}.create`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class FellowshipController {
    * @return {json} Returns json object
    * @memberof FellowshipController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${FellowshipController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
@@ -155,7 +155,7 @@ class FellowshipController {
    * @return {json} Returns json object
    * @memberof FellowshipController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { fellowship: payload } = req;
 
     const apilog = {
@@ -211,7 +211,7 @@ class FellowshipController {
    * @return {json} Returns json object
    * @memberof FellowshipController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${FellowshipController.parameters.toLowerCase()}.update`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),
@@ -289,7 +289,7 @@ class FellowshipController {
    * @return {json} Returns json object
    * @memberof FellowshipController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${FellowshipController.parameters.toLowerCase()}.delete`,
       refid: randString(`${FellowshipController.parameter.toUpperCase()}`),

@@ -23,7 +23,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.create`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -155,7 +155,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { config: payload } = req;
 
     const apilog = {
@@ -210,7 +210,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getByName(req, res) {
+  static async getByName(req, res, next) {
     const { config: payload } = req;
 
     const apilog = {
@@ -266,7 +266,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.update`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -340,7 +340,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),

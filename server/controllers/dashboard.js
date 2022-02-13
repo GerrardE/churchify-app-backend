@@ -21,7 +21,7 @@ class DashboardController {
    * @return {json} Returns json object
    * @memberof DashboardController
    */
-  static async getStatistics(req, res) {
+  static async getStatistics(req, res, next) {
     const apilog = {
       name: `${DashboardController.parameters.toLowerCase()}.getStatistics`,
       refid: randString(`${DashboardController.parameter.toUpperCase()}`),

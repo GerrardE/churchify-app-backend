@@ -21,7 +21,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.create`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -102,7 +102,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -159,7 +159,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { zone: payload } = req;
 
     const apilog = {
@@ -215,7 +215,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.update`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -290,7 +290,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),

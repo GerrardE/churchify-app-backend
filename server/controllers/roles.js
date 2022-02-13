@@ -23,7 +23,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.create`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async assignpermissions(req, res) {
+  static async assignpermissions(req, res, next) {
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.assignpermissions`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -156,7 +156,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async unassignpermissions(req, res) {
+  static async unassignpermissions(req, res, next) {
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.unassignpermissions`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -214,7 +214,7 @@ class RoleController {
   //  * @return {json} Returns json object
   //  * @memberof RoleController
   //  */
-  // static async assignRoles(req, res) {
+  // static async assignRoles(req, res, next) {
   //   const apilog = {
   //     name: `${RoleController.parameters.toLowerCase()}.assignRoles`,
   //     refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -271,7 +271,7 @@ class RoleController {
   //  * @return {json} Returns json object
   //  * @memberof RoleController
   //  */
-  // static async unassignRoles(req, res) {
+  // static async unassignRoles(req, res, next) {
   //   const apilog = {
   //     name: `${RoleController.parameters.toLowerCase()}.unassignRoles`,
   //     refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -328,7 +328,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -385,7 +385,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { role } = req;
 
     const apilog = {
@@ -459,7 +459,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.update`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),
@@ -534,7 +534,7 @@ class RoleController {
    * @return {json} Returns json object
    * @memberof RoleController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${RoleController.parameters.toLowerCase()}.delete`,
       refid: randString(`${RoleController.parameter.toUpperCase()}`),

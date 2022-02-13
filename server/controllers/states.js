@@ -19,7 +19,7 @@ class StateController {
    * @return {json} Returns json object
    * @memberof StateController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { state: payload } = req;
 
     const apilog = {
@@ -74,7 +74,7 @@ class StateController {
    * @return {json} Returns json object
    * @memberof StateController
    */
-  static async getByCountryId(req, res) {
+  static async getByCountryId(req, res, next) {
     const { state } = req;
     const { id } = state;
     const payload = await State.findAll({ where: { country_id: id },

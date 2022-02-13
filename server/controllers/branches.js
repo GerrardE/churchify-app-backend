@@ -21,7 +21,7 @@ class BranchController {
    * @return {json} Returns json object
    * @memberof BranchController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${BranchController.parameters.toLowerCase()}.create`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class BranchController {
    * @return {json} Returns json object
    * @memberof BranchController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${BranchController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
@@ -155,7 +155,7 @@ class BranchController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { branch: payload } = req;
 
     const apilog = {
@@ -211,7 +211,7 @@ class BranchController {
    * @return {json} Returns json object
    * @memberof BranchController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${BranchController.parameters.toLowerCase()}.update`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
@@ -286,7 +286,7 @@ class BranchController {
    * @return {json} Returns json object
    * @memberof BranchController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${BranchController.parameters.toLowerCase()}.delete`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),

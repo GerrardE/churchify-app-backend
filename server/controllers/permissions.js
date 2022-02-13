@@ -21,7 +21,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.create`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -96,7 +96,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -153,7 +153,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { permission: payload } = req;
 
     const apilog = {
@@ -209,7 +209,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.update`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -282,7 +282,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.delete`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),

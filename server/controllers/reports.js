@@ -39,7 +39,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async membership(req, res) {
+  static async membership(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.membership`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -114,7 +114,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async attendance(req, res) {
+  static async attendance(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.attendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -189,7 +189,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getGlobalAttendance(req, res) {
+  static async getGlobalAttendance(req, res, next) {
     const { from, to, eventid = 1 } = req.body;
 
     const apilog = {
@@ -271,7 +271,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getZoneAttendance(req, res) {
+  static async getZoneAttendance(req, res, next) {
     const { from, to, eventid = 1, zoneid = 1 } = req.body;
 
     const apilog = {
@@ -358,7 +358,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getBranchAttendance(req, res) {
+  static async getBranchAttendance(req, res, next) {
     const { from, to, eventid = 1, branchid = 1 } = req.body;
 
     const apilog = {
@@ -447,7 +447,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getSynodAttendance(req, res) {
+  static async getSynodAttendance(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.getSynodAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -611,7 +611,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async training(req, res) {
+  static async training(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.training`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -686,7 +686,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async activity(req, res) {
+  static async activity(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.activity`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -761,7 +761,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async group(req, res) {
+  static async group(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.group`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -836,7 +836,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async freport(req, res) {
+  static async freport(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.freport`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),

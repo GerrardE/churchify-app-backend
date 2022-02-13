@@ -21,7 +21,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.create`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -98,7 +98,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -155,7 +155,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { event: payload } = req;
 
     const apilog = {
@@ -211,7 +211,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.update`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -286,7 +286,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.delete`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
