@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Zone.hasMany(Branch, {
-      foreignKey: "id",
+      foreignKey: "zoneid",
       as: "branches"
     });
 

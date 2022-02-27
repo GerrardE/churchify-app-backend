@@ -53,9 +53,9 @@ describe("REPORT TESTS", () => {
             tithers: "12",
             newmembers: "11",
             notes: "good report",
-            branchid: "1",
+            branchid: branch.id,
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: "1"
+            zoneid: zone.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -79,7 +79,7 @@ describe("REPORT TESTS", () => {
             tithers: "12",
             newmembers: "11",
             notes: "",
-            branchid: "1"
+            branchid: branch.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
@@ -112,9 +112,9 @@ describe("REPORT TESTS", () => {
             eventid: event.id,
             preacherid: preachr.id,
             notes: "A very good note",
-            branchid: "1",
+            branchid: branch.id,
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: "1"
+            zoneid: zone.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -167,10 +167,10 @@ describe("REPORT TESTS", () => {
             trainees: "23",
             converts: "1",
             notes: "Good training report",
-            branchid: "1",
+            branchid: branch.id,
             trainingtypeid: "1",
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: "1"
+            zoneid: zone.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -216,10 +216,10 @@ describe("REPORT TESTS", () => {
             special: "4",
             project: "2",
             notes: "God report",
-            branchid: "1",
+            branchid: branch.id,
             activitytypeid: "1",
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: "1"
+            zoneid: zone.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -242,7 +242,7 @@ describe("REPORT TESTS", () => {
             special: "4",
             project: "2",
             notes: "",
-            branchid: "1"
+            branchid: branch.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
@@ -271,10 +271,10 @@ describe("REPORT TESTS", () => {
             yaf: "12",
             teens: "12",
             rcf: "7",
-            branchid: "1",
+            branchid: branch.id,
             notes: "Nice group report",
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: "1"
+            zoneid: zone.id
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
@@ -297,7 +297,7 @@ describe("REPORT TESTS", () => {
             cwf: "1",
             cyf: "12",
             rcf: "7",
-            branchid: "1",
+            branchid: branch.id,
             notes: ""
           })
           .end((err, res) => {
@@ -320,17 +320,17 @@ describe("REPORT TESTS", () => {
           .post("/api/v1/reports/freport")
           .set({ Authorization: user.token })
           .send({
-            newcells: "1",
+            newcells: "10",
             totalcells: "11",
             attendance: "2",
-            fellowshipid: "2",
+            fellowshipid: Number(fellowship.id),
             notes: "Good job on the report",
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: "1",
-            branchid: "1"
+            zoneid: zone.id,
+            branchid: branch.id
           })
           .end((err, res) => {
-            console.log(err, ">>>>>>>>>>>>>fell report")
+            console.log(branch, "branch, zone", zone)
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
@@ -350,7 +350,7 @@ describe("REPORT TESTS", () => {
             newcells: "1",
             totalcells: "11",
             attendance: "2",
-            fellowshipid: "1",
+            fellowshipid: Number(fellowship.id),
             notes: ""
           })
           .end((err, res) => {

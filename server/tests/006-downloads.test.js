@@ -6,14 +6,17 @@ import setup from "./factory/setup";
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user, category, download;
+let user, category, download, download1;
 
 describe("DOWNLOADS TESTS", () => {
   before(async () => {
     const setupData = await setup();
 
-    download = setupData.download;
+    download = setupData.download.dataValues;
     category = setupData.category;
+
+    const setupData1 = await setup();
+    download1 = setupData1.download.dataValues;
   });
   describe("CREATE DOWNLOAD ***", () => {
     it("should return success on download test login ===========> ", (done) => {
@@ -153,7 +156,7 @@ describe("DOWNLOADS TESTS", () => {
           .put(`/api/v1/downloads/${download.id}`)
           .set({ Authorization: user.token })
           .send({
-            name: "Jajms",
+            name: download.name,
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
             categoryid: "2",
@@ -197,7 +200,7 @@ describe("DOWNLOADS TESTS", () => {
     it("should return success on delete download ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete(`/api/v1/downloads/${download.id}`)
+          .delete(`/api/v1/downloads/${download1.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

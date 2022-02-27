@@ -51,6 +51,25 @@ describe("BRANCH CONTROLLER TESTS", () => {
     sinon.assert.calledOnce(mock);
   });
 
+  it("should handle error on GETALL BRANCHES BY ZONE ID ===========> ", async () => {
+    const next = sinon.spy();
+    const mock = sinon.spy();
+    const req = {
+      params: {
+        id: 1
+      }
+    };
+
+    const res = {
+      status: () => ({
+        json: mock
+      })
+    };
+
+    await branches.getByZoneId(req, res, next);
+    sinon.assert.calledOnce(mock);
+  });
+
   it("should handle error on GET BRANCH ===========> ", async () => {
     const mock = sinon.spy();
     const res = {

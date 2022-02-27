@@ -216,10 +216,10 @@ class ReportController {
     as month, total from 
       (
         SELECT
-        ROUND(AVG(a.children), 2) as avg_children, 
-        ROUND(AVG(a.men), 2) as avg_men, 
-        ROUND(AVG(a.women), 2) as avg_women, 
-        ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+        ROUND(AVG(a.children)) as avg_children, 
+        ROUND(AVG(a.men)) as avg_men, 
+        ROUND(AVG(a.women)) as avg_women, 
+        ROUND(ROUND(AVG(a.children))+ROUND(AVG(a.men))+ROUND(AVG(a.women))) as total,
         a.eventid,
         DATE_TRUNC('month', a.date) as attmonth
         from "Attendances" a
@@ -301,10 +301,10 @@ class ReportController {
   as month, total from 
     (
       SELECT
-      ROUND(AVG(a.children), 2) as avg_children, 
-      ROUND(AVG(a.men), 2) as avg_men, 
-      ROUND(AVG(a.women), 2) as avg_women, 
-      ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+      ROUND(AVG(a.children)) as avg_children, 
+      ROUND(AVG(a.men)) as avg_men, 
+      ROUND(AVG(a.women)) as avg_women, 
+      ROUND(ROUND(AVG(a.children))+ROUND(AVG(a.men))+ROUND(AVG(a.women))) as total,
       a.eventid, a.zoneid as zoneid,
       DATE_TRUNC('month', a.date) as attmonth
       from "Attendances" a
@@ -390,10 +390,10 @@ class ReportController {
   as month, total from 
     (
       SELECT
-      ROUND(AVG(a.children), 2) as avg_children, 
-      ROUND(AVG(a.men), 2) as avg_men, 
-      ROUND(AVG(a.women), 2) as avg_women, 
-      ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+      ROUND(AVG(a.children)) as avg_children, 
+      ROUND(AVG(a.men)) as avg_men, 
+      ROUND(AVG(a.women)) as avg_women, 
+      ROUND(ROUND(AVG(a.children))+ROUND(AVG(a.men))+ROUND(AVG(a.women))) as total,
       a.eventid, a.branchid as branchid,
       DATE_TRUNC('month', a.date) as attmonth
       from "Attendances" a
@@ -886,7 +886,7 @@ class ReportController {
         payload
       );
     } catch (err) {
-      console.log(err, "freport>>>>>>>>>>>>>>>")
+      console.log(err, "controllerfreport>>>>>>>>>>>>>>>")
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;

@@ -5,7 +5,7 @@ import models from "@models";
 import randString from "@helpers/utilities";
 import { v4 } from "uuid";
 
-const { Branch, ApiLogs } = models;
+const { Branch, ApiLogs, Zone } = models;
 
 /**
  * Branch Controller
@@ -47,7 +47,13 @@ class BranchController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          "Error: invalid input",
+          errors
+        );
       }
 
       const payload = await Branch.create({ ...req.body });
@@ -74,7 +80,13 @@ class BranchController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        return ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          validationResponse(err),
+          err
+        );
       }
 
       apilog.reqendtime = Date.now();
@@ -115,7 +127,7 @@ class BranchController {
 
     try {
       const payload = await Branch.findAll({
-        order: [["name", "ASC"]]
+        order: [["name", "ASC"]],
       });
 
       apilog.resbody = JSON.stringify(payload);
@@ -159,7 +171,7 @@ class BranchController {
     const { branch: payload } = req;
 
     const apilog = {
-      name: `${BranchController.parameters.toLowerCase()}.getById`,
+      name: `${BranchController.parameter.toLowerCase()}.getById`,
       refid: randString(`${BranchController.parameter.toUpperCase()}`),
       reqbody: JSON.stringify(req.body),
       resbody: "",
@@ -203,6 +215,75 @@ class BranchController {
   }
 
   /**
+   * Get a branch by zoneId
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof ZoneController
+   */
+  static async getByZoneId(req, res, next) {
+    const apilog = {
+      name: `${BranchController.parameters.toLowerCase()}.getByZoneId`,
+      refid: randString(`${BranchController.parameters.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${BranchController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    const { id } = req.params;
+
+    try {
+      const zone = await Zone.findOne({
+        where: { id },
+        attributes: [],
+        include: [
+          {
+            attributes: ["id", "name"],
+            model: Branch,
+            as: "branches",
+          },
+        ],
+      });
+
+      const payload = zone.dataValues.branches;
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${BranchController.parameters} retrieved successfully`,
+        payload ? payload : []
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${BranchController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${BranchController.parameters} could not be retrieved`,
+        err
+      );
+    }
+  }
+
+  /**
    * Update a Branch
    * @static
    * @param {*} req - Request object
@@ -237,7 +318,13 @@ class BranchController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(
+          res,
+          400,
+          400,
+          "Error: invalid input",
+          errors
+        );
       }
 
       const { branch } = req;
@@ -306,7 +393,7 @@ class BranchController {
       const { id } = branch;
       await Branch.destroy({ where: { id } });
       const payload = await Branch.findAll({
-        order: [["name", "ASC"]]
+        order: [["name", "ASC"]],
       });
 
       apilog.reqendtime = Date.now();
