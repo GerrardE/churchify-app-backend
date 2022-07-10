@@ -17,6 +17,18 @@ module.exports = {
       notes: "guest role",
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      name: "zonal:pastor",
+      notes: "zonal pastor role",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "user",
+      notes: "user role",
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
   ], {}),
 

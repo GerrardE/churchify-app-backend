@@ -13,3 +13,4 @@ module.exports = {
 
   down: (queryInterface) => queryInterface.bulkDelete("Branches", null, {})
 };
+  
