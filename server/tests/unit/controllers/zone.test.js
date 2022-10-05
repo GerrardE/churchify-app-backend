@@ -80,7 +80,7 @@ describe("ZONE CONTROLLER TESTS", () => {
     const mock = sinon.spy();
     const req = {
       params: {
-        id: 9
+        id: 1001111111111
       },
     };
 

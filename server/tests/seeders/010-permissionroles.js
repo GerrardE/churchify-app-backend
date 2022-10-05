@@ -311,7 +311,31 @@ module.exports = {
       permissionid: 52,
       createdAt: new Date(),
       updatedAt: new Date()
-    },  
+    },
+    {
+      roleid: 1,
+      permissionid: 53,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 54,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 55,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 56,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ], {}),
 
   down: (queryInterface) => queryInterface.bulkDelete("PermissionRoles", null, {})

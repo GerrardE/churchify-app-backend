@@ -335,7 +335,7 @@ module.exports = {
       notes: "can delete trainingtype",
       createdAt: new Date(),
       updatedAt: new Date()
-    },  
+    },
   ], {}),
 
   down: (queryInterface) => queryInterface.bulkDelete("Permissions", null, {})

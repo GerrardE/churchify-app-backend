@@ -7,7 +7,7 @@ config();
 const salt = process.env.SALT || 10;
 const SALT_ROUNDS = +salt;
 
-const password = bcrypt.hashSync(process.env.SUPER_ADMIN_PASSWORD, SALT_ROUNDS);
+const password = bcrypt.hashSync("testpassword", SALT_ROUNDS);
 
 module.exports = {
   up: (queryInterface) => queryInterface.bulkInsert("Users", [{

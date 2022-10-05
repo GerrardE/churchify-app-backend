@@ -97,8 +97,8 @@ describe("USER TESTS", () => {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -296,7 +296,7 @@ describe("USER TESTS", () => {
             firstname: "Test",
             lastname: "User",
             phone: "08086814343",
-            email: "test@gmail",
+            email: "tester@tremorg",
             branchid: 1,
             country: 1,
             password: "testpass"
@@ -322,7 +322,7 @@ describe("USER TESTS", () => {
             firstname: "Test",
             lastname: "User",
             phone: "08086814343",
-            email: "ezeugwajuliet@gmail.com",
+            email: "tester@trem.org",
             branchid: 1,
             country: 1,
             zoneid: 1,

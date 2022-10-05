@@ -24,8 +24,8 @@ describe("DOWNLOADS TESTS", () => {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -153,13 +153,13 @@ describe("DOWNLOADS TESTS", () => {
     it("should return success on update download ===========> ", (done) => {
       try {
         chai.request(index)
-          .put(`/api/v1/downloads/${download.id}`)
+          .put(`/api/v1/downloads/${download1.id}`)
           .set({ Authorization: user.token })
           .send({
-            name: download.name,
+            name: "download.name",
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
-            categoryid: "2",
+            categoryid: category.id,
             notes: "Ebook TCF"
           })
           .end((err, res) => {

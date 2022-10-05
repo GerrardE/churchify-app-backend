@@ -1,0 +1,62 @@
+name: churchify-backend-ci
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+env:
+  # production, test or development
+  NODE_ENV: ${{ secrets.NODE_ENV }}
+  TEST_POSTGRES_USER: ${{ secrets.TEST_POSTGRES_USER }}
+  TEST_POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
+  TEST_POSTGRES_HOST: ${{ secrets.TEST_POSTGRES_HOST }}
+  TEST_POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB }}
+  TEST_POSTGRES_PORT: ${{ secrets.TEST_POSTGRES_PORT }}
+  PORT: ${{ secrets.PORT }}
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  SALT: ${{ secrets.SALT }}
+  SUPER_ADMIN_PASSWORD: ${{ secrets.SUPER_ADMIN_PASSWORD }}
+  ALLOWED_DOMAINS: ${{ secrets.ALLOWED_DOMAINS }}
+  LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+jobs:
+  test:
+    name: test
+    
+    runs-on: ubuntu-18.04
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.TEST_POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.TEST_POSTGRES_PORT }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run Tests
+        run: yarn test
+
+      - name: Run Test Coverage
+        run: yarn coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1

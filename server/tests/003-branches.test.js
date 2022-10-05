@@ -14,8 +14,8 @@ describe("BRANCH TESTS", () => {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
