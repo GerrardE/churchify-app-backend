@@ -27,7 +27,7 @@ const cityFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "City does not exist", err);
+    return ResponseController.error(res, 404, 404, "City does not exist", err);
   }
 
   req.city = city;

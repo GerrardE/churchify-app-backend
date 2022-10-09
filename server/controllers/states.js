@@ -19,7 +19,7 @@ class StateController {
    * @return {json} Returns json object
    * @memberof StateController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { state: payload } = req;
 
     const apilog = {
@@ -41,7 +41,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -56,7 +56,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -74,7 +74,7 @@ class StateController {
    * @return {json} Returns json object
    * @memberof StateController
    */
-  static async getByCountryId(req, res) {
+  static async getByCountryId(req, res, next) {
     const { state } = req;
     const { id } = state;
     const payload = await State.findAll({ where: { country_id: id },
@@ -100,7 +100,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -115,7 +115,7 @@ class StateController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

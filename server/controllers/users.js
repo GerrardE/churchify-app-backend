@@ -27,7 +27,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async signup(req, res) {
+  static async signup(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.signup`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -53,7 +53,7 @@ class UserController {
         apilog.message = errorvals;
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, errorvals, errors);
+        return ResponseController.error(res, 400, 400, errorvals, errors);
       }
 
       const user = await User.create(req.body);
@@ -69,7 +69,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -86,13 +86,13 @@ class UserController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(res, 400, 400, "Registration unsuccessful", err);
+      return ResponseController.error(res, 400, 400, "Registration unsuccessful", err);
     }
   }
 
@@ -105,7 +105,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async signin(req, res) {
+  static async signin(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.signin`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -130,7 +130,7 @@ class UserController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { email, password } = req.body;
@@ -158,7 +158,7 @@ class UserController {
         apilog.message = "Invalid email or password";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(
+        return ResponseController.error(
           res,
           400,
           400,
@@ -176,7 +176,7 @@ class UserController {
         apilog.message = "Invalid email or password";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(
+        return ResponseController.error(
           res,
           400,
           400,
@@ -209,7 +209,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -222,7 +222,7 @@ class UserController {
       apilog.statuscode = 400;
       apilog.message = "Login unsuccessful";
 
-      ResponseController.error(res, 400, 400, "Login unsuccessful", err);
+      return ResponseController.error(res, 400, 400, "Login unsuccessful", err);
     }
   }
 
@@ -234,7 +234,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async getAllUsers(req, res) {
+  static async getAllUsers(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.getAllUsers`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -272,7 +272,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -287,7 +287,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -305,7 +305,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async getUser(req, res) {
+  static async getUser(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.getUser`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -346,7 +346,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -361,7 +361,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -379,7 +379,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async updateUser(req, res) {
+  static async updateUser(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.updateUser`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -404,7 +404,7 @@ class UserController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { user } = req;
@@ -415,7 +415,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -433,13 +433,13 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -457,7 +457,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async assignrole(req, res) {
+  static async assignrole(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.assignrole`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -482,7 +482,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -497,7 +497,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -515,7 +515,7 @@ class UserController {
    * @return {json} Returns json object
    * @memberof UserController
    */
-  static async reassignrole(req, res) {
+  static async reassignrole(req, res, next) {
     const apilog = {
       name: `${UserController.parameters.toLowerCase()}.reassignrole`,
       refid: randString(`${UserController.parameter.toUpperCase()}`),
@@ -542,7 +542,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -557,7 +557,7 @@ class UserController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

@@ -1,21 +1,31 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import setup from "./factory/setup";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, category, download, download1;
 
 describe("DOWNLOADS TESTS", () => {
+  before(async () => {
+    const setupData = await setup();
+
+    download = setupData.download.dataValues;
+    category = setupData.category;
+
+    const setupData1 = await setup();
+    download1 = setupData1.download.dataValues;
+  });
   describe("CREATE DOWNLOAD ***", () => {
     it("should return success on download test login ===========> ", (done) => {
       try {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -39,7 +49,7 @@ describe("DOWNLOADS TESTS", () => {
             name: "Jaja",
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
-            categoryid: "2",
+            categoryid: category.id,
             notes: "Ebook TCF"
           })
           .end((err, res) => {
@@ -62,7 +72,7 @@ describe("DOWNLOADS TESTS", () => {
             name: "J",
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
-            categoryid: "2",
+            categoryid: category.id,
             notes: "Ebook TCF"
           })
           .end((err, res) => {
@@ -85,7 +95,7 @@ describe("DOWNLOADS TESTS", () => {
             name: "Jaja",
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
-            categoryid: "2",
+            categoryid: category.id,
             notes: "Ebook TCF"
           })
           .end((err, res) => {
@@ -124,7 +134,7 @@ describe("DOWNLOADS TESTS", () => {
     it("should return success on get download ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/downloads/1")
+          .get(`/api/v1/downloads/${download.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -143,13 +153,13 @@ describe("DOWNLOADS TESTS", () => {
     it("should return success on update download ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/downloads/1")
+          .put(`/api/v1/downloads/${download1.id}`)
           .set({ Authorization: user.token })
           .send({
-            name: "Jaja",
+            name: "download.name",
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
-            categoryid: "2",
+            categoryid: category.id,
             notes: "Ebook TCF"
           })
           .end((err, res) => {
@@ -166,7 +176,7 @@ describe("DOWNLOADS TESTS", () => {
     it("should handle validation error on update download ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/downloads/1")
+          .put(`/api/v1/downloads/${download.id}`)
           .set({ Authorization: user.token })
           .send({
             url: "www.james.de",
@@ -190,7 +200,7 @@ describe("DOWNLOADS TESTS", () => {
     it("should return success on delete download ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/downloads/1")
+          .delete(`/api/v1/downloads/${download1.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

@@ -21,7 +21,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.create`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -46,7 +46,7 @@ class ZoneController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Zone.create({ ...req.body });
@@ -55,7 +55,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -72,7 +72,7 @@ class ZoneController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(
+        return ResponseController.error(
           res,
           400,
           400,
@@ -84,7 +84,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -102,7 +102,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -126,7 +126,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -141,7 +141,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -159,7 +159,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { zone: payload } = req;
 
     const apilog = {
@@ -181,7 +181,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -196,7 +196,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -215,7 +215,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.update`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -240,7 +240,7 @@ class ZoneController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { zone } = req;
@@ -256,7 +256,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -271,7 +271,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -290,7 +290,7 @@ class ZoneController {
    * @return {json} Returns json object
    * @memberof ZoneController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${ZoneController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ZoneController.parameter.toUpperCase()}`),
@@ -313,7 +313,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -328,7 +328,7 @@ class ZoneController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

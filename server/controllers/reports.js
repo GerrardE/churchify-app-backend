@@ -39,7 +39,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async membership(req, res) {
+  static async membership(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.membership`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -64,7 +64,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -81,7 +81,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -96,7 +96,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -114,7 +114,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async attendance(req, res) {
+  static async attendance(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.attendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -139,7 +139,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -156,7 +156,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -171,7 +171,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -189,7 +189,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getGlobalAttendance(req, res) {
+  static async getGlobalAttendance(req, res, next) {
     const { from, to, eventid = 1 } = req.body;
 
     const apilog = {
@@ -216,10 +216,10 @@ class ReportController {
     as month, total from 
       (
         SELECT
-        ROUND(AVG(a.children), 2) as avg_children, 
-        ROUND(AVG(a.men), 2) as avg_men, 
-        ROUND(AVG(a.women), 2) as avg_women, 
-        ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+        ROUND(AVG(a.children)) as avg_children, 
+        ROUND(AVG(a.men)) as avg_men, 
+        ROUND(AVG(a.women)) as avg_women, 
+        ROUND(ROUND(AVG(a.children))+ROUND(AVG(a.men))+ROUND(AVG(a.women))) as total,
         a.eventid,
         DATE_TRUNC('month', a.date) as attmonth
         from "Attendances" a
@@ -244,7 +244,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(res, 200, 200, apilog.message, payload);
+      return ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -253,7 +253,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -271,7 +271,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getZoneAttendance(req, res) {
+  static async getZoneAttendance(req, res, next) {
     const { from, to, eventid = 1, zoneid = 1 } = req.body;
 
     const apilog = {
@@ -301,10 +301,10 @@ class ReportController {
   as month, total from 
     (
       SELECT
-      ROUND(AVG(a.children), 2) as avg_children, 
-      ROUND(AVG(a.men), 2) as avg_men, 
-      ROUND(AVG(a.women), 2) as avg_women, 
-      ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+      ROUND(AVG(a.children)) as avg_children, 
+      ROUND(AVG(a.men)) as avg_men, 
+      ROUND(AVG(a.women)) as avg_women, 
+      ROUND(ROUND(AVG(a.children))+ROUND(AVG(a.men))+ROUND(AVG(a.women))) as total,
       a.eventid, a.zoneid as zoneid,
       DATE_TRUNC('month', a.date) as attmonth
       from "Attendances" a
@@ -331,7 +331,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(res, 200, 200, apilog.message, payload);
+      return ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -340,7 +340,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -358,7 +358,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getBranchAttendance(req, res) {
+  static async getBranchAttendance(req, res, next) {
     const { from, to, eventid = 1, branchid = 1 } = req.body;
 
     const apilog = {
@@ -390,10 +390,10 @@ class ReportController {
   as month, total from 
     (
       SELECT
-      ROUND(AVG(a.children), 2) as avg_children, 
-      ROUND(AVG(a.men), 2) as avg_men, 
-      ROUND(AVG(a.women), 2) as avg_women, 
-      ROUND(ROUND(AVG(a.children), 2)+ROUND(AVG(a.men), 2)+ROUND(AVG(a.women), 2)) as total,
+      ROUND(AVG(a.children)) as avg_children, 
+      ROUND(AVG(a.men)) as avg_men, 
+      ROUND(AVG(a.women)) as avg_women, 
+      ROUND(ROUND(AVG(a.children))+ROUND(AVG(a.men))+ROUND(AVG(a.women))) as total,
       a.eventid, a.branchid as branchid,
       DATE_TRUNC('month', a.date) as attmonth
       from "Attendances" a
@@ -420,7 +420,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(res, 200, 200, apilog.message, payload);
+      return ResponseController.success(res, 200, 200, apilog.message, payload);
     } catch (err) {
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
@@ -429,7 +429,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -447,7 +447,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async getSynodAttendance(req, res) {
+  static async getSynodAttendance(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.getSynodAttendance`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -499,7 +499,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -514,7 +514,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -611,7 +611,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async training(req, res) {
+  static async training(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.training`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -636,7 +636,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -653,7 +653,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -668,7 +668,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -686,7 +686,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async activity(req, res) {
+  static async activity(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.activity`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -711,7 +711,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -728,7 +728,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -743,7 +743,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -761,7 +761,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async group(req, res) {
+  static async group(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.group`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -786,7 +786,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -803,7 +803,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -818,7 +818,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -836,7 +836,7 @@ class ReportController {
    * @return {json} Returns json object
    * @memberof ReportController
    */
-  static async freport(req, res) {
+  static async freport(req, res, next) {
     const apilog = {
       name: `${ReportController.parameters.toLowerCase()}.freport`,
       refid: randString(`${ReportController.parameter.toUpperCase()}`),
@@ -861,7 +861,7 @@ class ReportController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -878,7 +878,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -886,6 +886,7 @@ class ReportController {
         payload
       );
     } catch (err) {
+      console.log(err, "controllerfreport>>>>>>>>>>>>>>>")
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
@@ -893,7 +894,7 @@ class ReportController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

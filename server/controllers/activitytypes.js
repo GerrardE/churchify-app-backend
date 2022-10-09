@@ -21,7 +21,7 @@ class ActivityTypeController {
    * @return {json} Returns json object
    * @memberof ActivityTypeController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${ActivityTypeController.parameters.toLowerCase()}.create`,
       refid: randString(`${ActivityTypeController.parameter.toUpperCase()}`),
@@ -46,7 +46,7 @@ class ActivityTypeController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -60,7 +60,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -77,12 +77,12 @@ class ActivityTypeController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -100,7 +100,7 @@ class ActivityTypeController {
    * @return {json} Returns json object
    * @memberof ActivityTypeController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${ActivityTypeController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ActivityTypeController.parameter.toUpperCase()}`),
@@ -124,7 +124,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -139,7 +139,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -157,7 +157,7 @@ class ActivityTypeController {
    * @return {json} Returns json object
    * @memberof ActivityTypeController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { activitytype: payload } = req;
 
     const apilog = {
@@ -179,7 +179,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -194,7 +194,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -213,7 +213,7 @@ class ActivityTypeController {
    * @return {json} Returns json object
    * @memberof ActivityTypeController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${ActivityTypeController.parameters.toLowerCase()}.update`,
       refid: randString(`${ActivityTypeController.parameter.toUpperCase()}`),
@@ -238,7 +238,7 @@ class ActivityTypeController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { activitytype } = req;
@@ -257,7 +257,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -272,7 +272,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -291,7 +291,7 @@ class ActivityTypeController {
    * @return {json} Returns json object
    * @memberof ActivityTypeController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${ActivityTypeController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ActivityTypeController.parameter.toUpperCase()}`),
@@ -317,7 +317,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -332,7 +332,7 @@ class ActivityTypeController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

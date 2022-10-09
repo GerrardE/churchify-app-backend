@@ -21,7 +21,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.create`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -46,7 +46,7 @@ class EventController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -57,7 +57,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class EventController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -98,7 +98,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -122,7 +122,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -137,7 +137,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -155,7 +155,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { event: payload } = req;
 
     const apilog = {
@@ -177,7 +177,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -192,7 +192,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -211,7 +211,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.update`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -236,7 +236,7 @@ class EventController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { event } = req;
@@ -252,7 +252,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -267,7 +267,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -286,7 +286,7 @@ class EventController {
    * @return {json} Returns json object
    * @memberof EventController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${EventController.parameters.toLowerCase()}.delete`,
       refid: randString(`${EventController.parameter.toUpperCase()}`),
@@ -312,7 +312,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -327,7 +327,7 @@ class EventController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

@@ -21,7 +21,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.create`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -45,7 +45,7 @@ class CategoryController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -59,7 +59,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -76,12 +76,12 @@ class CategoryController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -99,7 +99,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -123,7 +123,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -138,7 +138,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -156,7 +156,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { category: payload } = req;
 
     const apilog = {
@@ -178,7 +178,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -193,7 +193,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -212,7 +212,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.update`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -237,7 +237,7 @@ class CategoryController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { category } = req;
@@ -256,7 +256,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -271,7 +271,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -290,7 +290,7 @@ class CategoryController {
    * @return {json} Returns json object
    * @memberof CategoryController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${CategoryController.parameters.toLowerCase()}.delete`,
       refid: randString(`${CategoryController.parameter.toUpperCase()}`),
@@ -316,7 +316,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -331,7 +331,7 @@ class CategoryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

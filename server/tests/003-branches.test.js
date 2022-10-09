@@ -14,8 +14,8 @@ describe("BRANCH TESTS", () => {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -118,6 +118,26 @@ describe("BRANCH TESTS", () => {
         chai
           .request(index)
           .get("/api/v1/branches")
+          .set({ Authorization: user.token })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.be.an("object");
+            expect(res.body).to.have.property("payload");
+            expect(res.body.message).to.eql("Branches retrieved successfully");
+            done();
+          });
+      } catch (err) {
+        throw err.message;
+      }
+    });
+  });
+
+  describe("GET BRANCHES BY ZONE ID***", () => {
+    it("should return success on get all branches ===========> ", (done) => {
+      try {
+        chai
+          .request(index)
+          .get("/api/v1/branches/1/zones")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

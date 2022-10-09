@@ -14,8 +14,8 @@ describe("CONFIGS TESTS", () => {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -137,12 +137,12 @@ describe("CONFIGS TESTS", () => {
     it("should return success on update config ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/configs/1")
+          .put("/api/v1/configs/2")
           .set({ Authorization: user.token })
           .send({
-            name: "Alabama",
+            name: "Alabamaz",
             type: "report",
-            config: [{}],
+            config: [{ style: "white" }],
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);

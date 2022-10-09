@@ -1,21 +1,34 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import setup from "./factory/setup";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, fellowship, fellowship1, branch, city, state, country;
 
 describe("FELLOWSHIP TESTS", () => {
+  before(async () => {
+    const setupData = await setup();
+
+    fellowship = setupData.fellowship.dataValues;
+    branch = setupData.branch;
+    country = setupData.country;
+    state = setupData.state;
+    city = setupData.city;
+
+    const setupData1 = await setup();
+    fellowship1 = setupData1.fellowship.dataValues;
+  });
   describe("CREATE FELLOWSHIP ***", () => {
     it("should return success on fellowship test login ===========> ", (done) => {
       try {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
           .send({
-            email: "ezeugwajuliet@gmail.com",
-            password: "testpass"
+            email: "tester@trem.org",
+            password: "testpassword"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -37,11 +50,11 @@ describe("FELLOWSHIP TESTS", () => {
           .set({ Authorization: user.token })
           .send({
             name: "Akoka",
-            country: "1",
-            state: "1",
+            country: country.id,
+            state: state.id,
             address: "Afolabi brown street",
-            city: "1",
-            branchid: "1",
+            city: city.id,
+            branchid: branch.id,
             notes: "Trem Akoka"
           })
           .end((err, res) => {
@@ -62,11 +75,11 @@ describe("FELLOWSHIP TESTS", () => {
           .set({ Authorization: user.token })
           .send({
             name: "Ojodu",
-            country: "1",
-            state: "1",
+            country: country.id,
+            state: state.id,
             address: "A",
-            city: "1",
-            branchid: "1",
+            city: city.id,
+            branchid: branch.id,
             notes: "Trem Ojodu"
           })
           .end((err, res) => {
@@ -87,11 +100,11 @@ describe("FELLOWSHIP TESTS", () => {
           .set({ Authorization: user.token })
           .send({
             name: "Akoka",
-            country: "1",
-            state: "1",
+            country: country.id,
+            state: state.id,
             address: "Afolabi brown street",
-            city: "1",
-            branchid: "1",
+            city: city.id,
+            branchid: branch.id,
             notes: "Trem Akoka"
           })
           .end((err, res) => {
@@ -130,15 +143,15 @@ describe("FELLOWSHIP TESTS", () => {
     it("should return success on update a fellowship ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/fellowships/1")
+          .put(`/api/v1/fellowships/${fellowship1.id}`)
           .set({ Authorization: user.token })
           .send({
-            name: "Akoka",
-            country: "1",
-            state: "1",
+            name: "fellowship",
+            country: country.id,
+            state: state.id,
             address: "Afolabi brown street",
-            city: "1",
-            branchid: "1",
+            city: city.id,
+            branchid: branch.id,
             notes: "Trem Akoka"
           })
           .end((err, res) => {
@@ -155,13 +168,13 @@ describe("FELLOWSHIP TESTS", () => {
     it("should handle validation error ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/fellowships/1")
+          .put(`/api/v1/fellowships/${fellowship.id}`)
           .set({ Authorization: user.token })
           .send({
-            state: "1",
+            state: state.id,
             address: "Afolabi brown street",
-            city: "1",
-            branchid: "1",
+            city: city.id,
+            branchid: branch.id,
             notes: "Trem Akoka"
           })
           .end((err, res) => {
@@ -181,7 +194,7 @@ describe("FELLOWSHIP TESTS", () => {
     it("should return success on getting a fellowship ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/fellowships/1")
+          .get(`/api/v1/fellowships/${fellowship.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -200,7 +213,7 @@ describe("FELLOWSHIP TESTS", () => {
     it("should return success on delete a fellowship ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/fellowships/1")
+          .delete(`/api/v1/fellowships/${fellowship1.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

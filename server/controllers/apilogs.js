@@ -18,14 +18,14 @@ class ApiLogsController {
    * @return {json} Returns json object
    * @memberof ApiLogsController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     try {
       const payload = await ApiLogs.findAll({
         attributes: ["id", "name", "refid", "httpstatuscode", "message"],
         order: [["createdAt", "DESC"]]
       });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -33,7 +33,7 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -51,11 +51,11 @@ class ApiLogsController {
    * @return {json} Returns json object
    * @memberof ApiLogsController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { apilog: payload } = req;
 
     try {
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -63,7 +63,7 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -82,7 +82,7 @@ class ApiLogsController {
    * @return {json} Returns json object
    * @memberof ApiLogsController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     try {
       const { apilog } = req;
       const { id } = apilog;
@@ -92,7 +92,7 @@ class ApiLogsController {
         order: [['createdAt', 'DESC']]
       });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -100,7 +100,7 @@ class ApiLogsController {
         payload
       );
     } catch (err) {
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

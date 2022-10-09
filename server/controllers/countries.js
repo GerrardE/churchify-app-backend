@@ -19,7 +19,7 @@ class CountryController {
    * @return {json} Returns json object
    * @memberof CountryController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${CountryController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
@@ -43,7 +43,7 @@ class CountryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -58,7 +58,7 @@ class CountryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -76,7 +76,7 @@ class CountryController {
    * @return {json} Returns json object
    * @memberof CountryController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { country: payload } = req;
 
     const apilog = {
@@ -98,7 +98,7 @@ class CountryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -113,7 +113,7 @@ class CountryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -131,7 +131,7 @@ class CountryController {
    * @return {json} Returns json object
    * @memberof CountryController
    */
-  static async getByName(req, res) {
+  static async getByName(req, res, next) {
     const apilog = {
       name: `${CountryController.parameters.toLowerCase()}.getByName`,
       refid: randString(`${CountryController.parameter.toUpperCase()}`),
@@ -154,7 +154,7 @@ class CountryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -169,7 +169,7 @@ class CountryController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

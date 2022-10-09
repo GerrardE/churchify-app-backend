@@ -30,7 +30,7 @@ const branchFinder = async (req, res, next) => {
 
     await ApiLogs.create({ ...apilog });
 
-    ResponseController.error(res, 404, 404, "Branch does not exist", err);
+    return ResponseController.error(res, 404, 404, "Branch does not exist", err);
   }
 
   req.branch = branch;
@@ -60,7 +60,7 @@ const branchPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(
+    return ResponseController.error(
       res,
       403,
       403,

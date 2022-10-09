@@ -21,7 +21,7 @@ class DashboardController {
    * @return {json} Returns json object
    * @memberof DashboardController
    */
-  static async getStatistics(req, res) {
+  static async getStatistics(req, res, next) {
     const apilog = {
       name: `${DashboardController.parameters.toLowerCase()}.getStatistics`,
       refid: randString(`${DashboardController.parameter.toUpperCase()}`),
@@ -156,7 +156,7 @@ class DashboardController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -171,7 +171,7 @@ class DashboardController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

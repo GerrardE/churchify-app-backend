@@ -29,7 +29,7 @@ const permissionFinder = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(res, 404, 404, "Permission does not exist", err);
+    return ResponseController.error(res, 404, 404, "Permission does not exist", err);
   }
 
   req.permission = permission;
@@ -59,7 +59,7 @@ const permissionPermission = async (req, res, next) => {
     };
 
     await ApiLogs.create({ ...apilog });
-    ResponseController.error(
+    return ResponseController.error(
       res,
       403,
       403,

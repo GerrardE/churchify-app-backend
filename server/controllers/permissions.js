@@ -21,7 +21,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.create`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -46,7 +46,7 @@ class PermissionController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Permission.create({ ...req.body });
@@ -55,7 +55,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -72,13 +72,13 @@ class PermissionController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -96,7 +96,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -120,7 +120,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -135,7 +135,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -153,7 +153,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { permission: payload } = req;
 
     const apilog = {
@@ -175,7 +175,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -190,7 +190,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -209,7 +209,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.update`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -234,7 +234,7 @@ class PermissionController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { permission } = req;
@@ -248,7 +248,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -263,7 +263,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -282,7 +282,7 @@ class PermissionController {
    * @return {json} Returns json object
    * @memberof PermissionController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${PermissionController.parameters.toLowerCase()}.delete`,
       refid: randString(`${PermissionController.parameter.toUpperCase()}`),
@@ -308,7 +308,7 @@ class PermissionController {
         order: [["createdAt", "DESC"]]
       });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -323,7 +323,7 @@ class PermissionController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

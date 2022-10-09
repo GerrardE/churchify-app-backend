@@ -21,7 +21,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.create`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -46,7 +46,7 @@ class PreacherController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -57,7 +57,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class PreacherController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -98,7 +98,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -126,7 +126,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -141,7 +141,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -159,7 +159,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { preacher: payload } = req;
 
     const apilog = {
@@ -181,7 +181,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -196,7 +196,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -215,7 +215,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.update`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -240,7 +240,7 @@ class PreacherController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { preacher } = req;
@@ -259,7 +259,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -274,7 +274,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -293,7 +293,7 @@ class PreacherController {
    * @return {json} Returns json object
    * @memberof PreacherController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${PreacherController.parameters.toLowerCase()}.delete`,
       refid: randString(`${PreacherController.parameter.toUpperCase()}`),
@@ -319,7 +319,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -334,7 +334,7 @@ class PreacherController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

@@ -23,7 +23,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.create`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -48,7 +48,7 @@ class ConfigController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const payload = await Config.create({ ...req.body });
@@ -57,7 +57,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class ConfigController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -98,7 +98,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -122,7 +122,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -137,7 +137,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -155,7 +155,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { config: payload } = req;
 
     const apilog = {
@@ -177,7 +177,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -192,7 +192,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -210,7 +210,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async getByName(req, res) {
+  static async getByName(req, res, next) {
     const { config: payload } = req;
 
     const apilog = {
@@ -232,7 +232,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -247,7 +247,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -266,7 +266,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.update`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -290,7 +290,7 @@ class ConfigController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { config } = req;
@@ -306,7 +306,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -321,7 +321,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -340,7 +340,7 @@ class ConfigController {
    * @return {json} Returns json object
    * @memberof ConfigController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${ConfigController.parameters.toLowerCase()}.delete`,
       refid: randString(`${ConfigController.parameter.toUpperCase()}`),
@@ -365,7 +365,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -380,7 +380,7 @@ class ConfigController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

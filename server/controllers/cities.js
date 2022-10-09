@@ -19,7 +19,7 @@ class CityController {
    * @return {json} Returns json object
    * @memberof CityController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { city: payload } = req;
 
     const apilog = {
@@ -41,7 +41,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -56,7 +56,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -74,7 +74,7 @@ class CityController {
    * @return {json} Returns json object
    * @memberof CityController
    */
-  static async getByStateId(req, res) {
+  static async getByStateId(req, res, next) {
     const apilog = {
       name: `${CityController.parameters.toLowerCase()}.getByStateId`,
       refid: randString(`${CityController.parameter.toUpperCase()}`),
@@ -101,7 +101,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -116,7 +116,7 @@ class CityController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

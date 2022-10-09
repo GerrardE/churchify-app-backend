@@ -1,7 +1,9 @@
 # Churchify-App
 Churchify-App is a church management application built with React, Node, Express and Postgresql. This repository is the api web service for the application.
 
-[![Build Status](https://travis-ci.org/GerrardE/churchify-app-backend.svg?branch=develop)](https://travis-ci.org/GerrardE/churchify-app-backend) [![Coverage Status](https://coveralls.io/repos/github/GerrardE/churchify-app-backend/badge.svg?branch=develop)](https://coveralls.io/github/GerrardE/churchify-app-backend?branch=develop) [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com) 
+![Build Status](https://github.com/churchify-app/churchify-app-backend/actions/workflows/ci.yml/badge.svg) ![Deployment Status](https://github.com/churchify-app/churchify-app-backend/actions/workflows/cd.yml/badge.svg)
+
+<!-- [![Build Status](https://travis-ci.org/GerrardE/churchify-app-backend.svg?branch=develop)](https://travis-ci.org/GerrardE/churchify-app-backend) [![Coverage Status](https://coveralls.io/repos/github/GerrardE/churchify-app-backend/badge.svg?branch=develop)](https://coveralls.io/github/GerrardE/churchify-app-backend?branch=develop) [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com) -- ##### Travis CI is deprecated -->
 
 **_This App is Live at_** ____
 

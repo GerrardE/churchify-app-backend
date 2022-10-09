@@ -9,6 +9,7 @@ const branchRouter = express.Router();
 branchRouter.post("/", verifyToken, trim, branchPermission, branches.create);
 branchRouter.get("/", branches.getAll);
 branchRouter.get("/:id", branchFinder, branches.getById);
+branchRouter.get("/:id/zones", branches.getByZoneId);
 branchRouter.put("/:id", verifyToken, branchFinder, branchPermission, branches.update);
 branchRouter.delete("/:id", verifyToken, branchFinder, branchPermission, branches.delete);
 

@@ -21,7 +21,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async create(req, res) {
+  static async create(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.create`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -46,7 +46,7 @@ class DownloadController {
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { id: userid } = req.decoded;
@@ -57,7 +57,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         201,
         201,
@@ -74,13 +74,13 @@ class DownloadController {
         apilog.message = JSON.stringify(validationResponse(err));
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
-        ResponseController.error(res, 400, 400, validationResponse(err), err);
+        return ResponseController.error(res, 400, 400, validationResponse(err), err);
       }
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -98,7 +98,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async getAll(req, res) {
+  static async getAll(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.getAll`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -122,7 +122,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -137,7 +137,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -155,7 +155,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     const { download: payload } = req;
 
     const apilog = {
@@ -177,7 +177,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -192,7 +192,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -211,7 +211,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async update(req, res) {
+  static async update(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.update`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -237,7 +237,7 @@ class DownloadController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
 
-        ResponseController.error(res, 400, 400, "Error: invalid input", errors);
+        return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
 
       const { download } = req;
@@ -256,7 +256,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -264,6 +264,7 @@ class DownloadController {
         payload
       );
     } catch (err) {
+      console.log(err, ">>>>>>>>>>>>>download")
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
@@ -271,7 +272,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,
@@ -290,7 +291,7 @@ class DownloadController {
    * @return {json} Returns json object
    * @memberof DownloadController
    */
-  static async delete(req, res) {
+  static async delete(req, res, next) {
     const apilog = {
       name: `${DownloadController.parameters.toLowerCase()}.delete`,
       refid: randString(`${DownloadController.parameter.toUpperCase()}`),
@@ -316,7 +317,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.success(
+      return ResponseController.success(
         res,
         200,
         200,
@@ -331,7 +332,7 @@ class DownloadController {
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
-      ResponseController.error(
+      return ResponseController.error(
         res,
         400,
         400,

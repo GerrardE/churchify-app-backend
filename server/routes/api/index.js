@@ -21,7 +21,7 @@ import trainingTypesRouter from "./trainingtypes";
 
 const apiRouter = express.Router();
 
-apiRouter.get("/", (req, res) => res.status(200).send("Welcome to the Churchify-App API"));
+apiRouter.get("/", (req, res, next) => res.status(200).send("Welcome to the Churchify-App API"));
 
 apiRouter.use("/users", userRouter);
 apiRouter.use("/roles", roleRouter);
