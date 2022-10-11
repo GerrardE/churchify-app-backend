@@ -42,7 +42,7 @@ resource "aws_key_pair" "deployer" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.small"
+  instance_type = "t2.micro"
   key_name = aws_key_pair.deployer.key_name
   tags = {
     Name = "${var.resource_tag_name}_ec2"
@@ -61,8 +61,8 @@ resource "aws_security_group" "allow_tls" {
 
   ingress {
     description      = "web access"
-    from_port        = 8080
-    to_port          = 8080
+    from_port        = 8000
+    to_port          = 8000
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
