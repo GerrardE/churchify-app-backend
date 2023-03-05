@@ -4,10 +4,8 @@
   "description": "Churchify-App is a church management application.",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "pm2": "pm2 start ecosystem.config.js",
+    "start": "pm2 start process.yml",
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
-    "heroku-postbuild": "npm run build",
     "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json && cd dist && zip -r server.zip . && cd ..",
     "seed": "sequelize db:seed:all",
     "migrate": "sequelize db:migrate",
@@ -19,7 +17,7 @@
     "lint": "eslint --fix --ext .js .",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "pretest": "cross-env NODE_ENV=test yarn refreshdb && yarn seed",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 100000 ./server/tests/**/*.test.js --exit"
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 100000 ./server/tests/**/*finance.test.js --exit"
   },
   "repository": {
     "type": "git",

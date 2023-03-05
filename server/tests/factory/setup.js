@@ -1,7 +1,9 @@
 import {
   createTestUser, createTestFellowship, createTestCountry,
   createTestState, createTestCity, createTestZone,
-  createTestBranch, createTestCategory, createTestDownload
+  createTestBranch, createTestCategory, createTestDownload,
+  createTestAsset, createTestFinance, createTestPayment,
+  createTestReceipt, createTestRemuneration, createTestPreacher
 } from "./index";
 
 const setup = async () => {
@@ -30,6 +32,35 @@ const setup = async () => {
     state: testState.id,
     country: testCountry.id
   });
+  const testPreacher = await createTestPreacher({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    city: testCity.id,
+    state: testState.id,
+    country: testCountry.id
+  });
+  const testFinance = await createTestFinance({
+    userid: testUser.id,
+    zoneid: testZone.id,
+    branchid: testBranch.id,
+    preacherid: testPreacher.id,
+  });
+  const testAsset = await createTestAsset({
+    userid: testUser.id,
+    financeid: testFinance.id
+  });
+  const testReceipt = await createTestReceipt({
+    userid: testUser.id,
+    financeid: testFinance.id
+  });
+  const testRemuneration = await createTestRemuneration({
+    userid: testUser.id,
+    financeid: testFinance.id
+  });
+  const testPayment = await createTestPayment({
+    userid: testUser.id,
+    financeid: testFinance.id
+  });
 
   return {
     country: testCountry,
@@ -40,7 +71,13 @@ const setup = async () => {
     user: testUser,
     category: testCategory,
     download: testDownload,
-    fellowship: testFellowship
+    fellowship: testFellowship,
+    preacher: testPreacher,
+    finance: testFinance,
+    asset: testAsset,
+    payment: testPayment,
+    remuneration: testRemuneration,
+    receipt: testReceipt,
   };
 };
 

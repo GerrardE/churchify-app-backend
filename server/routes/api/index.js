@@ -18,6 +18,9 @@ import dashboardRouter from "./dashboard";
 import apilogRouter from "./apilogs";
 import activityTypesRouter from "./activitytypes";
 import trainingTypesRouter from "./trainingtypes";
+import {
+ assetRouter, paymentRouter, remunerationRouter, financeRouter, receiptRouter
+} from "./finances";
 
 const apiRouter = express.Router();
 
@@ -42,5 +45,10 @@ apiRouter.use("/dashboard", dashboardRouter);
 apiRouter.use("/apilogs", apilogRouter);
 apiRouter.use("/activitytypes", activityTypesRouter);
 apiRouter.use("/trainingtypes", trainingTypesRouter);
+apiRouter.use("/finances", financeRouter);
+apiRouter.use("/finances/assets", assetRouter);
+apiRouter.use("/finances/receipts", receiptRouter);
+apiRouter.use("/finances/remunerations", remunerationRouter);
+apiRouter.use("/finances/payments", paymentRouter);
 
 export default apiRouter;

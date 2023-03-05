@@ -7,3 +7,5 @@ export { default as createTestCity } from "./city-factory";
 export { default as createTestZone } from "./zone-factory";
 export { default as createTestBranch } from "./branch-factory";
 export { default as createTestFellowship } from "./fellowship-factory";
+export { default as createTestPreacher } from "./preacher-factory";
+export * from "./finances";

@@ -336,6 +336,126 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      roleid: 1,
+      permissionid: 57,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 58,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 59,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 60,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 61,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 62,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 63,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 64,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 65,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 66,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 67,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 68,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 69,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 70,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 71,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 72,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 73,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 74,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 75,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      roleid: 1,
+      permissionid: 76,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ], {}),
 
   down: (queryInterface) => queryInterface.bulkDelete("PermissionRoles", null, {})
