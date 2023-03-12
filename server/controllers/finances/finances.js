@@ -1,5 +1,5 @@
 import validationResponse from "@validations/validationResponse";
-import validFinance from "@validations/finances";
+import { validFinance } from "@validations/finances";
 import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
@@ -25,6 +25,7 @@ class FinanceController {
 
     try {
       const { errors, isValid } = validFinance(req.body);
+
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -32,6 +33,7 @@ class FinanceController {
         apilog.statuscode = 400;
         apilog.message = "Error: invalid input";
         apilog.reqendtime = Date.now();
+
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 400, 400, "Error: invalid input", errors);
       }
@@ -52,7 +54,7 @@ class FinanceController {
         payload
       );
     } catch (err) {
-      apilog.resbody = JSON.stringify(err);
+      apilog.resbody = err.toString();
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
       apilog.message = `${FinanceController.parameter} could not be created`;
@@ -104,7 +106,7 @@ class FinanceController {
         payload
       );
     } catch (err) {
-      apilog.resbody = JSON.stringify(err);
+      apilog.resbody = err.toString();
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
       apilog.message = `${FinanceController.parameters} could not be retrieved`;
@@ -148,7 +150,7 @@ class FinanceController {
         payload
       );
     } catch (err) {
-      apilog.resbody = JSON.stringify(err);
+      apilog.resbody = err.toString();
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
       apilog.message = `${FinanceController.parameter} could not be retrieved`;
@@ -212,7 +214,7 @@ class FinanceController {
         payload
       );
     } catch (err) {
-      apilog.resbody = JSON.stringify(err);
+      apilog.resbody = err.toString();
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
       apilog.message = `${FinanceController.parameter} could not be updated`;
@@ -258,7 +260,7 @@ class FinanceController {
         payload
       );
     } catch (err) {
-      apilog.resbody = JSON.stringify(err);
+      apilog.resbody = err.toString();
       apilog.httpstatuscode = 400;
       apilog.statuscode = 400;
       apilog.message = `${FinanceController.parameter} could not be deleted`;

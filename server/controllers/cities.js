@@ -12,10 +12,68 @@ const { City, ApiLogs } = models;
  */
 class CityController {
   /**
+   * Get cities
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @return {json} Returns json object
+   * @memberof CityController
+   */
+  static async getAll(req, res, next) {
+    const apilog = {
+      name: `${CityController.parameters.toLowerCase()}.getAll`,
+      refid: randString(`${CityController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${CityController.parameters} retrieved successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      const payload = await City.findAll({
+        order: [["name", "ASC"]]
+      });
+
+      apilog.resbody = JSON.stringify(payload);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${CityController.parameters} retrieved successfully`,
+        payload
+      );
+    } catch (err) {
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 400;
+      apilog.statuscode = 400;
+      apilog.message = `${CityController.parameters} could not be retrieved`;
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.error(
+        res,
+        400,
+        400,
+        `${CityController.parameters} could not be retrieved`,
+        err
+      );
+    }
+  }
+
+  /**
    * Get a City item by id
    * @static
    * @param {*} req - Request object
    * @param {*} res - Response object
+   * @param {*} next - Next middleware
    * @return {json} Returns json object
    * @memberof CityController
    */

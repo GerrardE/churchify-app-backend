@@ -5,6 +5,7 @@ import stateFinder from "@middlewares/state.middleware";
 
 const cityRouter = express.Router();
 
+cityRouter.get("/", cities.getAll);
 cityRouter.get("/:id", cityFinder, cities.getById);
 cityRouter.get("/:id/state", stateFinder, cities.getByStateId);
 

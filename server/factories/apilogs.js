@@ -1,5 +1,6 @@
 import { v4 } from "uuid";
 import randString from "@helpers/utilities";
+import { stringify } from "flatted";
 
 const apiLogFactory = (
   Controller, req, res, action, result,
@@ -9,7 +10,7 @@ const apiLogFactory = (
   name: `${Controller.parameters.toLowerCase()}.${action}`,
   refid: randString(`${Controller.parameter.toUpperCase()}`),
   reqbody: JSON.stringify(req.body),
-  resbody: JSON.stringify(res.body) || JSON.stringify(res),
+  resbody: JSON.stringify(res.body) || stringify(res),
   httpstatuscode,
   statuscode,
   message: `${Controller.parameter} ${result}`,

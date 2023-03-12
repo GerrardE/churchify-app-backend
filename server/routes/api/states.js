@@ -4,6 +4,7 @@ import stateFinder from "@middlewares/state.middleware";
 
 const statesRouter = express.Router();
 
+statesRouter.get("/", states.getAll);
 statesRouter.get("/:id", stateFinder, states.getById);
 statesRouter.get("/:id/country", stateFinder, states.getByCountryId);
 

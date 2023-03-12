@@ -1,13 +1,14 @@
 import validator from "validator";
 import isEmpty from "../../middlewares/isEmpty";
 
-const validFinance = (data) => {
+const validFinance = (data, isEdit = false) => {
   const errors = {};
 
   data.preacherid = !isEmpty(data.preacherid) ? data.preacherid : "";
   data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
   data.name = !isEmpty(data.name) ? data.name : "";
+  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // zoneid validations
   if (isEmpty(data.zoneid)) {
@@ -20,13 +21,12 @@ const validFinance = (data) => {
   }
 
   // name validations
-  if (isEmpty(data.name)) {
-    errors.name = "name field is required";
+  if (!validator.isLength(data.name, { min: 2, max: 100 }) && !isEdit) {
+    errors.name = "name must be between 2 and 100 characters";
   }
 
-  // uploads validations
-  if (isEmpty(data.uploads)) {
-    errors.uploads = "please upload all supporting documents e.g receipts";
+  if (isEmpty(data.name)) {
+    errors.name = "name field is required";
   }
 
   // finance validations

@@ -7,6 +7,7 @@ const validRemuneration = (data) => {
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";
   data.pastorpaid = !isEmpty(data.pastorpaid) ? data.pastorpaid : "";
   data.fulltimepastorcount = !isEmpty(data.fulltimepastorcount) ? data.fulltimepastorcount : "";
+  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // pastorpaid validations
   if (isEmpty(data.pastorpaid)) {
