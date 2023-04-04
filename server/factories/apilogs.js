@@ -13,7 +13,7 @@ const apiLogFactory = (
   resbody: JSON.stringify(res.body) || stringify(res),
   httpstatuscode,
   statuscode,
-  message: `${Controller.parameter} ${result}`,
+  message: (action === "getAll") ? `${Controller.parameters} ${result}` : `${Controller.parameter} ${result}`,
   apiref: v4(),
   url: `${req.method} ~ ${req.originalUrl}`,
   reqstarttime,

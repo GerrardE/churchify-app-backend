@@ -1,7 +1,7 @@
 import validator from "validator";
 import isEmpty from "../../middlewares/isEmpty";
 
-const validAsset = (data) => {
+const validAsset = (data, isEdit=false) => {
   const errors = {};
 
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";

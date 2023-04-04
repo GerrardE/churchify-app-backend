@@ -2,25 +2,21 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
 import setup from "./factory/setup";
-import { createTestFinance } from "./factory";
+import { createTestReceipt } from "./factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user, finance, finance1, zone, branch, preacher;
+let user, finance, receipt;
 
-describe("FINANCE TESTS", () => {
+describe("RECEIPT TESTS", () => {
   before(async () => {
     const setupData = await setup();
 
-    zone = setupData.zone.dataValues;
-    branch = setupData.branch.dataValues;
-    preacher = setupData.preacher.dataValues;
-
     finance = setupData.finance.dataValues;
   });
-  describe("CREATE FINANCE ***", () => {
-    it("should return success on finance test login ===========> ", (done) => {
+  describe("CREATE RECEIPT ***", () => {
+    it("should return success on receipt test login ===========> ", (done) => {
       try {
         chai.request(index)
           .post("/api/v1/users/auth/signin")
@@ -41,68 +37,58 @@ describe("FINANCE TESTS", () => {
         throw err.message;
       }
     });
-    it("should return success on create finance ===========> ", (done) => {
+    it("should return success on create receipt ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/finances")
+          .post("/api/v1/finance/receipts")
           .set({ Authorization: user.token })
           .send({
-            name: "test finance",
-            zoneid: zone.id,
-            branchid: branch.id,
-            preacherid: preacher.id,
-            userid: user.id,
-            notes: finance.notes,
+            month: "2023-04-01",
+            offerings: 800,
+            tithes: 800,
+            seedfaith: 800,
+            thanksgiving: 900,
+            annualthanksgiving: 70,
+            buildingprojects: 800,
+            otherprojects: 600,
+            crusadeandmissionary: 80,
+            ministrydeposits: 70,
+            assetdisposal: 700,
+            interestincome: 40,
+            loanrepaidbydebtors: 7,
+            loanreceived: 100,
+            donationreceived: 90,
+            uploads: [
+              "receipt1",
+              "receipt3"
+            ],
+            financeid: finance.id,
+            notes: "Receipts for lagos"
           })
           .end((err, res) => {
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Finance created successfully");
+            expect(res.body.message).to.eql("Receipt created successfully");
             done();
           });
       } catch (err) {
         throw err.message;
       }
     });
-    it("should handle validation error on create finance ===========> ", (done) => {
+    it("should handle validation error on create receipt ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/finances")
+          .post("/api/v1/finance/receipts")
           .set({ Authorization: user.token })
           .send({
-            name: "P",
-            notes: "A good finance"
+            financeid: finance.id,
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.name).to.eql("name must be between 2 and 100 characters");
-            done();
-          });
-      } catch (err) {
-        throw err.message;
-      }
-    });
-    it("should handle unique validation error ===========> ", (done) => {
-      try {
-        chai.request(index)
-          .post("/api/v1/finances")
-          .set({ Authorization: user.token })
-          .send({
-            name: "test finance",
-            zoneid: zone.id,
-            branchid: branch.id,
-            preacherid: preacher.id,
-            userid: user.id,
-            notes: finance.notes,
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(400);
-            expect(res.body).to.be.an("object");
-            expect(res.body).to.have.property("errors");
-            expect(res.body.message.name).to.eql("name has already been taken");
+            expect(res.body.errors.uploads).to.eql("please upload all supporting documents e.g receipts");
             done();
           });
       } catch (err) {
@@ -111,17 +97,17 @@ describe("FINANCE TESTS", () => {
     });
   });
 
-  describe("GET FINANCES ***", () => {
-    it("should return success on get finances ===========> ", (done) => {
+  describe("GET RECEIPTS ***", () => {
+    it("should return success on get receipts ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/finances")
+          .get("/api/v1/finance/receipts")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Finances retrieved successfully");
+            expect(res.body.message).to.eql("Receipts retrieved successfully");
             done();
           });
       } catch (err) {
@@ -130,17 +116,17 @@ describe("FINANCE TESTS", () => {
     });
   });
 
-  describe("GET FINANCE ***", () => {
-    it("should return success on getting an finance ===========> ", (done) => {
+  describe("GET RECEIPT ***", () => {
+    it("should return success on getting an receipt ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/finances/1")
+          .get("/api/v1/finance/receipts/1")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Finance retrieved successfully");
+            expect(res.body.message).to.eql("Receipt retrieved successfully");
             done();
           });
       } catch (err) {
@@ -149,38 +135,53 @@ describe("FINANCE TESTS", () => {
     });
   });
 
-  describe("UPDATE FINANCE ***", () => {
-    it("should return success on update a finance ===========> ", (done) => {
+  describe("UPDATE RECEIPT ***", () => {
+    it("should return success on update an receipt ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/finances/1")
+          .put("/api/v1/finance/receipts/1")
           .set({ Authorization: user.token })
           .send({
-            name: "Test finance for update",
-            zoneid: zone.id,
-            branchid: branch.id,
-            preacherid: preacher.id,
-            userid: user.id,
-            notes: finance.notes,
+            month: "2023-04-01",
+            offerings: 800,
+            tithes: 800,
+            seedfaith: 800,
+            thanksgiving: 900,
+            annualthanksgiving: 70,
+            buildingprojects: 800,
+            otherprojects: 600,
+            crusadeandmissionary: 80,
+            ministrydeposits: 70,
+            assetdisposal: 700,
+            interestincome: 40,
+            loanrepaidbydebtors: 7,
+            loanreceived: 100,
+            donationreceived: 90,
+            uploads: [
+              "receipt1",
+              "receipt3"
+            ],
+            financeid: finance.id,
+            notes: "Receipts updated for lagos"
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Finance updated successfully");
+            expect(res.body.message).to.eql("Receipt updated successfully");
             done();
           });
       } catch (err) {
         throw err.message;
       }
     });
-    it("should handle validation error on update finance ===========> ", (done) => {
+    it("should handle validation error on update receipt ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/finances/1")
+          .put("/api/v1/finance/receipts/1")
           .set({ Authorization: user.token })
           .send({
-            notes: "A good finance"
+            notes: "A good receipt"
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
@@ -195,26 +196,24 @@ describe("FINANCE TESTS", () => {
     });
   });
 
-  describe("DELETE FINANCE ***", () => {
+  describe("DELETE RECEIPT ***", () => {
     before(async () => {
       const userid = user.id;
-      finance1 = await createTestFinance({
+      receipt = await createTestReceipt({
         userid,
-        zoneid: zone.id,
-        branchid: branch.id,
-        preacherid: preacher.id,
+        financeid: finance.id,
       });
     });
-    it("should return success on delete finance ===========> ", (done) => {
+    it("should return success on delete receipt ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete(`/api/v1/finances/${finance1.id}`)
+          .delete(`/api/v1/finance/receipts/${receipt.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("payload");
-            expect(res.body.message).to.eql("Finance deleted successfully");
+            expect(res.body.message).to.eql("Receipt deleted successfully");
             done();
           });
       } catch (err) {

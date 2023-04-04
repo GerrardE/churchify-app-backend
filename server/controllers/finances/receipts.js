@@ -1,5 +1,5 @@
 import validationResponse from "@validations/validationResponse";
-import validReceipt from "@validations/finances";
+import { validReceipt } from "@validations/finances";
 import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
@@ -21,7 +21,7 @@ class ReceiptController {
    * @memberof ReceiptController
    */
   static async create(req, res, next) {
-    const apilog = apiLogFactory(ReceiptController, req, res, "create", "created", 201, 201);
+    const apilog = apiLogFactory(ReceiptController, req, res, "create", "created successfully", 201, 201);
 
     try {
       const { errors, isValid } = validReceipt(req.body);
@@ -87,7 +87,7 @@ class ReceiptController {
    * @memberof ReceiptController
    */
   static async getAll(req, res, next) {
-    const apilog = apiLogFactory(ReceiptController, req, res, "getAll", "retrieved", 200, 200);
+    const apilog = apiLogFactory(ReceiptController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
       const payload = await Receipt.findAll();
@@ -133,7 +133,7 @@ class ReceiptController {
   static async getById(req, res, next) {
     const { receipt: payload } = req;
 
-    const apilog = apiLogFactory(ReceiptController, req, res, "getById", "retrieved", 200, 200);
+    const apilog = apiLogFactory(ReceiptController, req, res, "getById", "retrieved successfully", 200, 200);
 
     try {
       apilog.resbody = JSON.stringify(payload);
@@ -175,7 +175,7 @@ class ReceiptController {
    * @memberof ReceiptController
    */
   static async update(req, res, next) {
-    const apilog = apiLogFactory(ReceiptController, req, res, "update", "updated", 200, 200);
+    const apilog = apiLogFactory(ReceiptController, req, res, "update", "updated successfully", 200, 200);
 
     try {
       const { errors, isValid } = validReceipt(req.body, true);
@@ -239,7 +239,7 @@ class ReceiptController {
    * @memberof ReceiptController
    */
   static async delete(req, res, next) {
-    const apilog = apiLogFactory(ReceiptController, req, res, "delete", "deleted", 200, 200);
+    const apilog = apiLogFactory(ReceiptController, req, res, "delete", "deleted successfully", 200, 200);
 
     try {
       const { receipt } = req;

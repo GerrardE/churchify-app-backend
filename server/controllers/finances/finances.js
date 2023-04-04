@@ -89,7 +89,7 @@ class FinanceController {
    * @memberof FinanceController
    */
   static async getAll(req, res, next) {
-    const apilog = apiLogFactory(FinanceController, req, res, "getAll", "retrieved", 200, 200);
+    const apilog = apiLogFactory(FinanceController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
       const payload = await Finance.findAll();
@@ -135,7 +135,7 @@ class FinanceController {
   static async getById(req, res, next) {
     const { finance: payload } = req;
 
-    const apilog = apiLogFactory(FinanceController, req, res, "getById", "retrieved", 200, 200);
+    const apilog = apiLogFactory(FinanceController, req, res, "getById", "retrieved successfully", 200, 200);
 
     try {
       apilog.resbody = JSON.stringify(payload);
@@ -177,7 +177,7 @@ class FinanceController {
    * @memberof FinanceController
    */
   static async update(req, res, next) {
-    const apilog = apiLogFactory(FinanceController, req, res, "update", "updated", 200, 200);
+    const apilog = apiLogFactory(FinanceController, req, res, "update", "updated successfully", 200, 200);
 
     try {
       const { errors, isValid } = validFinance(req.body, true);
@@ -241,7 +241,7 @@ class FinanceController {
    * @memberof FinanceController
    */
   static async delete(req, res, next) {
-    const apilog = apiLogFactory(FinanceController, req, res, "delete", "deleted", 200, 200);
+    const apilog = apiLogFactory(FinanceController, req, res, "delete", "deleted successfully", 200, 200);
 
     try {
       const { finance } = req;

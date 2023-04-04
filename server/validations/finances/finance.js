@@ -29,9 +29,9 @@ const validFinance = (data, isEdit = false) => {
     errors.name = "name field is required";
   }
 
-  // finance validations
+  // preacherid validations
   if (isEmpty(data.preacherid)) {
-    errors.finance = "finance field is required";
+    errors.preacherid = "preacher field is required";
   }
 
   // notes validations

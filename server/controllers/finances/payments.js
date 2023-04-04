@@ -1,5 +1,5 @@
 import validationResponse from "@validations/validationResponse";
-import validPayment from "@validations/finances";
+import { validPayment } from "@validations/finances";
 import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
@@ -21,8 +21,7 @@ class PaymentController {
    * @memberof PaymentController
    */
   static async create(req, res, next) {
-    const apilog = apiLogFactory(PaymentController, req, res, "create", "created", 201, 201);
-
+    const apilog = apiLogFactory(PaymentController, req, res, "create", "created successfully", 201, 201);
     try {
       const { errors, isValid } = validPayment(req.body);
       // Check Validation
@@ -87,7 +86,7 @@ class PaymentController {
    * @memberof PaymentController
    */
   static async getAll(req, res, next) {
-    const apilog = apiLogFactory(PaymentController, req, res, "getAll", "retrieved", 200, 200);
+    const apilog = apiLogFactory(PaymentController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
       const payload = await Payment.findAll();
@@ -133,7 +132,7 @@ class PaymentController {
   static async getById(req, res, next) {
     const { payment: payload } = req;
 
-    const apilog = apiLogFactory(PaymentController, req, res, "getById", "retrieved", 200, 200);
+    const apilog = apiLogFactory(PaymentController, req, res, "getById", "retrieved successfully", 200, 200);
 
     try {
       apilog.resbody = JSON.stringify(payload);
@@ -175,7 +174,7 @@ class PaymentController {
    * @memberof PaymentController
    */
   static async update(req, res, next) {
-    const apilog = apiLogFactory(PaymentController, req, res, "update", "updated", 200, 200);
+    const apilog = apiLogFactory(PaymentController, req, res, "update", "updated successfully", 200, 200);
 
     try {
       const { errors, isValid } = validPayment(req.body, true);
@@ -239,7 +238,7 @@ class PaymentController {
    * @memberof PaymentController
    */
   static async delete(req, res, next) {
-    const apilog = apiLogFactory(PaymentController, req, res, "delete", "deleted", 200, 200);
+    const apilog = apiLogFactory(PaymentController, req, res, "delete", "deleted successfully", 200, 200);
 
     try {
       const { payment } = req;

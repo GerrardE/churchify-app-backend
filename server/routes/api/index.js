@@ -46,9 +46,9 @@ apiRouter.use("/apilogs", apilogRouter);
 apiRouter.use("/activitytypes", activityTypesRouter);
 apiRouter.use("/trainingtypes", trainingTypesRouter);
 apiRouter.use("/finances", financeRouter);
-apiRouter.use("/finances/assets", assetRouter);
-apiRouter.use("/finances/receipts", receiptRouter);
-apiRouter.use("/finances/remunerations", remunerationRouter);
-apiRouter.use("/finances/payments", paymentRouter);
+apiRouter.use("/finance/assets", assetRouter);
+apiRouter.use("/finance/receipts", receiptRouter);
+apiRouter.use("/finance/remunerations", remunerationRouter);
+apiRouter.use("/finance/payments", paymentRouter);
 
 export default apiRouter;

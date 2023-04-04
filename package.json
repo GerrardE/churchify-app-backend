@@ -17,7 +17,7 @@
     "lint": "eslint --fix --ext .js .",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "pretest": "cross-env NODE_ENV=test yarn refreshdb && yarn seed",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 100000 ./server/tests/**/*finance.test.js --exit"
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --require @babel/register --env=test mocha --timeout 100000 ./server/tests/**/*.test.js --exit"
   },
   "repository": {
     "type": "git",

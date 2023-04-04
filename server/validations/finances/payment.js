@@ -1,14 +1,14 @@
 import validator from "validator";
 import isEmpty from "../../middlewares/isEmpty";
 
-const validPayment = (data) => {
+const validPayment = (data, isEdit=false) => {
   const errors = {};
 
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";
-  data.nationaloffcieremittance = !isEmpty(data.nationaloffcieremittance) ? data.nationaloffcieremittance : "";
+  data.nationalofficeremittance = !isEmpty(data.nationalofficeremittance) ? data.nationalofficeremittance : "";
   data.hqbuilding = !isEmpty(data.hqbuilding) ? data.hqbuilding : "";
   data.zonalhqremittance = !isEmpty(data.zonalhqremittance) ? data.zonalhqremittance : "";
-  data.salariesallowancies = !isEmpty(data.salariesallowancies) ? data.salariesallowancies : "";
+  data.salariesallowances = !isEmpty(data.salariesallowances) ? data.salariesallowances : "";
   data.pastorpension = !isEmpty(data.pastorpension) ? data.pastorpension : "";
   data.crusadeandmissionary = !isEmpty(data.crusadeandmissionary) ? data.crusadeandmissionary : "";
   data.personalwelfare = !isEmpty(data.personalwelfare) ? data.personalwelfare : "";
@@ -19,6 +19,7 @@ const validPayment = (data) => {
   data.medicalwelfare = !isEmpty(data.medicalwelfare) ? data.medicalwelfare : "";
   data.stationery = !isEmpty(data.stationery) ? data.stationery : "";
   data.churchexpenses = !isEmpty(data.churchexpenses) ? data.churchexpenses : "";
+  data.officeexpenses = !isEmpty(data.officeexpenses) ? data.officeexpenses : "";
   data.rentpersonage = !isEmpty(data.rentpersonage) ? data.rentpersonage : "";
   data.rentpersonage = !isEmpty(data.rentpersonage) ? data.rentpersonage : "";
   data.churchrent = !isEmpty(data.churchrent) ? data.churchrent : "";
@@ -35,13 +36,13 @@ const validPayment = (data) => {
   data.eqptmaintenance = !isEmpty(data.eqptmaintenance) ? data.eqptmaintenance : "";
   data.motormaintenance = !isEmpty(data.motormaintenance) ? data.motormaintenance : "";
   data.churchbldmaintenance = !isEmpty(data.churchbldmaintenance) ? data.churchbldmaintenance : "";
-  data.personagemaintenance = !isEmpty(data.personagemaintenance) ? data.personagemaintenance : "";
+  data.parsonagemaintenance = !isEmpty(data.parsonagemaintenance) ? data.parsonagemaintenance : "";
   data.uploads = !isEmpty(data.uploads) ? data.uploads : "";
   data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // nationaloffcieremittance validations
-  if (isEmpty(data.nationaloffcieremittance)) {
-    errors.nationaloffcieremittance = "nationaloffcieremittance field is required";
+  if (isEmpty(data.nationalofficeremittance)) {
+    errors.nationalofficeremittance = "nationalofficeremittance field is required";
   }
 
   // hqbuilding validations
@@ -54,9 +55,9 @@ const validPayment = (data) => {
     errors.zonalhqremittance = "zonalhqremittance field is required";
   }
 
-  // salariesallowancies validations
-  if (isEmpty(data.salariesallowancies)) {
-    errors.salariesallowancies = "salariesallowancies field is required";
+  // salariesallowances validations
+  if (isEmpty(data.salariesallowances)) {
+    errors.salariesallowances = "salariesallowances field is required";
   }
 
   // pastorpension validations
@@ -107,6 +108,11 @@ const validPayment = (data) => {
   // churchexpenses validations
   if (isEmpty(data.churchexpenses)) {
     errors.churchexpenses = "churchexpenses field is required";
+  }
+
+  // officeexpenses validations
+  if (isEmpty(data.officeexpenses)) {
+    errors.officeexpenses = "officeexpenses field is required";
   }
 
   // rentpersonage validations
@@ -189,9 +195,9 @@ const validPayment = (data) => {
     errors.churchbldmaintenance = "churchbldmaintenance field is required";
   }
 
-  // personagemaintenance validations
-  if (isEmpty(data.personagemaintenance)) {
-    errors.personagemaintenance = "personagemaintenance field is required";
+  // parsonagemaintenance validations
+  if (isEmpty(data.parsonagemaintenance)) {
+    errors.parsonagemaintenance = "parsonagemaintenance field is required";
   }
 
   // uploads validations

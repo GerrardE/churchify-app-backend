@@ -1,5 +1,5 @@
 import validationResponse from "@validations/validationResponse";
-import validAsset from "@validations/finances";
+import { validAsset } from "@validations/finances";
 import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
@@ -21,7 +21,7 @@ class AssetController {
    * @memberof AssetController
    */
   static async create(req, res, next) {
-    const apilog = apiLogFactory(AssetController, req, res, "create", "created", 201, 201);
+    const apilog = apiLogFactory(AssetController, req, res, "create", "created successfully", 201, 201);
 
     try {
       const { errors, isValid } = validAsset(req.body);
@@ -87,7 +87,7 @@ class AssetController {
    * @memberof AssetController
    */
   static async getAll(req, res, next) {
-    const apilog = apiLogFactory(AssetController, req, res, "getAll", "retrieved", 200, 200);
+    const apilog = apiLogFactory(AssetController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
       const payload = await Asset.findAll();
@@ -133,7 +133,7 @@ class AssetController {
   static async getById(req, res, next) {
     const { asset: payload } = req;
 
-    const apilog = apiLogFactory(AssetController, req, res, "getById", "retrieved", 200, 200);
+    const apilog = apiLogFactory(AssetController, req, res, "getById", "retrieved successfully", 200, 200);
 
     try {
       apilog.resbody = JSON.stringify(payload);
@@ -175,7 +175,7 @@ class AssetController {
    * @memberof AssetController
    */
   static async update(req, res, next) {
-    const apilog = apiLogFactory(AssetController, req, res, "update", "updated", 200, 200);
+    const apilog = apiLogFactory(AssetController, req, res, "update", "updated successfully", 200, 200);
 
     try {
       const { errors, isValid } = validAsset(req.body, true);
@@ -239,7 +239,7 @@ class AssetController {
    * @memberof AssetController
    */
   static async delete(req, res, next) {
-    const apilog = apiLogFactory(AssetController, req, res, "delete", "deleted", 200, 200);
+    const apilog = apiLogFactory(AssetController, req, res, "delete", "deleted successfully", 200, 200);
 
     try {
       const { asset } = req;
