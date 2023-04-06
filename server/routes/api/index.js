@@ -9,7 +9,6 @@ import eventRouter from "./events";
 import categoryRouter from "./categories";
 import downloadRouter from "./downloads";
 import preacherRouter from "./preachers";
-import reportRouter from "./reports";
 import configRouter from "./configs";
 import countryRouter from "./countries";
 import stateRouter from "./states";
@@ -19,8 +18,13 @@ import apilogRouter from "./apilogs";
 import activityTypesRouter from "./activitytypes";
 import trainingTypesRouter from "./trainingtypes";
 import {
- assetRouter, paymentRouter, remunerationRouter, financeRouter, receiptRouter
+  assetRouter, paymentRouter, remunerationRouter, financeRouter, receiptRouter
 } from "./finances";
+import {
+  membershipRouter,
+  attendanceRouter, activityRouter, freportRouter,
+  trainingRouter, groupRouter
+} from "./reports";
 
 const apiRouter = express.Router();
 
@@ -36,7 +40,6 @@ apiRouter.use("/events", eventRouter);
 apiRouter.use("/categories", categoryRouter);
 apiRouter.use("/downloads", downloadRouter);
 apiRouter.use("/preachers", preacherRouter);
-apiRouter.use("/reports", reportRouter);
 apiRouter.use("/configs", configRouter);
 apiRouter.use("/countries", countryRouter);
 apiRouter.use("/states", stateRouter);
@@ -50,5 +53,11 @@ apiRouter.use("/finance/assets", assetRouter);
 apiRouter.use("/finance/receipts", receiptRouter);
 apiRouter.use("/finance/remunerations", remunerationRouter);
 apiRouter.use("/finance/payments", paymentRouter);
+apiRouter.use("/memberships", membershipRouter);
+apiRouter.use("/activitys", activityRouter);
+apiRouter.use("/freports", freportRouter);
+apiRouter.use("/trainings", trainingRouter);
+apiRouter.use("/groups", groupRouter);
+apiRouter.use("/attendances", attendanceRouter);
 
 export default apiRouter;

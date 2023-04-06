@@ -216,7 +216,7 @@ describe("PREACHERS TESTS", () => {
     });
   });
 
-  describe("DELETE PREACHER ***", async() => {
+  describe("DELETE PREACHER ***", async () => {
     const userid = user.id;
     preacher = await createTestPreacher({
       userid,

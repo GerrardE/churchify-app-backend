@@ -456,6 +456,150 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      name: "can:post:membership",
+      notes: "can post membership",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:membership",
+      notes: "can put membership",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:membership",
+      notes: "can get membership",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:membership",
+      notes: "can delete membership",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:post:freport",
+      notes: "can post freport",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:freport",
+      notes: "can put freport",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:freport",
+      notes: "can get freport",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:freport",
+      notes: "can delete freport",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:post:activity",
+      notes: "can post activity",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:activity",
+      notes: "can put activity",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:activity",
+      notes: "can get activity",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:activity",
+      notes: "can delete activity",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:post:attendance",
+      notes: "can post attendance",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:attendance",
+      notes: "can put attendance",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:attendance",
+      notes: "can get attendance",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:attendance",
+      notes: "can delete attendance",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:post:group",
+      notes: "can post group",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:group",
+      notes: "can put group",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:group",
+      notes: "can get group",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:group",
+      notes: "can delete group",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:post:training",
+      notes: "can post training",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:put:training",
+      notes: "can put training",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:get:training",
+      notes: "can get training",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: "can:delete:training",
+      notes: "can delete training",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ], {}),
 
   down: (queryInterface) => queryInterface.bulkDelete("Permissions", null, {})

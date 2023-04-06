@@ -3,7 +3,10 @@ import {
   createTestState, createTestCity, createTestZone,
   createTestBranch, createTestCategory, createTestDownload,
   createTestAsset, createTestFinance, createTestPayment,
-  createTestReceipt, createTestRemuneration, createTestPreacher
+  createTestReceipt, createTestRemuneration, createTestPreacher,
+  createTestMembership, createTestFreport, createTestActivity,
+  createTestAttendance, createTestTraining, createTestGroup,
+  createTestEvent, createTestActivityType, createTestTrainingType,
 } from "./index";
 
 const setup = async () => {
@@ -24,6 +27,11 @@ const setup = async () => {
   const testDownload = await createTestDownload({
     userid: testUser.id,
     categoryid: testCategory.id
+  });
+  const testEvent = await createTestEvent({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    country: testCountry.id
   });
   const testFellowship = await createTestFellowship({
     userid: testUser.id,
@@ -61,6 +69,49 @@ const setup = async () => {
     userid: testUser.id,
     financeid: testFinance.id
   });
+  const testActivityType = await createTestActivityType({
+    userid: testUser.id,
+    branchid: testBranch.id
+  });
+  const testTrainingType = await createTestTrainingType({
+    userid: testUser.id,
+    branchid: testBranch.id
+  });
+  const testMembership = await createTestMembership({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    zoneid: testZone.id
+  });
+  const testFreport = await createTestFreport({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    zoneid: testZone.id,
+    fellowshipid: testFellowship.id,
+  });
+  const testActivity = await createTestActivity({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    activitytypeid: testActivityType.id,
+    zoneid: testZone.id
+  });
+  const testAttendance = await createTestAttendance({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    zoneid: testZone.id,
+    preacherid: testPreacher.id,
+    eventid: testEvent.id
+  });
+  const testTraining = await createTestTraining({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    trainingtypeid: testTrainingType.id,
+    zoneid: testZone.id
+  });
+  const testGroup = await createTestGroup({
+    userid: testUser.id,
+    branchid: testBranch.id,
+    zoneid: testZone.id
+  });
 
   return {
     country: testCountry,
@@ -78,6 +129,15 @@ const setup = async () => {
     payment: testPayment,
     remuneration: testRemuneration,
     receipt: testReceipt,
+    freport: testFreport,
+    group: testGroup,
+    activity: testActivity,
+    attendance: testAttendance,
+    training: testTraining,
+    membership: testMembership,
+    evnt: testEvent,
+    trainingtype: testTrainingType,
+    activitytype: testActivityType,
   };
 };
 

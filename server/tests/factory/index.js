@@ -8,4 +8,8 @@ export { default as createTestZone } from "./zone-factory";
 export { default as createTestBranch } from "./branch-factory";
 export { default as createTestFellowship } from "./fellowship-factory";
 export { default as createTestPreacher } from "./preacher-factory";
+export { default as createTestEvent } from "./event-factory";
+export { default as createTestActivityType } from "./activitytypes-factory";
+export { default as createTestTrainingType } from "./trainingtypes-factory";
 export * from "./finances";
+export * from "./reports";

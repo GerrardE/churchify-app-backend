@@ -1,6 +1,7 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import { createTestFellowship } from "./factory";
 import setup from "./factory/setup";
 
 chai.use(chaiHttp);
@@ -17,9 +18,6 @@ describe("FELLOWSHIP TESTS", () => {
     country = setupData.country;
     state = setupData.state;
     city = setupData.city;
-
-    const setupData1 = await setup();
-    fellowship1 = setupData1.fellowship.dataValues;
   });
   describe("CREATE FELLOWSHIP ***", () => {
     it("should return success on fellowship test login ===========> ", (done) => {
@@ -143,7 +141,7 @@ describe("FELLOWSHIP TESTS", () => {
     it("should return success on update a fellowship ===========> ", (done) => {
       try {
         chai.request(index)
-          .put(`/api/v1/fellowships/${fellowship1.id}`)
+          .put(`/api/v1/fellowships/${fellowship.id}`)
           .set({ Authorization: user.token })
           .send({
             name: "fellowship",
@@ -210,6 +208,16 @@ describe("FELLOWSHIP TESTS", () => {
   });
 
   describe("DELETE FELLOWSHIP ***", () => {
+    before(async () => {
+      const userid = user.id;
+      fellowship1 = await createTestFellowship({
+        userid,
+        branchid: branch.id,
+        country: country.id,
+        city: city.id,
+        state: state.id
+      });
+    });
     it("should return success on delete a fellowship ===========> ", (done) => {
       try {
         chai.request(index)
