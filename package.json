@@ -8,6 +8,7 @@
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
     "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json && cd dist && zip -r server.zip . && cd ..",
     "seed": "sequelize db:seed:all",
+    "seedundo": "sequelize db:seed:undo",
     "migrate": "sequelize db:migrate",
     "migrate:undo:all": "sequelize db:migrate:undo:all",
     "migrate:undo": "sequelize db:migrate:undo",

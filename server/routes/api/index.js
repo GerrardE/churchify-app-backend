@@ -54,9 +54,9 @@ apiRouter.use("/finance/receipts", receiptRouter);
 apiRouter.use("/finance/remunerations", remunerationRouter);
 apiRouter.use("/finance/payments", paymentRouter);
 apiRouter.use("/memberships", membershipRouter);
-apiRouter.use("/activitys", activityRouter);
+apiRouter.use("/activityreports", activityRouter);
 apiRouter.use("/freports", freportRouter);
-apiRouter.use("/trainings", trainingRouter);
+apiRouter.use("/trainingreports", trainingRouter);
 apiRouter.use("/groups", groupRouter);
 apiRouter.use("/attendances", attendanceRouter);
 
