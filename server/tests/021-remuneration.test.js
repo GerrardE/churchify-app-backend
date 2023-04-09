@@ -43,7 +43,7 @@ describe("REMUNERATION TESTS", () => {
           .post("/api/v1/finance/remunerations")
           .set({ Authorization: user.token })
           .send({
-            pastorpaid: true,
+            pastorpayed: true,
             fulltimepastorcount: 7,
             uploads: [
               "receipt2",
@@ -81,7 +81,7 @@ describe("REMUNERATION TESTS", () => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.pastorpaid).to.eql("pastorpaid field is required");
+            expect(res.body.errors.pastorpayed).to.eql("pastorpayed field is required");
             done();
           });
       } catch (err) {
@@ -135,7 +135,7 @@ describe("REMUNERATION TESTS", () => {
           .put("/api/v1/finance/remunerations/1")
           .set({ Authorization: user.token })
           .send({
-            pastorpaid: true,
+            pastorpayed: true,
             fulltimepastorcount: 7,
             uploads: [
               "receipt4",
@@ -181,7 +181,7 @@ describe("REMUNERATION TESTS", () => {
       const userid = user.id;
       remuneration = await createTestRemuneration({
         userid,
-        pastorpaid: true,
+        pastorpayed: true,
         fulltimepastorcount: 7,
         uploads: [
           "receipt2",

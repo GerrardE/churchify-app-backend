@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    pastorpaid: { type: DataTypes.BOOLEAN, },
+    pastorpayed: { type: DataTypes.BOOLEAN, },
     fulltimepastorcount: { type: DataTypes.INTEGER },
     uploads: {
       type: DataTypes.ARRAY(DataTypes.JSONB),

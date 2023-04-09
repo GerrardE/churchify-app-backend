@@ -5,13 +5,13 @@ const validRemuneration = (data) => {
   const errors = {};
 
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";
-  data.pastorpaid = !isEmpty(data.pastorpaid) ? data.pastorpaid : "";
+  data.pastorpayed = !isEmpty(data.pastorpayed) ? data.pastorpayed : "";
   data.fulltimepastorcount = !isEmpty(data.fulltimepastorcount) ? data.fulltimepastorcount : "";
   data.notes = !isEmpty(data.notes) ? data.notes : "";
 
-  // pastorpaid validations
-  if (isEmpty(data.pastorpaid)) {
-    errors.pastorpaid = "pastorpaid field is required";
+  // pastorpayed validations
+  if (isEmpty(data.pastorpayed)) {
+    errors.pastorpayed = "pastorpayed field is required";
   }
 
   // fulltimepastorcount validations

@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     ministrydeposits: { type: DataTypes.INTEGER, allowNull: false },
     assetdisposal: { type: DataTypes.INTEGER, allowNull: false },
     interestincome: { type: DataTypes.INTEGER, allowNull: false },
-    loanrepaidbydebtors: { type: DataTypes.INTEGER, allowNull: false },
+    loanrepayedbydebtors: { type: DataTypes.INTEGER, allowNull: false },
     loanreceived: { type: DataTypes.INTEGER, allowNull: false },
     donationreceived: { type: DataTypes.INTEGER, allowNull: false },
     uploads: {

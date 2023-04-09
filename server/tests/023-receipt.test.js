@@ -55,7 +55,7 @@ describe("RECEIPT TESTS", () => {
             ministrydeposits: 70,
             assetdisposal: 700,
             interestincome: 40,
-            loanrepaidbydebtors: 7,
+            loanrepayedbydebtors: 7,
             loanreceived: 100,
             donationreceived: 90,
             uploads: [
@@ -154,7 +154,7 @@ describe("RECEIPT TESTS", () => {
             ministrydeposits: 70,
             assetdisposal: 700,
             interestincome: 40,
-            loanrepaidbydebtors: 7,
+            loanrepayedbydebtors: 7,
             loanreceived: 100,
             donationreceived: 90,
             uploads: [

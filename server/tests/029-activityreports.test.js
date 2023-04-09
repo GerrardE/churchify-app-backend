@@ -43,7 +43,7 @@ describe("ACTIVITY TESTS", () => {
     it("should return success on create activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/activitys")
+          .post("/api/v1/activityreports")
           .set({ Authorization: user.token })
           .send({
             userid: user.id,
@@ -70,7 +70,7 @@ describe("ACTIVITY TESTS", () => {
     it("should handle validation error on create activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/activitys")
+          .post("/api/v1/activityreports")
           .set({ Authorization: user.token })
           .send({
             userid: user.id,
@@ -99,7 +99,7 @@ describe("ACTIVITY TESTS", () => {
     it("should return success on get activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/activitys")
+          .get("/api/v1/activityreports")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -118,7 +118,7 @@ describe("ACTIVITY TESTS", () => {
     it("should return success on getting an activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/activitys/1")
+          .get("/api/v1/activityreports/1")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -137,7 +137,7 @@ describe("ACTIVITY TESTS", () => {
     it("should return success on update an activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/activitys/1")
+          .put("/api/v1/activityreports/1")
           .set({ Authorization: user.token })
           .send({
             userid: user.id,
@@ -164,7 +164,7 @@ describe("ACTIVITY TESTS", () => {
     it("should handle validation error on update activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/activitys/1")
+          .put("/api/v1/activityreports/1")
           .set({ Authorization: user.token })
           .send({
             notes: "A good activity"
@@ -195,7 +195,7 @@ describe("ACTIVITY TESTS", () => {
     it("should return success on delete activity ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete(`/api/v1/activitys/${activity.id}`)
+          .delete(`/api/v1/activityreports/${activity.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

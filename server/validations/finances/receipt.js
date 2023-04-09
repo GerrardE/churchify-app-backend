@@ -17,7 +17,7 @@ const validReceipt = (data) => {
   data.ministydeposits = !isEmpty(data.ministydeposits) ? data.ministydeposits : "";
   data.assetdisposal = !isEmpty(data.assetdisposal) ? data.assetdisposal : "";
   data.interestincome = !isEmpty(data.interestincome) ? data.interestincome : "";
-  data.loanrepaidbydebtors = !isEmpty(data.loanrepaidbydebtors) ? data.loanrepaidbydebtors : "";
+  data.loanrepayedbydebtors = !isEmpty(data.loanrepayedbydebtors) ? data.loanrepayedbydebtors : "";
   data.loanreceived = !isEmpty(data.loanreceived) ? data.loanreceived : "";
   data.donationreceived = !isEmpty(data.donationreceived) ? data.donationreceived : "";
   data.uploads = !isEmpty(data.uploads) ? data.uploads : "";
@@ -83,9 +83,9 @@ const validReceipt = (data) => {
     errors.interestincome = "interestincome field is required";
   }
 
-  // loanrepaidbydebtors validations
-  if (isEmpty(data.loanrepaidbydebtors)) {
-    errors.loanrepaidbydebtors = "loanrepaidbydebtors field is required";
+  // loanrepayedbydebtors validations
+  if (isEmpty(data.loanrepayedbydebtors)) {
+    errors.loanrepayedbydebtors = "loanrepayedbydebtors field is required";
   }
 
   // loanreceived validations

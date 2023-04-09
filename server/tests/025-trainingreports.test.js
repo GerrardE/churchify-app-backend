@@ -43,7 +43,7 @@ describe("TRAINING TESTS", () => {
     it("should return success on create training ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/trainings")
+          .post("/api/v1/trainingreports")
           .set({ Authorization: user.token })
           .send({
             trainees: "23",
@@ -68,7 +68,7 @@ describe("TRAINING TESTS", () => {
     it("should handle validation error on create training ===========> ", (done) => {
       try {
         chai.request(index)
-          .post("/api/v1/trainings")
+          .post("/api/v1/trainingreports")
           .set({ Authorization: user.token })
           .send({
             branchid: branch.id,
@@ -90,7 +90,7 @@ describe("TRAINING TESTS", () => {
     it("should return success on get trainings ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/trainings")
+          .get("/api/v1/trainingreports")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -109,7 +109,7 @@ describe("TRAINING TESTS", () => {
     it("should return success on getting an training ===========> ", (done) => {
       try {
         chai.request(index)
-          .get("/api/v1/trainings/1")
+          .get("/api/v1/trainingreports/1")
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);
@@ -128,7 +128,7 @@ describe("TRAINING TESTS", () => {
     it("should return success on update an training ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/trainings/1")
+          .put("/api/v1/trainingreports/1")
           .set({ Authorization: user.token })
           .send({
             trainees: "23",
@@ -153,7 +153,7 @@ describe("TRAINING TESTS", () => {
     it("should handle validation error on update training ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/trainings/1")
+          .put("/api/v1/trainingreports/1")
           .set({ Authorization: user.token })
           .send({
             notes: "A good training"
@@ -184,7 +184,7 @@ describe("TRAINING TESTS", () => {
     it("should return success on delete training ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete(`/api/v1/trainings/${training.id}`)
+          .delete(`/api/v1/trainingreports/${training.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

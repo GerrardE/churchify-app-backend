@@ -17,7 +17,7 @@ const createTestReceipt = async ({
   ministrydeposits,
   assetdisposal,
   interestincome,
-  loanrepaidbydebtors,
+  loanrepayedbydebtors,
   loanreceived,
   donationreceived,
   uploads, notes
@@ -37,7 +37,7 @@ const createTestReceipt = async ({
     ministrydeposits: ministrydeposits || faker.datatype.number(),
     assetdisposal: assetdisposal || faker.datatype.number(),
     interestincome: interestincome || faker.datatype.number(),
-    loanrepaidbydebtors: loanrepaidbydebtors || faker.datatype.number(),
+    loanrepayedbydebtors: loanrepayedbydebtors || faker.datatype.number(),
     loanreceived: loanreceived || faker.datatype.number(),
     donationreceived: donationreceived || faker.datatype.number(),
     uploads: uploads || [JSON.parse(faker.datatype.json())],

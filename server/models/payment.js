@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     bankcharges: { type: DataTypes.INTEGER, allowNull: false },
     groupexpenses: { type: DataTypes.INTEGER, allowNull: false },
     loanadvanced: { type: DataTypes.INTEGER, allowNull: false },
-    loanrepaid: { type: DataTypes.INTEGER, allowNull: false },
+    loanrepayed: { type: DataTypes.INTEGER, allowNull: false },
     furnituremaintenance: { type: DataTypes.INTEGER, allowNull: false },
     eqptmaintenance: { type: DataTypes.INTEGER, allowNull: false },
     motormaintenance: { type: DataTypes.INTEGER, allowNull: false },

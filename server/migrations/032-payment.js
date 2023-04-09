@@ -56,7 +56,7 @@ module.exports = {
     bankcharges: { type: Sequelize.INTEGER, allowNull: false },
     groupexpenses: { type: Sequelize.INTEGER, allowNull: false },
     loanadvanced: { type: Sequelize.INTEGER, allowNull: false },
-    loanrepaid: { type: Sequelize.INTEGER, allowNull: false },
+    loanrepayed: { type: Sequelize.INTEGER, allowNull: false },
     furnituremaintenance: { type: Sequelize.INTEGER, allowNull: false },
     eqptmaintenance: { type: Sequelize.INTEGER, allowNull: false },
     motormaintenance: { type: Sequelize.INTEGER, allowNull: false },

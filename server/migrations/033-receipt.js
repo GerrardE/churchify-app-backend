@@ -35,7 +35,7 @@ module.exports = {
     ministrydeposits: { type: Sequelize.INTEGER, allowNull: false },
     assetdisposal: { type: Sequelize.INTEGER, allowNull: false },
     interestincome: { type: Sequelize.INTEGER, allowNull: false },
-    loanrepaidbydebtors: { type: Sequelize.INTEGER, allowNull: false },
+    loanrepayedbydebtors: { type: Sequelize.INTEGER, allowNull: false },
     loanreceived: { type: Sequelize.INTEGER, allowNull: false },
     donationreceived: { type: Sequelize.INTEGER, allowNull: false },
     uploads: {

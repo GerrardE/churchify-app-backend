@@ -31,7 +31,7 @@ const validPayment = (data, isEdit=false) => {
   data.bankcharges = !isEmpty(data.bankcharges) ? data.bankcharges : "";
   data.groupexpenses = !isEmpty(data.groupexpenses) ? data.groupexpenses : "";
   data.loanadvanced = !isEmpty(data.loanadvanced) ? data.loanadvanced : "";
-  data.loanrepaid = !isEmpty(data.loanrepaid) ? data.loanrepaid : "";
+  data.loanrepayed = !isEmpty(data.loanrepayed) ? data.loanrepayed : "";
   data.furnituremaintenance = !isEmpty(data.furnituremaintenance) ? data.furnituremaintenance : "";
   data.eqptmaintenance = !isEmpty(data.eqptmaintenance) ? data.eqptmaintenance : "";
   data.motormaintenance = !isEmpty(data.motormaintenance) ? data.motormaintenance : "";
@@ -165,9 +165,9 @@ const validPayment = (data, isEdit=false) => {
     errors.loanadvanced = "loanadvanced field is required";
   }
 
-  // loanrepaid validations
-  if (isEmpty(data.loanrepaid)) {
-    errors.loanrepaid = "loanrepaid field is required";
+  // loanrepayed validations
+  if (isEmpty(data.loanrepayed)) {
+    errors.loanrepayed = "loanrepayed field is required";
   }
 
   // furnituremaintenance validations

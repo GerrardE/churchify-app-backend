@@ -23,7 +23,7 @@ module.exports = {
         key: "id"
       }
     },
-    pastorpaid: { type: Sequelize.BOOLEAN, },
+    pastorpayed: { type: Sequelize.BOOLEAN, },
     fulltimepastorcount: { type: Sequelize.INTEGER },
     uploads: {
       type: Sequelize.ARRAY(Sequelize.JSONB),

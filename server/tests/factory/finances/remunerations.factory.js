@@ -5,14 +5,14 @@ const { Remuneration } = models;
 
 const createTestRemuneration = async ({
   financeid, userid,
-  pastorpaid,
+  pastorpayed,
   fulltimepastorcount,
   uploads, notes
 }) => {
   const newRemuneration = await Remuneration.create({
     userid: userid || faker.datatype.number(),
     financeid: financeid || faker.datatype.number(),
-    pastorpaid: pastorpaid || faker.datatype.boolean(),
+    pastorpayed: pastorpayed || faker.datatype.boolean(),
     fulltimepastorcount: fulltimepastorcount || faker.datatype.number(),
     uploads: uploads || [JSON.parse(faker.datatype.json())],
     notes: notes || faker.random.alphaNumeric(10),
