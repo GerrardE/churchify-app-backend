@@ -95,7 +95,22 @@ class TrainingController {
     const apilog = apiLogFactory(TrainingController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Training.findAll();
+      const payload = await Training.findAll({
+        order: [["createdAt", "DESC"]],
+        attributes: ["id", "date", "converts", "trainees", "createdAt", "updatedAt"],
+        include: [
+          {
+            attributes: ["firstname"],
+            model: models.User,
+            as: "usertraining",
+          },
+          {
+            attributes: ["name"],
+            model: models.Branch,
+            as: "branchtraining",
+          },
+        ],
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

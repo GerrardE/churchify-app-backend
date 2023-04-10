@@ -144,6 +144,8 @@ describe("FREPORT TESTS", () => {
             zoneid: zone.id,
             branchid: branch.id,
             notes: "Good updated report",
+            updatedAt: "2020-12-04T15:12:13.758Z",
+            createdAt: "2020-12-04T15:12:13.758Z",
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);

@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
 
     date: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      get() {
+        return this.getDataValue("date")
+          .toLocaleDateString("en-GB", { timeZone: "UTC" });
+      }
     },
 
     zoneid: {
@@ -43,6 +47,22 @@ module.exports = (sequelize, DataTypes) => {
     notes: {
       type: DataTypes.STRING,
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        return this.getDataValue("createdAt")
+          .toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      get() {
+        return this.getDataValue("updatedAt")
+          .toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    }
   }, {});
 
   Activity.associate = (models) => {
@@ -51,13 +71,13 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Activity.belongsTo(User, {
-      foreignKey: "id",
-      as: "activity"
+      foreignKey: "userid",
+      as: "useractivity"
     });
 
     Activity.belongsTo(Branch, {
-      foreignKey: "id",
-      as: "branchActivity"
+      foreignKey: "branchid",
+      as: "branchactivity"
     });
   };
 

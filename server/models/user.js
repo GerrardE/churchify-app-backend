@@ -66,6 +66,22 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+
+      createdAt: {
+        type: DataTypes.DATE,
+        get() {
+          return this.getDataValue("createdAt")
+            .toLocaleString("en-GB", { timeZone: "UTC" });
+        }
+      },
+
+      updatedAt: {
+        type: DataTypes.DATE,
+        get() {
+          return this.getDataValue("updatedAt")
+            .toLocaleString("en-GB", { timeZone: "UTC" });
+        }
       }
     },
     {
@@ -86,7 +102,9 @@ module.exports = (sequelize, DataTypes) => {
       Group,
       Membership,
       Training,
-      Role
+      Role,
+      Attendance,
+      Activity,
     } = models;
 
     User.hasMany(Training, {
@@ -107,6 +125,16 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(Freport, {
       foreignKey: "id",
       as: "freports"
+    });
+
+    User.hasMany(Attendance, {
+      foreignKey: "id",
+      as: "attendances"
+    });
+
+    User.hasMany(Activity, {
+      foreignKey: "id",
+      as: "activities"
     });
 
     User.hasMany(Event, {

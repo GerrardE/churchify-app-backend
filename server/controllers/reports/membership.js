@@ -95,7 +95,22 @@ class MembershipController {
     const apilog = apiLogFactory(MembershipController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Membership.findAll();
+      const payload = await Membership.findAll({
+        order: [["createdAt", "DESC"]],
+        attributes: ["id", "date", "adults", "children", "tithers", "newmembers", "createdAt", "updatedAt"],
+        include: [
+          {
+            attributes: ["firstname"],
+            model: models.User,
+            as: "usermembership",
+          },
+          {
+            attributes: ["name"],
+            model: models.Branch,
+            as: "branchmembership",
+          },
+        ],
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

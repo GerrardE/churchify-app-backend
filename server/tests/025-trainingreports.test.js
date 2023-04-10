@@ -137,7 +137,9 @@ describe("TRAINING TESTS", () => {
             branchid: branch.id,
             trainingtypeid: trainingtype.id,
             date: "2020-12-04T15:12:13.758Z",
-            zoneid: zone.id
+            zoneid: zone.id,
+            updatedAt: "2020-12-04T15:12:13.758Z",
+            createdAt: "2020-12-04T15:12:13.758Z",
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);

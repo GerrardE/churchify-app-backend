@@ -150,6 +150,8 @@ describe("ATTENDANCE TESTS", () => {
             date: "2020-12-04T15:12:13.758Z",
             zoneid: zone.id,
             notes: "A updated note",
+            updatedAt: "2020-12-04T15:12:13.758Z",
+            createdAt: "2020-12-04T15:12:13.758Z",
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);

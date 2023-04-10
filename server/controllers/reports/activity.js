@@ -95,7 +95,22 @@ class ActivityController {
     const apilog = apiLogFactory(ActivityController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Activity.findAll();
+      const payload = await Activity.findAll({
+        order: [["createdAt", "DESC"]],
+        attributes: ["id", "date", "council", "special", "project", "createdAt", "updatedAt"],
+        include: [
+          {
+            attributes: ["firstname"],
+            model: models.User,
+            as: "useractivity",
+          },
+          {
+            attributes: ["name"],
+            model: models.Branch,
+            as: "branchactivity",
+          },
+        ],
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

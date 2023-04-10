@@ -42,16 +42,21 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Fellowship.associate = (models) => {
-    const { Branch, User } = models;
+    const { Branch, User, Freport } = models;
 
     Fellowship.belongsTo(Branch, {
-      foreignKey: "id",
-      as: "fellowships"
+      foreignKey: "branchid",
+      as: "branchfellowship"
     });
 
     Fellowship.belongsTo(User, {
       foreignKey: "id",
-      as: "user_fellowship"
+      as: "userfellowship"
+    });
+
+    Fellowship.hasMany(Freport, {
+      foreignKey: "id",
+      as: "freports"
     });
   };
 

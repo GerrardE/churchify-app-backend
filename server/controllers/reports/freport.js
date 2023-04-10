@@ -95,7 +95,22 @@ class FreportController {
     const apilog = apiLogFactory(FreportController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Freport.findAll();
+      const payload = await Freport.findAll({
+        order: [["createdAt", "DESC"]],
+        attributes: ["id", "date", "newcells", "totalcells", "attendance", "createdAt", "updatedAt"],
+        include: [
+          {
+            attributes: ["firstname"],
+            model: models.User,
+            as: "userfreport",
+          },
+          {
+            attributes: ["name"],
+            model: models.Branch,
+            as: "branchfreport",
+          },
+        ],
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
