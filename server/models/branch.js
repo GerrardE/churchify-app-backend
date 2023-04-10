@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
 
     notes: {
       type: DataTypes.STRING,
-      allowNull: false
     },
   }, {});
 
@@ -76,12 +75,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "id",
       as: "branches"
     });
-    
+
     Branch.hasMany(TrainingType, {
       foreignKey: "id",
       as: "trainingtype"
     });
-    
+
     Branch.hasMany(ActivityType, {
       foreignKey: "id",
       as: "activitytype"

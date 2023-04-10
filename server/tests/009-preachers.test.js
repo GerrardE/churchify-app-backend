@@ -1,13 +1,21 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import setup from "./factory/setup";
+import { createTestPreacher } from "./factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, preacher, branch, preacher1;
 
 describe("PREACHERS TESTS", () => {
+  before(async () => {
+    const setupData = await setup();
+
+    preacher1 = setupData.preacher.dataValues;
+    branch = setupData.branch.dataValues;
+  });
   describe("CREATE PREACHER ***", () => {
     it("should return success on preacher test login ===========> ", (done) => {
       try {
@@ -156,18 +164,19 @@ describe("PREACHERS TESTS", () => {
     it("should return success on update a preacher ===========> ", (done) => {
       try {
         chai.request(index)
-          .put("/api/v1/preachers/1")
+          .put(`/api/v1/preachers/${preacher1.id}`)
           .set({ Authorization: user.token })
           .send({
+            userid: user.id,
             firstname: "Ugochucku",
             lastname: "Eze",
             country: "1",
             state: "1",
             address: "Lagos",
             city: "1",
-            branchid: "1",
+            branchid: branch.id,
             notes: "A good coach",
-            email: "ugo@gmail.com",
+            email: "ugoyuu@gmail.com",
             phone: "08137776789",
           })
           .end((err, res) => {
@@ -207,11 +216,16 @@ describe("PREACHERS TESTS", () => {
     });
   });
 
-  describe("DELETE PREACHER ***", () => {
+  describe("DELETE PREACHER ***", async () => {
+    const userid = user.id;
+    preacher = await createTestPreacher({
+      userid,
+      branchid: branch.id,
+    });
     it("should return success on delete a preacher ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/preachers/1")
+          .delete(`/api/v1/preachers/${preacher.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

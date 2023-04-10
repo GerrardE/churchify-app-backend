@@ -29,6 +29,9 @@
             "@validations/*": [
                 "./server/validations/*"
             ],
+            "@factories/*": [
+                "./server/factories/*"
+            ],
         }
     },
     "exclude": [

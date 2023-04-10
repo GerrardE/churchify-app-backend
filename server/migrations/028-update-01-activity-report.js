@@ -1,20 +1,14 @@
-"use strict";
-
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return Promise.all([
-      queryInterface.addColumn("Activities", "activitytypeid", {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "ActivityTypes",
-          key: "id",
-        },
-      }),
-    ]);
-  },
+  up: (queryInterface, Sequelize) => Promise.all([
+    queryInterface.addColumn("Activities", "activitytypeid", {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: "ActivityTypes",
+        key: "id",
+      },
+    }),
+  ]),
 
-  down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Activities");
-  },
+  down: async (queryInterface) => queryInterface.removeColumn("Activities", "activitytypeid"),
 };

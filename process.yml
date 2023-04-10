@@ -4,8 +4,5 @@ apps:
     exec_mode: cluster
     instances: min
     env:
-      NODE_ENV: development 
-      PORT: 3000
-    env_production:
-      PORT: 3000
       NODE_ENV: production
+      PORT: 3000

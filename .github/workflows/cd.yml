@@ -24,7 +24,7 @@ jobs:
   test:
     name: test
     
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     services:
       postgres:
@@ -64,7 +64,7 @@ jobs:
   build:
     name: build
     needs: test
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2

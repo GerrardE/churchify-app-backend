@@ -26,7 +26,8 @@
           "@models": "./server/models",
           "@routes": "./server/routes",
           "@tests": "./server/tests",
-          "@validations": "./server/validations"
+          "@validations": "./server/validations",
+          "@factories": "./server/factories"
         }
       }
     ]

@@ -8,7 +8,7 @@ module.exports = {
       config: [{ field: "userid", datatype: "uuid", required: true }, {
         field: "name", unique: true, datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -21,7 +21,7 @@ module.exports = {
       }, {
         field: "country", datatype: "string", required: true, validation: { required: "country is required" }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -32,7 +32,7 @@ module.exports = {
       config: [{ field: "userid", datatype: "uuid", required: true }, {
         field: "name", unique: true, datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -47,7 +47,7 @@ module.exports = {
       }, {
         field: "name", unique: true, datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -68,7 +68,7 @@ module.exports = {
       }, {
         field: "address", datatype: "string", required: true, validation: { required: "address is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -91,7 +91,7 @@ module.exports = {
       }, {
         field: "attendance", datatype: "integer", required: true, validation: { required: "attendance is required" }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -114,7 +114,7 @@ module.exports = {
       }, {
         field: "newmembers", datatype: "integer", required: true, validation: { required: "no of newmembers is required" }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -139,7 +139,7 @@ module.exports = {
       }, {
         field: "children", datatype: "integer", required: true, validation: { required: "no of children is required" }
       }, {
-        field: "notes", datatype: "string", required: false, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false,
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -168,7 +168,7 @@ module.exports = {
       }, {
         field: "rcf", datatype: "integer", required: true, validation: { required: "rcf is required" }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -189,7 +189,7 @@ module.exports = {
       }, {
         field: "trainees", datatype: "integer", required: true, validation: { required: "no. trainees is required" }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -200,7 +200,7 @@ module.exports = {
       config: [{
         field: "name", datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 2, message: "min. of 2 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -223,7 +223,7 @@ module.exports = {
       }, {
         field: "project", datatype: "integer", required: true, validation: { required: "project is required" }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -250,7 +250,7 @@ module.exports = {
       }, {
         field: "address", datatype: "string", required: true, validation: { required: "address is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -271,7 +271,7 @@ module.exports = {
       }, {
         field: "name", unique: true, datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -282,7 +282,7 @@ module.exports = {
       config: [{
         field: "name", datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 2, message: "min. of 2 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -348,7 +348,7 @@ module.exports = {
       config: [{ field: "userid", datatype: "uuid", required: true }, {
         field: "name", unique: true, datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()
@@ -359,7 +359,7 @@ module.exports = {
       config: [{ field: "userid", datatype: "uuid", required: true }, {
         field: "name", unique: true, datatype: "string", required: true, validation: { required: "name is required", minLength: { value: 5, message: "min. of 5 characters required" } }
       }, {
-        field: "notes", datatype: "string", required: true, validation: { required: "notes are required", minLength: { value: 5, message: "min. of 5 characters required" } }
+        field: "notes", datatype: "string", required: false
       }],
       createdAt: new Date(),
       updatedAt: new Date()

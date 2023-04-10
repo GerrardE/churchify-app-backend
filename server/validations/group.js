@@ -12,6 +12,8 @@ const validGroup = (data) => {
   data.teens = !isEmpty(data.teens) ? data.teens : "";
   data.rcf = !isEmpty(data.rcf) ? data.rcf : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
+  data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
+  data.date = !isEmpty(data.date) ? data.date : "";
   data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // cmf validations
@@ -52,6 +54,16 @@ const validGroup = (data) => {
   // branch validations
   if (isEmpty(data.branchid)) {
     errors.branch = "branch field is required";
+  }
+
+  // zone validations
+  if (isEmpty(data.zoneid)) {
+    errors.zone = "zone field is required";
+  }
+
+  // date validations
+  if (isEmpty(data.date)) {
+    errors.date = "date field is required";
   }
 
   // notes validations
