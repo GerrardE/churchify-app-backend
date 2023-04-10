@@ -8,7 +8,6 @@ const validFinance = (data, isEdit = false) => {
   data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
   data.name = !isEmpty(data.name) ? data.name : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // zoneid validations
   if (isEmpty(data.zoneid)) {
@@ -32,15 +31,6 @@ const validFinance = (data, isEdit = false) => {
   // preacherid validations
   if (isEmpty(data.preacherid)) {
     errors.preacherid = "preacher field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {

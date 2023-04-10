@@ -48,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     notes: {
       type: DataTypes.STRING,
-      allowNull: false
     }
   }, {});
 

@@ -1,4 +1,3 @@
-import validator from "validator";
 import isEmpty from "../../middlewares/isEmpty";
 
 const validRemuneration = (data) => {
@@ -7,7 +6,6 @@ const validRemuneration = (data) => {
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";
   data.pastorpayed = !isEmpty(data.pastorpayed) ? data.pastorpayed : "";
   data.fulltimepastorcount = !isEmpty(data.fulltimepastorcount) ? data.fulltimepastorcount : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // pastorpayed validations
   if (isEmpty(data.pastorpayed)) {
@@ -27,15 +25,6 @@ const validRemuneration = (data) => {
   // finance validations
   if (isEmpty(data.financeid)) {
     errors.finance = "finance field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {

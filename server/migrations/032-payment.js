@@ -68,7 +68,6 @@ module.exports = {
     },
     notes: {
       type: Sequelize.STRING,
-      allowNull: false
     },
     createdAt: {
       allowNull: false,

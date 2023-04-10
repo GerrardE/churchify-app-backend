@@ -29,6 +29,15 @@ Below are the features of churchify-app-backend at this point
 - Users with permissions can be able to hit an api endpoint and CRUD categories <br>
 - Users with permissions can be able to hit an api endpoint and CRUD downloads <br>
 - Users with permissions can be able to hit an api endpoint and CRUD configurations <br>
+- Users with permissions can be able to hit an api endpoint and CRUD finances <br>
+- Users with permissions can be able to hit an api endpoint and CRUD remunerations <br>
+- Users with permissions can be able to hit an api endpoint and CRUD assets <br>
+- Users with permissions can be able to hit an api endpoint and CRUD payments <br>
+- Users with permissions can be able to hit an api endpoint and CRUD receipts <br>
+- Users with permissions can be able to hit an api endpoint and CRUD activitytypes <br>
+- Users with permissions can be able to hit an api endpoint and CRUD activities <br>
+- Users with permissions can be able to hit an api endpoint and CRUD trainings <br>
+- Users with permissions can be able to hit an api endpoint and CRUD trainingtypes <br>
 - Users with permissions can be able to see apilogs <br>
 
 ## Installation
@@ -60,6 +69,10 @@ npm install
 8. Run "npm run start:dev" to start the app
 
 9. Run "npm test" to test application
+
+## Helpful Commands
+
+1. Seed specific file: `npx sequelize db:seed --name 015-configs.js`
 
 ## Technologies
 

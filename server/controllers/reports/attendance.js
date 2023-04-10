@@ -96,7 +96,9 @@ class AttendanceController {
     const apilog = apiLogFactory(AttendanceController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Attendance.findAll();
+      const payload = await Attendance.findAll({
+
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

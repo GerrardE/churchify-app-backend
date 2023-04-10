@@ -1,4 +1,3 @@
-import validator from "validator";
 import isEmpty from "../../middlewares/isEmpty";
 
 const validAsset = (data, isEdit=false) => {
@@ -12,7 +11,6 @@ const validAsset = (data, isEdit=false) => {
   data.asabaproject = !isEmpty(data.asabaproject) ? data.asabaproject : "";
   data.others = !isEmpty(data.others) ? data.others : "";
   data.uploads = !isEmpty(data.uploads) ? data.uploads : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // building validations
   if (isEmpty(data.building)) {
@@ -52,15 +50,6 @@ const validAsset = (data, isEdit=false) => {
   // finance validations
   if (isEmpty(data.financeid)) {
     errors.finance = "finance field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {
