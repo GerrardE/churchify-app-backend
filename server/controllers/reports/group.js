@@ -95,7 +95,25 @@ class GroupController {
     const apilog = apiLogFactory(GroupController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Group.findAll();
+      const payload = await Group.findAll({
+        order: [["createdAt", "DESC"]],
+        attributes: [
+          "id", "date", "cmf", "cwf", "ywcf", "gymcf", "yaf", "teens", "rcf",
+          "createdAt", "updatedAt"
+        ],
+        include: [
+          {
+            attributes: ["firstname"],
+            model: models.User,
+            as: "usergroup",
+          },
+          {
+            attributes: ["name"],
+            model: models.Branch,
+            as: "branchgroup",
+          },
+        ],
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

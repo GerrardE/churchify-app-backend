@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
 
     date: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      get() {
+        return this.getDataValue("date")
+          .toLocaleDateString("en-GB", { timeZone: "UTC" });
+      }
     },
 
     zoneid: {
@@ -57,6 +61,22 @@ module.exports = (sequelize, DataTypes) => {
 
     notes: {
       type: DataTypes.STRING,
+    },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        return this.getDataValue("createdAt")
+          .toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
+
+    updatedAt: {
+      type: DataTypes.DATE,
+      get() {
+        return this.getDataValue("updatedAt")
+          .toLocaleString("en-GB", { timeZone: "UTC" });
+      }
     }
   }, {});
 
@@ -64,13 +84,13 @@ module.exports = (sequelize, DataTypes) => {
     const { Branch, User } = models;
 
     Group.belongsTo(User, {
-      foreignKey: "id",
-      as: "user_group"
+      foreignKey: "userid",
+      as: "usergroup"
     });
 
     Group.belongsTo(Branch, {
-      foreignKey: "id",
-      as: "groups"
+      foreignKey: "branchid",
+      as: "branchgroup"
     });
   };
 

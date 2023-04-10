@@ -97,7 +97,20 @@ class AttendanceController {
 
     try {
       const payload = await Attendance.findAll({
-
+        order: [["createdAt", "DESC"]],
+        attributes: ["id", "date", "women", "men", "children", "createdAt", "updatedAt"],
+        include: [
+          {
+            attributes: ["firstname"],
+            model: models.User,
+            as: "attendance",
+          },
+          {
+            attributes: ["name"],
+            model: models.Branch,
+            as: "branchattendance",
+          },
+        ],
       });
 
       apilog.resbody = JSON.stringify(payload);

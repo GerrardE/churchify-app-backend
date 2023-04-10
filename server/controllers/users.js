@@ -250,6 +250,7 @@ class UserController {
     };
     try {
       const payload = await User.findAll({
+        order: [["createdAt", "DESC"]],
         attributes: [
           "id",
           "firstname",
@@ -257,15 +258,15 @@ class UserController {
           "email",
           "phone",
           "createdAt",
+          "updatedAt",
         ],
         include: [
           {
             model: Role,
             as: "roles",
-            attributes: ["id", "name"],
+            attributes: ["name"],
           },
         ],
-        order: [["firstname", "ASC"]]
       });
 
       apilog.resbody = JSON.stringify(payload);

@@ -147,6 +147,8 @@ describe("GROUP TESTS", () => {
             zoneid: zone.id,
             notes: "Nice updated group report",
             date: "2020-12-04T15:12:13.758Z",
+            updatedAt: "2020-12-04T15:12:13.758Z",
+            createdAt: "2020-12-04T15:12:13.758Z",
           })
           .end((err, res) => {
             expect(res.status).to.equal(200);
