@@ -90,7 +90,9 @@ class ReceiptController {
     const apilog = apiLogFactory(ReceiptController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Receipt.findAll();
+      const payload = await Receipt.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -198,7 +200,9 @@ class ReceiptController {
         where: { id, userid },
       });
 
-      const payload = await Receipt.findAll();
+      const payload = await Receipt.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -245,7 +249,9 @@ class ReceiptController {
       const { receipt } = req;
       const { id, userid } = receipt;
       await Receipt.destroy({ where: { id, userid } });
-      const payload = await Receipt.findAll();
+      const payload = await Receipt.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

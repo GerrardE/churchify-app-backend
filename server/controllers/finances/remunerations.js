@@ -90,7 +90,9 @@ class RemunerationController {
     const apilog = apiLogFactory(RemunerationController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Remuneration.findAll();
+      const payload = await Remuneration.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -198,7 +200,9 @@ class RemunerationController {
         where: { id, userid },
       });
 
-      const payload = await Remuneration.findAll();
+      const payload = await Remuneration.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -245,7 +249,9 @@ class RemunerationController {
       const { remuneration } = req;
       const { id, userid } = remuneration;
       await Remuneration.destroy({ where: { id, userid } });
-      const payload = await Remuneration.findAll();
+      const payload = await Remuneration.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

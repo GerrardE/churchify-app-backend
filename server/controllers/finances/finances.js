@@ -92,7 +92,9 @@ class FinanceController {
     const apilog = apiLogFactory(FinanceController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Finance.findAll();
+      const payload = await Finance.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -200,7 +202,9 @@ class FinanceController {
         where: { id, userid },
       });
 
-      const payload = await Finance.findAll();
+      const payload = await Finance.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -247,7 +251,9 @@ class FinanceController {
       const { finance } = req;
       const { id, userid } = finance;
       await Finance.destroy({ where: { id, userid } });
-      const payload = await Finance.findAll();
+      const payload = await Finance.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

@@ -96,6 +96,7 @@ class GroupController {
 
     try {
       const payload = await Group.findAll({
+        limit: 100,
         order: [["createdAt", "DESC"]],
         attributes: [
           "id", "date", "cmf", "cwf", "ywcf", "gymcf", "yaf", "teens", "rcf",
@@ -221,7 +222,9 @@ class GroupController {
         where: { id, userid },
       });
 
-      const payload = await Group.findAll();
+      const payload = await Group.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -268,7 +271,9 @@ class GroupController {
       const { group } = req;
       const { id, userid } = group;
       await Group.destroy({ where: { id, userid } });
-      const payload = await Group.findAll();
+      const payload = await Group.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

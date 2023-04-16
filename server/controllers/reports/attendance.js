@@ -97,6 +97,7 @@ class AttendanceController {
 
     try {
       const payload = await Attendance.findAll({
+        limit: 100,
         order: [["createdAt", "DESC"]],
         attributes: ["id", "date", "women", "men", "children", "createdAt", "updatedAt"],
         include: [
@@ -219,7 +220,9 @@ class AttendanceController {
         where: { id, userid },
       });
 
-      const payload = await Attendance.findAll();
+      const payload = await Attendance.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -266,7 +269,9 @@ class AttendanceController {
       const { attendance } = req;
       const { id, userid } = attendance;
       await Attendance.destroy({ where: { id, userid } });
-      const payload = await Attendance.findAll();
+      const payload = await Attendance.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

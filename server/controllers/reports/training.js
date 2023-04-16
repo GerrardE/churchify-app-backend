@@ -96,6 +96,7 @@ class TrainingController {
 
     try {
       const payload = await Training.findAll({
+        limit: 100,
         order: [["createdAt", "DESC"]],
         attributes: ["id", "date", "converts", "trainees", "createdAt", "updatedAt"],
         include: [
@@ -218,7 +219,9 @@ class TrainingController {
         where: { id, userid },
       });
 
-      const payload = await Training.findAll();
+      const payload = await Training.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -265,7 +268,9 @@ class TrainingController {
       const { training } = req;
       const { id, userid } = training;
       await Training.destroy({ where: { id, userid } });
-      const payload = await Training.findAll();
+      const payload = await Training.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
