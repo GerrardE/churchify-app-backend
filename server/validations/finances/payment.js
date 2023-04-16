@@ -37,7 +37,6 @@ const validPayment = (data, isEdit=false) => {
   data.churchbldmaintenance = !isEmpty(data.churchbldmaintenance) ? data.churchbldmaintenance : "";
   data.parsonagemaintenance = !isEmpty(data.parsonagemaintenance) ? data.parsonagemaintenance : "";
   data.uploads = !isEmpty(data.uploads) ? data.uploads : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // nationaloffcieremittance validations
   if (isEmpty(data.nationalofficeremittance)) {

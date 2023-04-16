@@ -79,14 +79,13 @@ describe("ACTIVITY TESTS", () => {
             project: "2",
             branchid: branch.id,
             activitytypeid: activitytype.id,
-            date: "2020-12-04T15:12:13.758Z",
             zoneid: zone.id,
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.notes).to.eql("notes field is required");
+            expect(res.body.errors.date).to.eql("date field is required");
             done();
           });
       } catch (err) {

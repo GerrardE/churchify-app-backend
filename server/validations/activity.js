@@ -9,7 +9,6 @@ const validActivity = (data) => {
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
   data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
   data.activitytypeid = !isEmpty(data.activitytypeid) ? data.activitytypeid : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // council validations
   if (isEmpty(data.council)) {
@@ -39,15 +38,6 @@ const validActivity = (data) => {
   // activitytype validations
   if (isEmpty(data.activitytypeid)) {
     errors.activitytype = "activitytype field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {

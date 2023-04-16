@@ -9,7 +9,6 @@ const validTraining = (data) => {
   data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
   data.date = !isEmpty(data.date) ? data.date : "";
   data.trainingtypeid = !isEmpty(data.trainingtypeid) ? data.trainingtypeid : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // trainees validations
   if (isEmpty(data.trainees)) {
@@ -39,15 +38,6 @@ const validTraining = (data) => {
   // trainingtype validations
   if (isEmpty(data.trainingtypeid)) {
     errors.trainingtype = "trainingtype field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {
