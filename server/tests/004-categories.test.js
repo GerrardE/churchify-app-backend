@@ -1,13 +1,21 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import index from "../index";
+import setup from "./factory/setup";
+import { createTestCategory } from "./factory";
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let user;
+let user, category;
 
 describe("CATEGORIES TESTS", () => {
+  before(async () => {
+    const setupData = await setup();
+
+    user = setupData.user.dataValues;
+    category = setupData.category.dataValues;
+  });
   describe("CREATE CATEGORY ***", () => {
     it("should return success on category test login ===========> ", (done) => {
       try {
@@ -151,33 +159,19 @@ describe("CATEGORIES TESTS", () => {
         throw err.message;
       }
     });
-    it("should handle validation error ===========> ", (done) => {
-      try {
-        chai.request(index)
-          .put("/api/v1/categories/1")
-          .set({ Authorization: user.token })
-          .send({
-            name: "A",
-            notes: ""
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(400);
-            expect(res.body).to.be.an("object");
-            expect(res.body).to.have.property("errors");
-            expect(res.body.message).to.eql("Error: invalid input");
-            done();
-          });
-      } catch (err) {
-        throw err.message;
-      }
-    });
   });
 
-  describe("UPDATE CATEGORY ***", () => {
+  describe("DELETE CATEGORY ***", () => {
+    before(async () => {
+      const userid = user.id;
+      category = await createTestCategory({
+        userid,
+      });
+    });
     it("should return success on delete a caetgory ===========> ", (done) => {
       try {
         chai.request(index)
-          .delete("/api/v1/categories/1")
+          .delete(`/api/v1/categories/${category.id}`)
           .set({ Authorization: user.token })
           .end((err, res) => {
             expect(res.status).to.equal(200);

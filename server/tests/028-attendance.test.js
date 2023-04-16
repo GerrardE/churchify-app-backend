@@ -80,14 +80,13 @@ describe("ATTENDANCE TESTS", () => {
             eventid: evnt.id,
             preacherid: preacher.id,
             branchid: branch.id,
-            date: "2020-12-04T15:12:13.758Z",
             zoneid: zone.id,
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.notes).to.eql("notes field is required");
+            expect(res.body.errors.date).to.eql("date field is required");
             done();
           });
       } catch (err) {

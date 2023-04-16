@@ -12,7 +12,6 @@ const validPreacher = (data) => {
   data.address = !isEmpty(data.address) ? data.address : "";
   data.city = !isEmpty(data.city) ? data.city : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // firstname validations
   if (!validator.isLength(data.firstname, { min: 2, max: 20 })) {
@@ -76,15 +75,6 @@ const validPreacher = (data) => {
   // branch validations
   if (isEmpty(data.branchid)) {
     errors.branch = "branch field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {

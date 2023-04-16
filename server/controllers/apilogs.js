@@ -21,6 +21,7 @@ class ApiLogsController {
   static async getAll(req, res, next) {
     try {
       const payload = await ApiLogs.findAll({
+        limit: 100,
         attributes: ["id", "name", "refid", "httpstatuscode", "message"],
         order: [["createdAt", "DESC"]]
       });
@@ -89,6 +90,7 @@ class ApiLogsController {
       await ApiLogs.destroy({ where: { id } });
 
       const payload = await ApiLogs.findAll({
+        limit: 100,
         order: [['createdAt', 'DESC']]
       });
 

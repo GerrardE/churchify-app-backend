@@ -98,6 +98,7 @@ class ActivityController {
       const payload = await Activity.findAll({
         order: [["createdAt", "DESC"]],
         attributes: ["id", "date", "council", "special", "project", "createdAt", "updatedAt"],
+        limit: 100,
         include: [
           {
             attributes: ["firstname"],
@@ -218,7 +219,9 @@ class ActivityController {
         where: { id, userid },
       });
 
-      const payload = await Activity.findAll();
+      const payload = await Activity.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -265,7 +268,9 @@ class ActivityController {
       const { activity } = req;
       const { id, userid } = activity;
       await Activity.destroy({ where: { id, userid } });
-      const payload = await Activity.findAll();
+      const payload = await Activity.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

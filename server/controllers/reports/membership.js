@@ -96,6 +96,7 @@ class MembershipController {
 
     try {
       const payload = await Membership.findAll({
+        limit: 100,
         order: [["createdAt", "DESC"]],
         attributes: ["id", "date", "adults", "children", "tithers", "newmembers", "createdAt", "updatedAt"],
         include: [
@@ -218,7 +219,9 @@ class MembershipController {
         where: { id, userid },
       });
 
-      const payload = await Membership.findAll();
+      const payload = await Membership.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -265,7 +268,9 @@ class MembershipController {
       const { membership } = req;
       const { id, userid } = membership;
       await Membership.destroy({ where: { id, userid } });
-      const payload = await Membership.findAll();
+      const payload = await Membership.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

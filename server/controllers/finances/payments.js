@@ -89,7 +89,9 @@ class PaymentController {
     const apilog = apiLogFactory(PaymentController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Payment.findAll();
+      const payload = await Payment.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -197,7 +199,9 @@ class PaymentController {
         where: { id, userid },
       });
 
-      const payload = await Payment.findAll();
+      const payload = await Payment.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -244,7 +248,9 @@ class PaymentController {
       const { payment } = req;
       const { id, userid } = payment;
       await Payment.destroy({ where: { id, userid } });
-      const payload = await Payment.findAll();
+      const payload = await Payment.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

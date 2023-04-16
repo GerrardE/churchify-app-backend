@@ -14,7 +14,6 @@ const validGroup = (data) => {
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
   data.zoneid = !isEmpty(data.zoneid) ? data.zoneid : "";
   data.date = !isEmpty(data.date) ? data.date : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // cmf validations
   if (isEmpty(data.cmf)) {
@@ -64,15 +63,6 @@ const validGroup = (data) => {
   // date validations
   if (isEmpty(data.date)) {
     errors.date = "date field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {

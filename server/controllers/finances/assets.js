@@ -90,7 +90,9 @@ class AssetController {
     const apilog = apiLogFactory(AssetController, req, res, "getAll", "retrieved successfully", 200, 200);
 
     try {
-      const payload = await Asset.findAll();
+      const payload = await Asset.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -198,7 +200,9 @@ class AssetController {
         where: { id, userid },
       });
 
-      const payload = await Asset.findAll();
+      const payload = await Asset.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -245,7 +249,9 @@ class AssetController {
       const { asset } = req;
       const { id, userid } = asset;
       await Asset.destroy({ where: { id, userid } });
-      const payload = await Asset.findAll();
+      const payload = await Asset.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });

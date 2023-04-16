@@ -9,7 +9,6 @@ const validFellowship = (data, isEdit = false) => {
   data.address = !isEmpty(data.address) ? data.address : "";
   data.city = !isEmpty(data.city) ? data.city : "";
   data.branchid = !isEmpty(data.branchid) ? data.branchid : "";
-  data.notes = !isEmpty(data.notes) ? data.notes : "";
 
   // name validations
   if (!validator.isLength(data.name, { min: 2, max: 20 }) && !isEdit) {
@@ -47,15 +46,6 @@ const validFellowship = (data, isEdit = false) => {
   // branch validations
   if (isEmpty(data.branchid)) {
     errors.branch = "branch field is required";
-  }
-
-  // notes validations
-  if (!validator.isLength(data.notes, { min: 5, max: 200 })) {
-    errors.notes = "notes must be between 5 and 200 characters";
-  }
-
-  if (isEmpty(data.notes)) {
-    errors.notes = "notes field is required";
   }
 
   return {

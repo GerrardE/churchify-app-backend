@@ -96,6 +96,7 @@ class FreportController {
 
     try {
       const payload = await Freport.findAll({
+        limit: 100,
         order: [["createdAt", "DESC"]],
         attributes: ["id", "date", "newcells", "totalcells", "attendance", "createdAt", "updatedAt"],
         include: [
@@ -218,7 +219,9 @@ class FreportController {
         where: { id, userid },
       });
 
-      const payload = await Freport.findAll();
+      const payload = await Freport.findAll({
+        limit: 100
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -265,7 +268,9 @@ class FreportController {
       const { freport } = req;
       const { id, userid } = freport;
       await Freport.destroy({ where: { id, userid } });
-      const payload = await Freport.findAll();
+      const payload = await Freport.findAll({
+        limit: 100
+      });
 
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
