@@ -77,7 +77,6 @@ describe("ACTIVITY TESTS", () => {
             council: "2",
             special: "4",
             project: "2",
-            branchid: branch.id,
             activitytypeid: activitytype.id,
             zoneid: zone.id,
           })
@@ -85,7 +84,7 @@ describe("ACTIVITY TESTS", () => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.date).to.eql("date field is required");
+            expect(res.body.errors.branch).to.eql("branch field is required");
             done();
           });
       } catch (err) {

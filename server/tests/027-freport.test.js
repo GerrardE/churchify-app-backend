@@ -74,15 +74,13 @@ describe("FREPORT TESTS", () => {
           .send({
             newcells: "1",
             totalcells: "11",
-            attendance: "2",
             fellowshipid: Number(fellowship.id),
-            notes: "",
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.notes).to.eql("notes field is required");
+            expect(res.body.errors.attendance).to.eql("attendance field is required");
             done();
           });
       } catch (err) {
