@@ -51,7 +51,7 @@ class CityController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Event.create({ userid, ...req.body });
+      const payload = await City.create({ userid, ...req.body });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();

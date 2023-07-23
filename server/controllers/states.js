@@ -51,7 +51,7 @@ class StateController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Event.create({ userid, ...req.body });
+      const payload = await State.create({ userid, ...req.body });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -308,8 +308,8 @@ class StateController {
         );
       }
 
-      const { branch } = req;
-      const { id } = branch;
+      const { state } = req;
+      const { id } = state;
 
       const payload = await State.update(req.body, {
         returning: true,

@@ -2,7 +2,7 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import sinon from "sinon";
 import states from "@controllers/states";
-import stateFinder from "@middlewares/state.middleware";
+import { stateFinder } from "@middlewares/state.middleware";
 
 chai.use(chaiHttp);
 

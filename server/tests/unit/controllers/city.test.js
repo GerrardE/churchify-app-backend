@@ -2,7 +2,7 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import sinon from "sinon";
 import cities from "@controllers/cities";
-import cityFinder from "@middlewares/city.middleware";
+import { cityFinder } from "@middlewares/city.middleware";
 
 chai.use(chaiHttp);
 

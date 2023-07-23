@@ -51,7 +51,7 @@ class CountryController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Event.create({ userid, ...req.body });
+      const payload = await Country.create({ userid, ...req.body });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -305,8 +305,8 @@ class CountryController {
         );
       }
 
-      const { branch } = req;
-      const { id } = branch;
+      const { country } = req;
+      const { id } = country;
 
       const payload = await Country.update(req.body, {
         returning: true,
