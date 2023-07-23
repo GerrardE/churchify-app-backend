@@ -15,10 +15,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false
+    buffer: {
+      type: DataTypes.BLOB("long"),
+      allowNull: false,
+      get() {
+        return this.getDataValue("buffer")
+          .toString("base64");
+      }
     },
+
+    originalname: { type: DataTypes.STRING, allowNull: false },
+    mimetype: { type: DataTypes.STRING, allowNull: false },
 
     name: {
       type: DataTypes.STRING,

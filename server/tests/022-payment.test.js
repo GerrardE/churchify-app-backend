@@ -42,7 +42,7 @@ describe("PAYMENT TESTS", () => {
         chai.request(index)
           .post("/api/v1/finance/payments")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             nationalofficeremittance: "the remittance",
             hqbuilding: 100,
             zonalhqremittance: 100,
@@ -74,13 +74,10 @@ describe("PAYMENT TESTS", () => {
             motormaintenance: 100,
             churchbldmaintenance: 100,
             parsonagemaintenance: 700,
-            uploads: [
-              "receipt1",
-              "receipt3"
-            ],
             financeid: finance.id,
             notes: "Payments for lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
@@ -97,14 +94,14 @@ describe("PAYMENT TESTS", () => {
         chai.request(index)
           .post("/api/v1/finance/payments")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             financeid: finance.id,
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.uploads).to.eql("please upload all supporting documents e.g receipts");
+            expect(res.body.errors.upload).to.eql("please upload all supporting documents e.g receipts");
             done();
           });
       } catch (err) {
@@ -157,7 +154,7 @@ describe("PAYMENT TESTS", () => {
         chai.request(index)
           .put("/api/v1/finance/payments/1")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             nationalofficeremittance: "the updated remittance",
             hqbuilding: 100,
             zonalhqremittance: 100,
@@ -189,13 +186,10 @@ describe("PAYMENT TESTS", () => {
             motormaintenance: 100,
             churchbldmaintenance: 100,
             parsonagemaintenance: 700,
-            uploads: [
-              "receipt1",
-              "receipt3"
-            ],
             financeid: finance.id,
             notes: "Payments for lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");

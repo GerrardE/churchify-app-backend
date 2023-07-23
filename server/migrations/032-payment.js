@@ -62,10 +62,9 @@ module.exports = {
     motormaintenance: { type: Sequelize.INTEGER, allowNull: false },
     churchbldmaintenance: { type: Sequelize.INTEGER, allowNull: false },
     parsonagemaintenance: { type: Sequelize.INTEGER, allowNull: false },
-    uploads: {
-      type: Sequelize.ARRAY(Sequelize.JSONB),
-      allowNull: false
-    },
+    buffer: { type: Sequelize.BLOB("long"), allowNull: false },
+    originalname: { type: Sequelize.STRING, allowNull: false },
+    mimetype: { type: Sequelize.STRING, allowNull: false },
     notes: {
       type: Sequelize.STRING,
     },

@@ -24,7 +24,7 @@ class RemunerationController {
     const apilog = apiLogFactory(RemunerationController, req, res, "create", "created successfully", 201, 201);
 
     try {
-      const { errors, isValid } = validRemuneration(req.body);
+      const { errors, isValid } = validRemuneration({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -38,7 +38,11 @@ class RemunerationController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Remuneration.create({ userid, ...req.body });
+      const payload = await Remuneration.create({
+        userid,
+        ...req.file,
+        ...req.body
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -180,7 +184,7 @@ class RemunerationController {
     const apilog = apiLogFactory(RemunerationController, req, res, "update", "updated successfully", 200, 200);
 
     try {
-      const { errors, isValid } = validRemuneration(req.body, true);
+      const { errors, isValid } = validRemuneration({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -195,7 +199,10 @@ class RemunerationController {
       const { remuneration } = req;
       const { userid, id } = remuneration;
 
-      await Remuneration.update(req.body, {
+      await Remuneration.update({
+        ...req.file,
+        ...req.body
+      }, {
         returning: true,
         where: { id, userid },
       });

@@ -38,10 +38,9 @@ module.exports = {
     loanrepayedbydebtors: { type: Sequelize.INTEGER, allowNull: false },
     loanreceived: { type: Sequelize.INTEGER, allowNull: false },
     donationreceived: { type: Sequelize.INTEGER, allowNull: false },
-    uploads: {
-      type: Sequelize.ARRAY(Sequelize.JSONB),
-      allowNull: false
-    },
+    buffer: { type: Sequelize.BLOB("long"), allowNull: false },
+    originalname: { type: Sequelize.STRING, allowNull: false },
+    mimetype: { type: Sequelize.STRING, allowNull: false },
     notes: {
       type: Sequelize.STRING,
     },

@@ -5,7 +5,7 @@ const { Asset } = models;
 
 const createTestAsset = async ({
   financeid, userid, building, motorvehicle,
-  generator, musicaleqpt, asabaproject, others, uploads, notes
+  generator, musicaleqpt, asabaproject, others, buffer, originalname, mimetype, notes
 }) => {
   const newAsset = await Asset.create({
     userid: userid || faker.datatype.number(),
@@ -16,7 +16,9 @@ const createTestAsset = async ({
     musicaleqpt: musicaleqpt || faker.datatype.number(),
     asabaproject: asabaproject || faker.datatype.number(),
     others: others || faker.datatype.number(),
-    uploads: uploads || [JSON.parse(faker.datatype.json())],
+    buffer: buffer || faker.random.alphaNumeric(100),
+    originalname: originalname || faker.datatype.string(),
+    mimetype: mimetype || "image/png",
     notes: notes || faker.random.alphaNumeric(10),
   });
 

@@ -15,13 +15,16 @@ module.exports = (sequelize, DataTypes) => {
     musicaleqpt: { type: DataTypes.INTEGER, allowNull: false },
     asabaproject: { type: DataTypes.INTEGER, allowNull: false },
     others: { type: DataTypes.INTEGER, allowNull: false },
-    uploads: {
-      type: DataTypes.ARRAY(DataTypes.JSONB),
-      allowNull: false
+    buffer: {
+      type: DataTypes.BLOB("long"),
+      allowNull: false,
+      get() {
+        return this.getDataValue("buffer").toString("base64");
+      }
     },
-    notes: {
-      type: DataTypes.STRING,
-    }
+    originalname: { type: DataTypes.STRING, allowNull: false },
+    mimetype: { type: DataTypes.STRING, allowNull: false },
+    notes: { type: DataTypes.STRING }
   }, {});
 
   Asset.associate = (models) => {

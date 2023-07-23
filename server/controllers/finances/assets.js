@@ -24,7 +24,7 @@ class AssetController {
     const apilog = apiLogFactory(AssetController, req, res, "create", "created successfully", 201, 201);
 
     try {
-      const { errors, isValid } = validAsset(req.body);
+      const { errors, isValid } = validAsset({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -38,7 +38,11 @@ class AssetController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Asset.create({ userid, ...req.body });
+      const payload = await Asset.create({
+        userid,
+        ...req.file,
+        ...req.body
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -180,7 +184,7 @@ class AssetController {
     const apilog = apiLogFactory(AssetController, req, res, "update", "updated successfully", 200, 200);
 
     try {
-      const { errors, isValid } = validAsset(req.body, true);
+      const { errors, isValid } = validAsset({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -195,7 +199,10 @@ class AssetController {
       const { asset } = req;
       const { userid, id } = asset;
 
-      await Asset.update(req.body, {
+      await Asset.update({
+        ...req.file,
+        ...req.body
+      }, {
         returning: true,
         where: { id, userid },
       });

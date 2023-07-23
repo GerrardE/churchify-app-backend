@@ -37,7 +37,7 @@ class DownloadController {
     };
 
     try {
-      const { errors, isValid } = validDownload(req.body);
+      const { errors, isValid } = validDownload({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -51,7 +51,13 @@ class DownloadController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Download.create({ userid, ...req.body });
+      const payload = await Download.create(
+        {
+          userid,
+          ...req.file,
+          ...req.body
+        }
+      );
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -227,7 +233,7 @@ class DownloadController {
     };
 
     try {
-      const { errors, isValid } = validDownload(req.body, true);
+      const { errors, isValid } = validDownload({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -243,7 +249,10 @@ class DownloadController {
       const { download } = req;
       const { userid, id } = download;
 
-      await Download.update(req.body, {
+      await Download.update({
+        ...req.file,
+        ...req.body
+      }, {
         returning: true,
         where: { id, userid },
       });

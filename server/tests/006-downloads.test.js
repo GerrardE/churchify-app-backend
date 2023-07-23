@@ -45,13 +45,13 @@ describe("DOWNLOADS TESTS", () => {
         chai.request(index)
           .post("/api/v1/downloads")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             name: "Jaja",
-            url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
             categoryid: category.id,
             notes: "Ebook TCF"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
@@ -91,13 +91,14 @@ describe("DOWNLOADS TESTS", () => {
         chai.request(index)
           .post("/api/v1/downloads")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             name: "Jaja",
             url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
             categoryid: category.id,
             notes: "Ebook TCF"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
@@ -155,13 +156,13 @@ describe("DOWNLOADS TESTS", () => {
         chai.request(index)
           .put(`/api/v1/downloads/${download1.id}`)
           .set({ Authorization: user.token })
-          .send({
+          .field({
             name: "download.name",
-            url: "www.james.de",
             date: "2020-12-04T15:12:13.758Z",
             categoryid: category.id,
             notes: "Ebook TCF"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");

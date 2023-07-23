@@ -19,7 +19,7 @@ const validReceipt = (data) => {
   data.loanrepayedbydebtors = !isEmpty(data.loanrepayedbydebtors) ? data.loanrepayedbydebtors : "";
   data.loanreceived = !isEmpty(data.loanreceived) ? data.loanreceived : "";
   data.donationreceived = !isEmpty(data.donationreceived) ? data.donationreceived : "";
-  data.uploads = !isEmpty(data.uploads) ? data.uploads : "";
+  data.size = !isEmpty(data.size) ? data.size : 0;
 
   // month validations
   if (isEmpty(data.month)) {
@@ -96,9 +96,13 @@ const validReceipt = (data) => {
     errors.donationreceived = "donationreceived field is required";
   }
 
-  // uploads validations
-  if (isEmpty(data.uploads)) {
-    errors.uploads = "please upload all supporting documents e.g receipts";
+  // upload validations
+  if (isEmpty(data.originalname)) {
+    errors.upload = "please upload all supporting documents e.g receipts";
+  }
+
+  if (data.size > 9999999) {
+    errors.upload = "upload field must be less than 10 MB";
   }
 
   // finance validations

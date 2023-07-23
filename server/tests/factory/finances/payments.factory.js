@@ -34,7 +34,7 @@ const createTestPayment = async ({
   eqptmaintenance,
   motormaintenance,
   churchbldmaintenance,
-  parsonagemaintenance, uploads,
+  parsonagemaintenance, buffer, mimetype, originalname,
   notes
 }) => {
   const newPayment = await Payment.create({
@@ -71,7 +71,9 @@ const createTestPayment = async ({
     motormaintenance: motormaintenance || faker.datatype.number(),
     churchbldmaintenance: churchbldmaintenance || faker.datatype.number(),
     parsonagemaintenance: parsonagemaintenance || faker.datatype.number(),
-    uploads: uploads || [JSON.parse(faker.datatype.json())],
+    buffer: buffer || faker.random.alphaNumeric(100),
+    originalname: originalname || faker.datatype.string(),
+    mimetype: mimetype || "image/png",
     notes: notes || faker.random.alphaNumeric(10),
   });
 
