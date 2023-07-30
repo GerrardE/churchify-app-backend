@@ -1,6 +1,6 @@
 import isEmpty from "../../middlewares/isEmpty";
 
-const validAsset = (data, isEdit=false) => {
+const validAsset = (data) => {
   const errors = {};
 
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";
@@ -10,7 +10,7 @@ const validAsset = (data, isEdit=false) => {
   data.musicaleqpt = !isEmpty(data.musicaleqpt) ? data.musicaleqpt : "";
   data.asabaproject = !isEmpty(data.asabaproject) ? data.asabaproject : "";
   data.others = !isEmpty(data.others) ? data.others : "";
-  data.uploads = !isEmpty(data.uploads) ? data.uploads : "";
+  data.size = !isEmpty(data.size) ? data.size : 0;
 
   // building validations
   if (isEmpty(data.building)) {
@@ -42,9 +42,13 @@ const validAsset = (data, isEdit=false) => {
     errors.others = "others field is required";
   }
 
-  // uploads validations
-  if (isEmpty(data.uploads)) {
-    errors.uploads = "please upload all supporting documents e.g receipts";
+  // upload validations
+  if (isEmpty(data.originalname)) {
+    errors.upload = "please upload all supporting documents e.g receipts";
+  }
+
+  if (data.size > 9999999) {
+    errors.upload = "upload field must be less than 10 MB";
   }
 
   // finance validations

@@ -42,17 +42,17 @@ describe("ASSET TESTS", () => {
         chai.request(index)
           .post("/api/v1/finance/assets")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             building: 10,
             motorvehicle: 10,
             generator: 50,
             musicaleqpt: 30,
             asabaproject: 29,
             others: 59,
-            uploads: ["receipt1", "receipt3"],
             financeid: finance.id,
             notes: "Asset for Lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
@@ -136,17 +136,17 @@ describe("ASSET TESTS", () => {
         chai.request(index)
           .put("/api/v1/finance/assets/1")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             asabaproject: 98,
             building: 10,
             motorvehicle: 10,
             generator: 50,
             musicaleqpt: 30,
             others: 59,
-            uploads: ["receipt1", "receipt3"],
             financeid: finance.id,
             notes: "Asset for Lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");

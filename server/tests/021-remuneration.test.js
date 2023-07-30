@@ -42,16 +42,13 @@ describe("REMUNERATION TESTS", () => {
         chai.request(index)
           .post("/api/v1/finance/remunerations")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             pastorpayed: true,
             fulltimepastorcount: 7,
-            uploads: [
-              "receipt2",
-              "receipt3"
-            ],
             financeid: finance.id,
             notes: "Remuneration for lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
@@ -134,16 +131,13 @@ describe("REMUNERATION TESTS", () => {
         chai.request(index)
           .put("/api/v1/finance/remunerations/1")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             pastorpayed: true,
             fulltimepastorcount: 7,
-            uploads: [
-              "receipt4",
-              "receipt3"
-            ],
             financeid: finance.id,
             notes: "Remuneration for lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");

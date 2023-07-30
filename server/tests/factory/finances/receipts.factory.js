@@ -20,7 +20,7 @@ const createTestReceipt = async ({
   loanrepayedbydebtors,
   loanreceived,
   donationreceived,
-  uploads, notes
+  buffer, originalname, mimetype, notes
 }) => {
   const newReceipt = await Receipt.create({
     userid: userid || faker.datatype.number(),
@@ -40,7 +40,9 @@ const createTestReceipt = async ({
     loanrepayedbydebtors: loanrepayedbydebtors || faker.datatype.number(),
     loanreceived: loanreceived || faker.datatype.number(),
     donationreceived: donationreceived || faker.datatype.number(),
-    uploads: uploads || [JSON.parse(faker.datatype.json())],
+    buffer: buffer || faker.random.alphaNumeric(100),
+    originalname: originalname || faker.datatype.string(),
+    mimetype: mimetype || "image/png",
     notes: notes || faker.random.alphaNumeric(10),
   });
 

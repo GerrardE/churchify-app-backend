@@ -4,7 +4,7 @@ import isEmpty from "../middlewares/isEmpty";
 const validEvent = (data, isEdit = false) => {
   const errors = {};
   data.name = !isEmpty(data.name) ? data.name : "";
-  data.url = !isEmpty(data.url) ? data.url : "";
+  data.size = !isEmpty(data.size) ? data.size : 0;
   data.date = !isEmpty(data.date) ? data.date : "";
   data.categoryid = !isEmpty(data.categoryid) ? data.categoryid : "";
 
@@ -17,9 +17,13 @@ const validEvent = (data, isEdit = false) => {
     errors.name = "name field is required";
   }
 
-  // url validations
-  if (!validator.isURL(data.url)) {
-    errors.url = "url must be valid";
+  // upload validations
+  if (isEmpty(data.originalname)) {
+    errors.upload = "please upload all supporting documents e.g receipts";
+  }
+
+  if (data.size > 9999999) {
+    errors.upload = "upload field must be less than 10 MB";
   }
 
   // date validations

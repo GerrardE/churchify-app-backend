@@ -29,10 +29,9 @@ module.exports = {
     musicaleqpt: { type: Sequelize.INTEGER, allowNull: false },
     asabaproject: { type: Sequelize.INTEGER, allowNull: false },
     others: { type: Sequelize.INTEGER, allowNull: false },
-    uploads: {
-      type: Sequelize.ARRAY(Sequelize.JSONB),
-      allowNull: false
-    },
+    buffer: { type: Sequelize.BLOB("long"), allowNull: false },
+    originalname: { type: Sequelize.STRING, allowNull: false },
+    mimetype: { type: Sequelize.STRING, allowNull: false },
     notes: {
       type: Sequelize.STRING,
     },

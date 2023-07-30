@@ -42,7 +42,7 @@ describe("RECEIPT TESTS", () => {
         chai.request(index)
           .post("/api/v1/finance/receipts")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             month: "2023-04-01",
             offerings: 800,
             tithes: 800,
@@ -58,13 +58,10 @@ describe("RECEIPT TESTS", () => {
             loanrepayedbydebtors: 7,
             loanreceived: 100,
             donationreceived: 90,
-            uploads: [
-              "receipt1",
-              "receipt3"
-            ],
             financeid: finance.id,
             notes: "Receipts for lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(201);
             expect(res.body).to.be.an("object");
@@ -81,14 +78,14 @@ describe("RECEIPT TESTS", () => {
         chai.request(index)
           .post("/api/v1/finance/receipts")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             financeid: finance.id,
           })
           .end((err, res) => {
             expect(res.status).to.equal(400);
             expect(res.body).to.be.an("object");
             expect(res.body).to.have.property("errors");
-            expect(res.body.errors.uploads).to.eql("please upload all supporting documents e.g receipts");
+            expect(res.body.errors.upload).to.eql("please upload all supporting documents e.g receipts");
             done();
           });
       } catch (err) {
@@ -141,7 +138,7 @@ describe("RECEIPT TESTS", () => {
         chai.request(index)
           .put("/api/v1/finance/receipts/1")
           .set({ Authorization: user.token })
-          .send({
+          .field({
             month: "2023-04-01",
             offerings: 800,
             tithes: 800,
@@ -157,13 +154,10 @@ describe("RECEIPT TESTS", () => {
             loanrepayedbydebtors: 7,
             loanreceived: 100,
             donationreceived: 90,
-            uploads: [
-              "receipt1",
-              "receipt3"
-            ],
             financeid: finance.id,
             notes: "Receipts updated for lagos"
           })
+          .attach("upload", `${__dirname}/images/testimage.png`)
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an("object");

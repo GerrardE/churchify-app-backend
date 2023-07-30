@@ -2,10 +2,12 @@ import { v4 } from "uuid";
 import randString from "@helpers/utilities";
 import ResponseController from "@helpers/response";
 import models from "@models";
+import handlePermission from "@helpers/permission";
+import { userFindAll } from "./user.middleware";
 
 const { State, ApiLogs } = models;
 
-const stateFinder = async (req, res, next) => {
+export const stateFinder = async (req, res, next) => {
   const { id } = req.params;
   let state;
   try {
@@ -34,4 +36,37 @@ const stateFinder = async (req, res, next) => {
   next();
 };
 
-export default stateFinder;
+export const statePermission = async (req, res, next) => {
+  try {
+    const { email } = req.decoded;
+
+    const { permissions } = await userFindAll(email);
+
+    await handlePermission(req, permissions, "state");
+  } catch (err) {
+    const apilog = {
+      name: "statePermission",
+      refid: randString("STATE"),
+      reqbody: JSON.stringify(req.body),
+      resbody: JSON.stringify(err),
+      httpstatuscode: 403,
+      statuscode: 403,
+      message: "You do not have enough permissions",
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: Date.now(),
+    };
+
+    await ApiLogs.create({ ...apilog });
+    return ResponseController.error(
+      res,
+      403,
+      403,
+      "You do not have enough permissions",
+      err
+    );
+  }
+
+  next();
+};

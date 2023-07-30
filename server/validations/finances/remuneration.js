@@ -6,6 +6,7 @@ const validRemuneration = (data) => {
   data.financeid = !isEmpty(data.financeid) ? data.financeid : "";
   data.pastorpayed = !isEmpty(data.pastorpayed) ? data.pastorpayed : "";
   data.fulltimepastorcount = !isEmpty(data.fulltimepastorcount) ? data.fulltimepastorcount : "";
+  data.size = !isEmpty(data.size) ? data.size : 0;
 
   // pastorpayed validations
   if (isEmpty(data.pastorpayed)) {
@@ -17,9 +18,13 @@ const validRemuneration = (data) => {
     errors.fulltimepastorcount = "fulltimepastorcount field is required";
   }
 
-  // uploads validations
-  if (isEmpty(data.uploads)) {
-    errors.uploads = "please upload all supporting documents e.g receipts";
+  // upload validations
+  if (isEmpty(data.originalname)) {
+    errors.upload = "please upload all supporting documents e.g receipts";
+  }
+
+  if (data.size > 9999999) {
+    errors.upload = "upload field must be less than 10 MB";
   }
 
   // finance validations

@@ -24,7 +24,7 @@ class ReceiptController {
     const apilog = apiLogFactory(ReceiptController, req, res, "create", "created successfully", 201, 201);
 
     try {
-      const { errors, isValid } = validReceipt(req.body);
+      const { errors, isValid } = validReceipt({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -38,7 +38,11 @@ class ReceiptController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Receipt.create({ userid, ...req.body });
+      const payload = await Receipt.create({
+        userid,
+        ...req.file,
+        ...req.body
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -180,7 +184,7 @@ class ReceiptController {
     const apilog = apiLogFactory(ReceiptController, req, res, "update", "updated successfully", 200, 200);
 
     try {
-      const { errors, isValid } = validReceipt(req.body, true);
+      const { errors, isValid } = validReceipt({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -195,7 +199,10 @@ class ReceiptController {
       const { receipt } = req;
       const { userid, id } = receipt;
 
-      await Receipt.update(req.body, {
+      await Receipt.update({
+        ...req.file,
+        ...req.body
+      }, {
         returning: true,
         where: { id, userid },
       });

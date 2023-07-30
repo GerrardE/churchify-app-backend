@@ -23,7 +23,7 @@ class PaymentController {
   static async create(req, res, next) {
     const apilog = apiLogFactory(PaymentController, req, res, "create", "created successfully", 201, 201);
     try {
-      const { errors, isValid } = validPayment(req.body);
+      const { errors, isValid } = validPayment({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -37,7 +37,11 @@ class PaymentController {
 
       const { id: userid } = req.decoded;
 
-      const payload = await Payment.create({ userid, ...req.body });
+      const payload = await Payment.create({
+        userid,
+        ...req.file,
+        ...req.body
+      });
 
       apilog.resbody = JSON.stringify(payload);
       apilog.reqendtime = Date.now();
@@ -179,7 +183,7 @@ class PaymentController {
     const apilog = apiLogFactory(PaymentController, req, res, "update", "updated successfully", 200, 200);
 
     try {
-      const { errors, isValid } = validPayment(req.body, true);
+      const { errors, isValid } = validPayment({ ...req.body, ...req.file });
       // Check Validation
       if (!isValid) {
         apilog.resbody = JSON.stringify(errors);
@@ -194,7 +198,10 @@ class PaymentController {
       const { payment } = req;
       const { userid, id } = payment;
 
-      await Payment.update(req.body, {
+      await Payment.update({
+        ...req.file,
+        ...req.body
+      }, {
         returning: true,
         where: { id, userid },
       });

@@ -42,10 +42,16 @@ module.exports = (sequelize, DataTypes) => {
     motormaintenance: { type: DataTypes.INTEGER, allowNull: false },
     churchbldmaintenance: { type: DataTypes.INTEGER, allowNull: false },
     parsonagemaintenance: { type: DataTypes.INTEGER, allowNull: false },
-    uploads: {
-      type: DataTypes.ARRAY(DataTypes.JSONB),
-      allowNull: false
+    buffer: {
+      type: DataTypes.BLOB("long"),
+      allowNull: false,
+      get() {
+        return this.getDataValue("buffer")
+          .toString("base64");
+      }
     },
+    originalname: { type: DataTypes.STRING, allowNull: false },
+    mimetype: { type: DataTypes.STRING, allowNull: false },
     notes: {
       type: DataTypes.STRING,
     }
