@@ -54,7 +54,14 @@ module.exports = (sequelize, DataTypes) => {
     mimetype: { type: DataTypes.STRING, allowNull: false },
     notes: {
       type: DataTypes.STRING,
-    }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const createdAt = this.getDataValue("createdAt") || "";
+        return createdAt.toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
   }, {});
 
   Payment.associate = (models) => {
@@ -63,12 +70,12 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Payment.belongsTo(Finance, {
-      foreignKey: "id",
-      as: "payments"
+      foreignKey: "financeid",
+      as: "finance_payments"
     });
 
     Payment.belongsTo(User, {
-      foreignKey: "id",
+      foreignKey: "userid",
       as: "user_payments"
     });
   };

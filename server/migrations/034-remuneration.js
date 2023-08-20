@@ -23,7 +23,7 @@ module.exports = {
         key: "id"
       }
     },
-    pastorpayed: { type: Sequelize.BOOLEAN, },
+    pastorpayed: { type: Sequelize.STRING, },
     fulltimepastorcount: { type: Sequelize.INTEGER },
     buffer: { type: Sequelize.BLOB("long"), allowNull: false },
     originalname: { type: Sequelize.STRING, allowNull: false },

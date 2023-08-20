@@ -4,7 +4,7 @@ import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
 
-const { Receipt, ApiLogs } = models;
+const { Receipt, ApiLogs, Finance, User } = models;
 
 /**
  * Receipt Controller
@@ -95,6 +95,19 @@ class ReceiptController {
 
     try {
       const payload = await Receipt.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_receipts",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_receipts",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 
@@ -208,6 +221,19 @@ class ReceiptController {
       });
 
       const payload = await Receipt.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_receipts",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_receipts",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 
@@ -257,6 +283,19 @@ class ReceiptController {
       const { id, userid } = receipt;
       await Receipt.destroy({ where: { id, userid } });
       const payload = await Receipt.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_receipts",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_receipts",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 

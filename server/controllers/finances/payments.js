@@ -4,7 +4,9 @@ import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
 
-const { Payment, ApiLogs } = models;
+const {
+  Payment, ApiLogs, Finance, User
+} = models;
 
 /**
  * Payment Controller
@@ -94,6 +96,19 @@ class PaymentController {
 
     try {
       const payload = await Payment.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_payments",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_payments",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 
@@ -207,6 +222,19 @@ class PaymentController {
       });
 
       const payload = await Payment.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_payments",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_payments",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 
@@ -256,6 +284,19 @@ class PaymentController {
       const { id, userid } = payment;
       await Payment.destroy({ where: { id, userid } });
       const payload = await Payment.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_payments",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_payments",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 

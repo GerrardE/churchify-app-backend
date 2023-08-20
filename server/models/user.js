@@ -105,6 +105,11 @@ module.exports = (sequelize, DataTypes) => {
       Role,
       Attendance,
       Activity,
+      Asset,
+      Receipt,
+      Payment,
+      Remuneration,
+      Finance,
     } = models;
 
     User.hasMany(Training, {
@@ -161,6 +166,31 @@ module.exports = (sequelize, DataTypes) => {
       through: "UserRole",
       as: "roles",
       foreignKey: "userid"
+    });
+
+    User.hasMany(Asset, {
+      foreignKey: "id",
+      as: "assets"
+    });
+
+    User.hasMany(Finance, {
+      foreignKey: "id",
+      as: "finances"
+    });
+
+    User.hasMany(Payment, {
+      foreignKey: "id",
+      as: "payments"
+    });
+
+    User.hasMany(Remuneration, {
+      foreignKey: "id",
+      as: "remunerations"
+    });
+
+    User.hasMany(Receipt, {
+      foreignKey: "id",
+      as: "receipts"
     });
   };
 

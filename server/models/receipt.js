@@ -8,7 +8,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    month: { type: DataTypes.DATE, allowNull: false },
+    month: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      get() {
+        const month = this.getDataValue("month") || "";
+        return month.toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
     offerings: { type: DataTypes.INTEGER, allowNull: false },
     tithes: { type: DataTypes.INTEGER, allowNull: false },
     seedfaith: { type: DataTypes.INTEGER, allowNull: false },
@@ -35,7 +42,14 @@ module.exports = (sequelize, DataTypes) => {
     mimetype: { type: DataTypes.STRING, allowNull: false },
     notes: {
       type: DataTypes.STRING,
-    }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const createdAt = this.getDataValue("createdAt") || "";
+        return createdAt.toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
   }, {});
 
   Receipt.associate = (models) => {
@@ -44,12 +58,12 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Receipt.belongsTo(Finance, {
-      foreignKey: "id",
-      as: "receipts"
+      foreignKey: "financeid",
+      as: "finance_receipts"
     });
 
     Receipt.belongsTo(User, {
-      foreignKey: "id",
+      foreignKey: "userid",
       as: "user_receipts"
     });
   };
