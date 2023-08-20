@@ -4,7 +4,9 @@ import apiLogFactory from "@factories/apilogs";
 import models from "@models";
 import ResponseController from "@helpers/response";
 
-const { Remuneration, ApiLogs } = models;
+const {
+  Remuneration, ApiLogs, User, Finance
+} = models;
 
 /**
  * Remuneration Controller
@@ -95,6 +97,19 @@ class RemunerationController {
 
     try {
       const payload = await Remuneration.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_remunerations",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_remunerations",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 
@@ -208,6 +223,19 @@ class RemunerationController {
       });
 
       const payload = await Remuneration.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_remunerations",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_remunerations",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 
@@ -257,6 +285,19 @@ class RemunerationController {
       const { id, userid } = remuneration;
       await Remuneration.destroy({ where: { id, userid } });
       const payload = await Remuneration.findAll({
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Finance,
+            as: "finance_remunerations",
+            attributes: ["name"]
+          },
+          {
+            model: User,
+            as: "user_remunerations",
+            attributes: ["firstname"]
+          }
+        ],
         limit: 100
       });
 

@@ -28,12 +28,20 @@ module.exports = (sequelize, DataTypes) => {
 
     notes: {
       type: DataTypes.STRING,
-    }
+    },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const createdAt = this.getDataValue("createdAt") || "";
+        return createdAt.toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
   }, {});
 
   Finance.associate = (models) => {
     const {
-      Branch, Zone, User
+      Branch, Zone, User, Asset, Remuneration, Payment, Receipt
     } = models;
 
     Finance.belongsTo(Branch, {
@@ -47,8 +55,28 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Finance.belongsTo(User, {
-      foreignKey: "id",
+      foreignKey: "userid",
       as: "user_finances"
+    });
+
+    Finance.hasMany(Asset, {
+      foreignKey: "id",
+      as: "assets"
+    });
+
+    Finance.hasMany(Remuneration, {
+      foreignKey: "id",
+      as: "remunerations"
+    });
+
+    Finance.hasMany(Payment, {
+      foreignKey: "id",
+      as: "payments"
+    });
+
+    Finance.hasMany(Receipt, {
+      foreignKey: "id",
+      as: "receipts"
     });
   };
 

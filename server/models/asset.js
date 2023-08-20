@@ -24,7 +24,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     originalname: { type: DataTypes.STRING, allowNull: false },
     mimetype: { type: DataTypes.STRING, allowNull: false },
-    notes: { type: DataTypes.STRING }
+    notes: { type: DataTypes.STRING },
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const createdAt = this.getDataValue("createdAt") || "";
+        return createdAt.toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
   }, {});
 
   Asset.associate = (models) => {
@@ -33,12 +40,12 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Asset.belongsTo(Finance, {
-      foreignKey: "id",
-      as: "assets"
+      foreignKey: "financeid",
+      as: "finance_assets"
     });
 
     Asset.belongsTo(User, {
-      foreignKey: "id",
+      foreignKey: "userid",
       as: "user_assets"
     });
   };

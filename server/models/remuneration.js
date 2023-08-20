@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    pastorpayed: { type: DataTypes.BOOLEAN, },
+    pastorpayed: {
+      type: DataTypes.STRING,
+    },
     fulltimepastorcount: { type: DataTypes.INTEGER },
     buffer: {
       type: DataTypes.BLOB("long"),
@@ -22,7 +24,14 @@ module.exports = (sequelize, DataTypes) => {
     mimetype: { type: DataTypes.STRING, allowNull: false },
     notes: {
       type: DataTypes.STRING,
-    }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const createdAt = this.getDataValue("createdAt") || "";
+        return createdAt.toLocaleString("en-GB", { timeZone: "UTC" });
+      }
+    },
   }, {});
 
   Remuneration.associate = (models) => {
@@ -31,12 +40,12 @@ module.exports = (sequelize, DataTypes) => {
     } = models;
 
     Remuneration.belongsTo(Finance, {
-      foreignKey: "id",
-      as: "remunerations"
+      foreignKey: "financeid",
+      as: "finance_remunerations"
     });
 
     Remuneration.belongsTo(User, {
-      foreignKey: "id",
+      foreignKey: "userid",
       as: "user_remunerations"
     });
   };
