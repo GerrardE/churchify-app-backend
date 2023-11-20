@@ -83,7 +83,9 @@ module.exports = {
             required: "wikiDataId is required"
           }
         }
-      ]
+      ],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       name: "states",
@@ -102,7 +104,9 @@ module.exports = {
         field: "flag", datatype: "integer", required: true, validation: { required: "flag is required" }
       }, {
         field: "wikiDataId", datatype: "string", required: true, validation: { required: "wikiDataId is required" }
-      }]
+      }],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       name: "countries",
@@ -133,7 +137,9 @@ module.exports = {
         field: "flag", datatype: "integer", required: true, validation: { required: "flag is required" }
       }, {
         field: "wikiDataId", datatype: "string", required: true, validation: { required: "wikiDataId is required" }
-      }]
+      }],
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
   ], {}, { config: { type: Sequelize.ARRAY(Sequelize.JSONB) } }),
 
