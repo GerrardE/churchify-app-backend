@@ -45,8 +45,12 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.deployer.key_name
 
+  # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  # source ~/.bashrc
+  # nvm install v16.14.0 && nvm use v16.14.0
   user_data = <<-EOF
     #!/bin/bash
+    cd /home/ubuntu
     sudo apt-get update
     sudo apt-get upgrade -y
     sudo apt install nginx curl certbot python3-certbot-nginx -y
@@ -56,16 +60,16 @@ resource "aws_instance" "web" {
     sudo ufw allow 'OpenSSH'
     sudo ufw delete allow 'Nginx HTTP'
     sudo chown -R $USER:$USER /var/log/nginx/
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-    source ~/.bashrc
-    nvm install v16.14.0 && nvm use v16.14.0
+    curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
+    sudo bash /tmp/nodesource_setup.sh
+    sudo apt install nodejs
     npm i pm2 yarn -g
     git clone https://github.com/GerrardE/churchify-app-frontend.git
     git clone https://github.com/GerrardE/churchify-app-backend.git
     pm2 serve ./churchify-app-frontend/dist 8000 --name client --spa
     sudo cp ./churchify-app-backend/docs/server/portal.conf /etc/nginx/conf.d/
     sudo chmod +x /etc/nginx/conf.d/portal.conf
-    cp ./churchify-app-backend/.env.example ./churchify-app-backend/.env && cd ./churchify-app-backend && yarn
+    cp ./churchify-app-backend/.env.example ./churchify-app-backend/.env && chmod 777 ./churchify-app-backend/.env && cd ./churchify-app-backend && yarn
   EOF
 
   tags = {
