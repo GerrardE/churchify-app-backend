@@ -59,6 +59,10 @@ resource "aws_instance" "web" {
     sudo ufw allow 'Nginx Full'
     sudo ufw allow 'OpenSSH'
     sudo ufw delete allow 'Nginx HTTP'
+    sudo touch /var/log/nginx/portal.trem.org.access.log
+    sudo touch /var/log/nginx/portal.trem.org.error.log
+    sudo touch /var/log/nginx/portalapi.trem.org.access.log
+    sudo touch /var/log/nginx/portalapi.trem.org.error.log
     sudo chown -R $USER:$USER /var/log/nginx/
     curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
     sudo bash /tmp/nodesource_setup.sh
@@ -66,7 +70,6 @@ resource "aws_instance" "web" {
     npm i pm2 yarn -g
     git clone https://github.com/GerrardE/churchify-app-frontend.git
     git clone https://github.com/GerrardE/churchify-app-backend.git
-    pm2 serve ./churchify-app-frontend/dist 8000 --name client --spa
     sudo cp ./churchify-app-backend/docs/server/portal.conf /etc/nginx/conf.d/
     sudo chmod +x /etc/nginx/conf.d/portal.conf
     cp ./churchify-app-backend/.env.example ./churchify-app-backend/.env && chmod 777 ./churchify-app-backend/.env && cd ./churchify-app-backend && yarn
