@@ -56,16 +56,16 @@ resource "aws_instance" "web" {
     sudo ufw allow 'OpenSSH'
     sudo ufw delete allow 'Nginx HTTP'
     sudo chown -R $USER:$USER /var/log/nginx/
-    sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
     source ~/.bashrc
     nvm install v16.14.0 && nvm use v16.14.0
     npm i pm2 yarn -g
     git clone https://github.com/GerrardE/churchify-app-frontend.git
-    cd churchify-app-frontend && pm2 serve dist 8000 --name client --spa && cd ..
     git clone https://github.com/GerrardE/churchify-app-backend.git
-    cd churchify-app-backend && cp .env.example .env && yarn & cd ..
+    pm2 serve ./churchify-app-frontend/dist 8000 --name client --spa
     sudo cp ./churchify-app-backend/docs/server/portal.conf /etc/nginx/conf.d/
     sudo chmod +x /etc/nginx/conf.d/portal.conf
+    cp ./churchify-app-backend/.env.example ./churchify-app-backend/.env && cd ./churchify-app-backend && yarn
   EOF
 
   tags = {
