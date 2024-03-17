@@ -43,7 +43,34 @@ resource "aws_key_pair" "deployer" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name = aws_key_pair.deployer.key_name
+  key_name      = aws_key_pair.deployer.key_name
+
+  user_data = <<-EOF
+    #!/bin/bash
+    sudo apt-get update
+    sudo apt-get upgrade -y
+    sudo apt install nginx curl certbot python3-certbot-nginx -y
+    sudo systemctl enable ufw
+    sudo ufw allow 'Nginx Full'
+    sudo ufw delete allow 'Nginx HTTP'
+    sudo mkdir -p /etc/nginx/conf.d/
+    sudo touch /etc/nginx/conf.d/portal.conf
+    sudo chown -R $USER:$USER /var/log/nginx/
+
+    sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    sudo source ~/.bashrc
+    sudo nvm install v16.14.0 && sudo nvm use v16.14.0
+    sudo npm i pm2 yarn -g
+    
+    git clone https://github.com/GerrardE/churchify-app-frontend.git
+    cd churchify-app-frontend
+    pm2 serve dist 8000 --name client --spa
+    git clone https://github.com/GerrardE/churchify-app-backend.git
+    cd ../churchify-app-backend
+    yarn & cd ..
+    sudo cat ./churchify-app-backend/docs/server/conf.md > /etc/nginx/conf.d/portal.conf
+    EOF
+
   tags = {
     Name = "${var.resource_tag_name}_ec2"
   }
