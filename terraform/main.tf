@@ -53,6 +53,7 @@ resource "aws_instance" "web" {
     sudo ufw enable
     sudo systemctl enable ufw
     sudo ufw allow 'Nginx Full'
+    sudo ufw allow 'OpenSSH'
     sudo ufw delete allow 'Nginx HTTP'
     sudo chown -R $USER:$USER /var/log/nginx/
     sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -74,7 +75,6 @@ resource "aws_instance" "web" {
 
 resource "aws_eip" "lb" {
   instance = aws_instance.web.id
-  vpc      = true
 }
 
 resource "aws_security_group" "allow_tls" {
