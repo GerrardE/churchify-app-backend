@@ -48,6 +48,9 @@ resource "aws_instance" "web" {
   # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
   # source ~/.bashrc
   # nvm install v16.14.0 && nvm use v16.14.0
+  # pm2 serve ./dist 8000 --name client --spa
+  # sudo certbot --nginx -d portal.trem.org -d www.portal.trem.org
+  # sudo certbot --nginx -d portalapi.trem.org -d www.portalapi.trem.org
   user_data = <<-EOF
     #!/bin/bash
     cd /home/ubuntu
@@ -58,6 +61,8 @@ resource "aws_instance" "web" {
     sudo systemctl enable ufw
     sudo ufw allow 'Nginx Full'
     sudo ufw allow 'OpenSSH'
+    sudo ufw allow 8000
+    sudo ufw allow 3000
     sudo ufw delete allow 'Nginx HTTP'
     sudo touch /var/log/nginx/portal.trem.org.access.log
     sudo touch /var/log/nginx/portal.trem.org.error.log
@@ -70,6 +75,8 @@ resource "aws_instance" "web" {
     npm i pm2 yarn -g
     git clone https://github.com/GerrardE/churchify-app-frontend.git
     git clone https://github.com/GerrardE/churchify-app-backend.git
+    sudo chown -R $USER:$USER churchify-app-frontend
+    sudo chown -R $USER:$USER churchify-app-backend
     sudo cp ./churchify-app-backend/docs/server/portal.conf /etc/nginx/conf.d/
     sudo chmod +x /etc/nginx/conf.d/portal.conf
     cp ./churchify-app-backend/.env.example ./churchify-app-backend/.env && chmod 777 ./churchify-app-backend/.env && cd ./churchify-app-backend && yarn
