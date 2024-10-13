@@ -50,17 +50,17 @@ module.exports = (sequelize, DataTypes) => {
 
       city: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
 
       state: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
 
       country: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
       },
 
       password: {
