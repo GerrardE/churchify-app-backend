@@ -23,12 +23,12 @@ env:
 jobs:
   test:
     name: test
-    
+
     runs-on: ubuntu-latest
 
     services:
       postgres:
-        image: postgres
+        image: postgres:14
         env:
           POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
           POSTGRES_HOST: ${{ secrets.TEST_POSTGRES_HOST }}
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
