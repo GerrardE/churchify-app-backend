@@ -8,9 +8,12 @@ import validSignin from "@validations/signin";
 import validationResponse from "@validations/validationResponse";
 import ResponseController from "@helpers/response";
 import models from "@models";
+import { validEmail } from "@validations/forgotPassword";
+import { validPassword } from "@validations/resetPassword";
+import { sendEmail } from "@helpers/mailer";
 
 const {
-  User, Role, Permission, ApiLogs, Branch, Zone
+  User, Role, Permission, ApiLogs, Branch, Zone, ForgotPassword
 } = models;
 
 /**
@@ -567,6 +570,257 @@ class UserController {
       );
     }
   }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof UserController
+   */
+  static async forgotPassword(req, res, next) {
+    const apilog = {
+      name: `${UserController.parameters.toLowerCase()}.forgotPassword`,
+      refid: randString(`${UserController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `Password reset link sent successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      const { errors, isValid } = validEmail(req.body);
+      if (!isValid) {
+        const errorvals = Object.values(errors).join(", ");
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400;
+        apilog.statuscode = 400;
+        apilog.message = errorvals;
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 400, 400, errorvals, errors);
+      };
+
+      const { email } = req.body;
+
+      const userExists = await User.findOne({
+        where: { email },
+      });
+
+      if (!userExists) {
+        apilog.resbody = JSON.stringify({ message: "User not found" });
+        apilog.httpstatuscode = 404;
+        apilog.statuscode = 404;
+        apilog.message = "Error: User with email not found";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 404, 404, "Error: User with email not found", { message: "User not found" });
+      };
+
+      const thirtyMins = new Date(Date.now() + 30 * 60 * 1000);
+
+      const forgotPasswordEntry = await ForgotPassword.create({
+        email: userExists.email,
+        expiresAt: thirtyMins,
+      });
+
+      const forgotPasswordLink = `${process.env.APP_URL}/reset-password?id=${forgotPasswordEntry.id}`;
+
+      const mailOptions = {
+        from: `${process.env.TREM_SENDER_EMAIL}`, // Must be a verified email in AWS SES
+        to: userExists.email,
+        subject: 'Churchify Forgot Password',
+        text: 'Click the link to reset your password',
+        html: `<strong><a href="${forgotPasswordLink}">Click here to reset your password</a></strong>`
+      };
+
+      await sendEmail(mailOptions);
+
+      apilog.resbody = JSON.stringify(forgotPasswordEntry)
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.success(
+        res,
+        201, // Created - New forgot password entry made
+        201,
+        `${UserController.parameter} forgot password url sent successfully`,
+        forgotPasswordEntry,
+      );
+    } catch (err) {
+      apilog.reqendtime = Date.now();
+
+      if (err.errors && err.errors[0].type === "unique violation") {
+        apilog.resbody = JSON.stringify(validationResponse(err));
+        apilog.httpstatuscode = 409;
+        apilog.statuscode = 409;
+        apilog.message = validationResponse(err);
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 409, 409, validationResponse(err), err);
+      };
+
+      apilog.resbody = JSON.stringify(err);
+      apilog.httpstatuscode = 500; // Internal Server Error - Unexpected error
+      apilog.statuscode = 500;
+      apilog.message = `Error with ${UserController.parameter} forgot password request`;
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.error(
+        res,
+        500,
+        500,
+        `Error with ${UserController.parameter} forgot password request`,
+        err,
+      );
+    };
+  }
+
+  /**
+   * @static
+   * @param {*} req - Request object
+   * @param {*} res - Response object
+   * @param {*} next - The next middleware
+   * @return {json} Returns json object
+   * @memberof UserController
+   */
+  static async resetPassword(req, res, next) {
+    const apilog = {
+      name: `${UserController.parameters.toLowerCase()}.resetPassword`,
+      refid: randString(`${UserController.parameter.toUpperCase()}`),
+      reqbody: JSON.stringify(req.body),
+      resbody: "",
+      httpstatuscode: 200,
+      statuscode: 200,
+      message: `${UserController.parameter} password reset successfully`,
+      apiref: v4(),
+      url: `${req.method} ~ ${req.originalUrl}`,
+      reqstarttime: Date.now(),
+      reqendtime: "",
+    };
+
+    try {
+      const { errors, isValid } = validPassword(req.body);
+
+      if (!isValid) {
+        const errorvals = Object.values(errors).join(", ");
+        apilog.resbody = JSON.stringify(errors);
+        apilog.httpstatuscode = 400; // Bad Request - Invalid password
+        apilog.statuscode = 400;
+        apilog.message = errorvals;
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 400, 400, errorvals, errors);
+      };
+
+      const { password } = req.body;
+      const { id } = req.params;
+
+      const forgotPasswordEntry = await ForgotPassword.findOne({
+        where: { id },
+      });
+
+      if (!forgotPasswordEntry) {
+        apilog.resbody = JSON.stringify({ message: "Forgot password entry not found" });
+        apilog.httpstatuscode = 404; // Not Found - Invalid/expired reset ID
+        apilog.statuscode = 404;
+        apilog.message = "Error: Forgot password entry not found";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 404, 404, "Error: Forgot password entry not found", { message: "Forgot password entry not found" });
+      };
+
+      if (forgotPasswordEntry.status === "USED") {
+        apilog.resbody = JSON.stringify({ message: "Reset link has been used" });
+        apilog.httpstatuscode = 410; // Gone - Expired resource
+        apilog.statuscode = 410;
+        apilog.message = "Error: Reset link has been used";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 410, 410, "Error: Reset link has been used", { message: "Reset link has been used" });
+      };
+
+      // Check if the reset link has expired
+      if (new Date() > forgotPasswordEntry.expiresAt) {
+        apilog.resbody = JSON.stringify({ message: "Reset link has expired" });
+        apilog.httpstatuscode = 410; // Gone - Expired resource
+        apilog.statuscode = 410;
+        apilog.message = "Error: Reset link has expired";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 410, 410, "Error: Reset link has expired", { message: "Reset link has expired" });
+      };
+
+      const userExists = await User.findOne({
+        where: { email: forgotPasswordEntry.email },
+      });
+
+      if (!userExists) {
+        apilog.resbody = JSON.stringify({ message: "User not found" });
+        apilog.httpstatuscode = 404; // Not Found - User doesn’t exist
+        apilog.statuscode = 404;
+        apilog.message = "Error: User not found";
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 404, 404, "Error: User not found", { message: "User not found" });
+      };
+
+      // Update the user instance directly with the new password
+      userExists.password = password; // Set plain text password; hook will hash it
+      await userExists.save(); // Save triggers beforeUpdate hook
+
+      // Update Forgot password entry
+      forgotPasswordEntry.status = "USED";
+      await forgotPasswordEntry.save();
+
+      // await ForgotPassword.update(
+      //   { status: "USED" },
+      //   { where: { id } }
+      // );
+
+      apilog.resbody = JSON.stringify(userExists);
+      apilog.reqendtime = Date.now();
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.success(
+        res,
+        200,
+        200,
+        `${UserController.parameter} password reset successful`,
+        userExtractor(userExists)
+      );
+    } catch (error) {
+      apilog.reqendtime = Date.now();
+
+      if (error.errors && error.errors[0].type === "unique violation") {
+        apilog.resbody = JSON.stringify(validationResponse(error));
+        apilog.httpstatuscode = 409; // Conflict - Unique constraint violation (unlikely here)
+        apilog.statuscode = 409;
+        apilog.message = validationResponse(error);
+        await ApiLogs.create({ ...apilog });
+        return ResponseController.error(res, 409, 409, validationResponse(error), error);
+      };
+
+      apilog.resbody = JSON.stringify(error);
+      apilog.httpstatuscode = 500; // Internal Server Error - Unexpected error
+      apilog.statuscode = 500;
+      apilog.message = `Error resetting ${UserController.parameter} password`;
+      await ApiLogs.create({ ...apilog });
+
+      return ResponseController.error(
+        res,
+        500,
+        500,
+        `Error resetting ${UserController.parameter} password`,
+        error
+      );
+    };
+  };
 }
 
 UserController.parameter = "User";
