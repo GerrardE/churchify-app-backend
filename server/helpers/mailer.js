@@ -1,25 +1,17 @@
 const nodemailer = require('nodemailer');
 
-// Create a transporter object using the SMTP details
 const emailTransporter = nodemailer.createTransport({
-    host: 'email-smtp.us-east-1.amazonaws.com', // Matches your original endpoint
-    port: 587, // STARTTLS port
-    secure: false, // Use false for port 587 (STARTTLS)
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT, // STARTTLS port
+    secure: false,
     auth: {
-        user: 'AKIAY2JKWEDCGJYXD2TZ', // SMTP user name
-        pass: 'BCMK8IIe7udPDIM63ykrj6tOUwtfJWqsaqPnKa9dtyYp' // SMTP password
+        user: process.env.SMTP_USERNAME, // SMTP user name
+        pass: process.env.SMTP_PASSWORD // SMTP password
     },
     tls: {
         rejectUnauthorized: true // Required for AWS SES
     }
 });
-
-// const mailOptions = {
-//     from: 'portal@trem.org', // Must be verified in SES
-//     to: 'obafemifavour@gmail.com',
-//     subject: 'Test Email',
-//     text: 'This is a test'
-// };
 
 export async function sendEmail(mailOptions) {
     try {
@@ -31,5 +23,3 @@ export async function sendEmail(mailOptions) {
         throw error;
     };
 };
-
-// sendEmail();
