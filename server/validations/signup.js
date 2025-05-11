@@ -1,16 +1,17 @@
+import { config } from "dotenv";
 import validator from "validator";
 import isEmpty from "../middlewares/isEmpty";
-import { config } from "dotenv";
 
 config();
 
-const isAllowed = process.env.ALLOWED_DOMAINS.split(",");
+const allowedDomains = process.env.ALLOWED_DOMAINS || "";
+const domainsArray = allowedDomains.split(",");
 
 const isAllowedEmailDomain = (email) => {
   const domain = email.split("@")[1];
-  const found = isAllowed.includes(domain);
+  const found = domainsArray.includes(domain);
 
-  if(found){
+  if (found) {
     return true;
   }
 
@@ -60,7 +61,7 @@ const validSignup = (data) => {
   }
 
   if (!isAllowedEmailDomain(data.email)) {
-    errors.email = `Email domain not allowed. Allowed domains: ${isAllowed.join(", ")}`;
+    errors.email = `Email domain not allowed. Allowed domains: ${domainsArray.join(", ")}`;
   }
 
   if (isEmpty(data.email)) {

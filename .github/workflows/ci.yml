@@ -23,16 +23,16 @@ env:
 jobs:
   test:
     name: test
-    
+
     runs-on: ubuntu-latest
 
     services:
       postgres:
-        image: postgres
+        image: postgres:14
         env:
-          POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ secrets.TEST_POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.TEST_POSTGRES_PORT }}
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
