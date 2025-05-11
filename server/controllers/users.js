@@ -614,13 +614,20 @@ class UserController {
       });
 
       if (!userExists) {
-        apilog.resbody = JSON.stringify({ message: "User not found" });
-        apilog.httpstatuscode = 404;
-        apilog.statuscode = 404;
-        apilog.message = "Error: User with email not found";
-        apilog.reqendtime = Date.now();
-        await ApiLogs.create({ ...apilog });
-        return ResponseController.error(res, 404, 404, "Error: User with email not found", { message: "User not found" });
+        // apilog.resbody = JSON.stringify({ message: "User not found" });
+        // apilog.httpstatuscode = 404;
+        // apilog.statuscode = 404;
+        // apilog.message = "Error: User with email not found";
+        // apilog.reqendtime = Date.now();
+        // await ApiLogs.create({ ...apilog });
+        // return ResponseController.error(res, 404, 404, "Error: User with email not found", { message: "User not found" });
+        return ResponseController.success(
+          res,
+          201, // Created - New forgot password entry made
+          201,
+          `${UserController.parameter} forgot password url sent successfully`,
+          {},
+        );
       };
 
       const thirtyMins = new Date(Date.now() + 30 * 60 * 1000);
