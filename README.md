@@ -55,12 +55,11 @@ npm install
 ```
 4. Create a postgres database `chooseaname` and update `.env` file accordingly.
 5. Run database setup in this order:
-   Query: psql -U postgres `chooseaname` < `file.sql`
-   
+   Query: psql -U postgres `targetdb` < `file.sql`
+
    - `docs/database/countries.sql`
    - `docs/database/states.sql`
    - `docs/database/cities.sql`
-   - `docs/database/configs.sql`
 
 6. Setup your `.env` using the `.env.example` format
 
