@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2 start process.yml",
     "start:dev": "cross-env NODE_ENV=development && nodemon ./server/index.js --exec babel-node",
-    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json && cd dist && zip -r server.zip . && cd ..",
+    "build": "cross-env NODE_ENV=production && yarn clean && babel ./server -d ./dist && cp package.json dist/package.json",
     "seed": "sequelize db:seed:all",
     "seedundo": "sequelize db:seed:undo",
     "migrate": "sequelize db:migrate",
@@ -88,7 +88,8 @@
     "sinon": "^7.3.2"
   },
   "resolutions": {
-    "chokidar": "^3.4.0"
+    "chokidar": "^3.4.0",
+    "proxy-agent": "4.0.0"
   },
   "nyc": {
     "all": true,

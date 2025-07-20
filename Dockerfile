@@ -1,17 +1,17 @@
 ARG PORT=5000
 
-FROM node:12.16.0-alpine AS node
+FROM node:12.16.1-alpine AS node
 
 # dev stage
 FROM node AS devstage
 
-WORKDIR /app
+WORKDIR /home/dev/app
 
-COPY package*.json ./
+COPY yarn.lock .yarnrc package.json ./
 
 RUN yarn install
 
-RUN yarn global add pm2
+RUN yarn add pm2
 
 COPY . .
 
@@ -33,20 +33,24 @@ ENV NODE_ENV production
 # Update the system
 RUN apk --no-cache -U upgrade
 
-RUN mkdir -p /home/node/app/dist && chown -R node:node /home/node/app 
+RUN mkdir -p /home/prod/app/dist && chown -R node:node /home/prod/app
 
-WORKDIR /home/node/app
+WORKDIR /home/prod/app
 
-RUN yarn global add pm2
+RUN yarn add pm2
 
-COPY package*.json process.yml ./
+COPY yarn.lock .yarnrc package*.json process.yml ./
 
 USER node
 
 # install only production dependencies
 RUN yarn install --only=production
 
-COPY --chown=node:node --from=devstage /app/dist ./dist
+RUN yarn add pm2
+
+COPY . .
+
+RUN yarn run build
 
 EXPOSE ${PORT}
 
