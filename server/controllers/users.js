@@ -587,7 +587,7 @@ class UserController {
       resbody: "",
       httpstatuscode: 200,
       statuscode: 200,
-      message: `Password reset link sent successfully`,
+      message: "Password reset link sent successfully",
       apiref: v4(),
       url: `${req.method} ~ ${req.originalUrl}`,
       reqstarttime: Date.now(),
@@ -605,7 +605,7 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 400, 400, errorvals, errors);
-      };
+      }
 
       const { email } = req.body;
 
@@ -620,7 +620,8 @@ class UserController {
         // apilog.message = "Error: User with email not found";
         // apilog.reqendtime = Date.now();
         // await ApiLogs.create({ ...apilog });
-        // return ResponseController.error(res, 404, 404, "Error: User with email not found", { message: "User not found" });
+        // return ResponseController.error(res, 404, 404,
+        // "Error: User with email not found", { message: "User not found" });
         return ResponseController.success(
           res,
           201, // Created - New forgot password entry made
@@ -628,7 +629,7 @@ class UserController {
           `${UserController.parameter} forgot password url sent successfully`,
           {},
         );
-      };
+      }
 
       const thirtyMins = new Date(Date.now() + 30 * 60 * 1000);
 
@@ -642,14 +643,14 @@ class UserController {
       const mailOptions = {
         from: `${process.env.TREM_SENDER_EMAIL}`, // Must be a verified email in AWS SES
         to: userExists.email,
-        subject: 'Churchify Forgot Password',
-        text: 'Click the link to reset your password',
+        subject: "Churchify Forgot Password",
+        text: "Click the link to reset your password",
         html: `<strong><a href="${forgotPasswordLink}">Click here to reset your password</a></strong>`
       };
 
       await sendEmail(mailOptions);
 
-      apilog.resbody = JSON.stringify(forgotPasswordEntry)
+      apilog.resbody = JSON.stringify(forgotPasswordEntry);
       apilog.reqendtime = Date.now();
       await ApiLogs.create({ ...apilog });
 
@@ -670,7 +671,7 @@ class UserController {
         apilog.message = validationResponse(err);
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 409, 409, validationResponse(err), err);
-      };
+      }
 
       apilog.resbody = JSON.stringify(err);
       apilog.httpstatuscode = 500; // Internal Server Error - Unexpected error
@@ -685,7 +686,7 @@ class UserController {
         `Error with ${UserController.parameter} forgot password request`,
         err,
       );
-    };
+    }
   }
 
   /**
@@ -723,7 +724,7 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 400, 400, errorvals, errors);
-      };
+      }
 
       const { password } = req.body;
       const { id } = req.params;
@@ -740,7 +741,7 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 404, 404, "Error: Forgot password entry not found", { message: "Forgot password entry not found" });
-      };
+      }
 
       if (forgotPasswordEntry.status === "USED") {
         apilog.resbody = JSON.stringify({ message: "Reset link has been used" });
@@ -750,7 +751,7 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 410, 410, "Error: Reset link has been used", { message: "Reset link has been used" });
-      };
+      }
 
       // Check if the reset link has expired
       if (new Date() > forgotPasswordEntry.expiresAt) {
@@ -761,7 +762,7 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 410, 410, "Error: Reset link has expired", { message: "Reset link has expired" });
-      };
+      }
 
       const userExists = await User.findOne({
         where: { email: forgotPasswordEntry.email },
@@ -775,7 +776,7 @@ class UserController {
         apilog.reqendtime = Date.now();
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 404, 404, "Error: User not found", { message: "User not found" });
-      };
+      }
 
       // Update the user instance directly with the new password
       userExists.password = password; // Set plain text password; hook will hash it
@@ -811,7 +812,7 @@ class UserController {
         apilog.message = validationResponse(error);
         await ApiLogs.create({ ...apilog });
         return ResponseController.error(res, 409, 409, validationResponse(error), error);
-      };
+      }
 
       apilog.resbody = JSON.stringify(error);
       apilog.httpstatuscode = 500; // Internal Server Error - Unexpected error
@@ -826,8 +827,8 @@ class UserController {
         `Error resetting ${UserController.parameter} password`,
         error
       );
-    };
-  };
+    }
+  }
 }
 
 UserController.parameter = "User";
