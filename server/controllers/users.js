@@ -613,46 +613,32 @@ class UserController {
         where: { email },
       });
 
-      if (!userExists) {
-        // apilog.resbody = JSON.stringify({ message: "User not found" });
-        // apilog.httpstatuscode = 404;
-        // apilog.statuscode = 404;
-        // apilog.message = "Error: User with email not found";
-        // apilog.reqendtime = Date.now();
-        // await ApiLogs.create({ ...apilog });
-        // return ResponseController.error(res, 404, 404,
-        // "Error: User with email not found", { message: "User not found" });
-        return ResponseController.success(
-          res,
-          201, // Created - New forgot password entry made
-          201,
-          `${UserController.parameter} forgot password url sent successfully`,
-          {},
-        );
+      let forgotPasswordEntry = {};
+
+      if (userExists) {
+        const thirtyMins = new Date(Date.now() + 30 * 60 * 1000);
+
+        forgotPasswordEntry = await ForgotPassword.create({
+          email: userExists.email,
+          expiresAt: thirtyMins,
+        });
+
+        const forgotPasswordLink = `${process.env.APP_URL}/reset-password?id=${forgotPasswordEntry.id}`;
+
+        const mailOptions = {
+          from: `${process.env.TREM_SENDER_EMAIL}`, // Must be a verified email in AWS SES
+          to: userExists.email,
+          subject: "Churchify Forgot Password",
+          text: "Click the link to reset your password",
+          html: `<strong><a href="${forgotPasswordLink}">Click here to reset your password</a></strong>`
+        };
+
+        await sendEmail(mailOptions);
+
+        apilog.resbody = JSON.stringify(forgotPasswordEntry);
+        apilog.reqendtime = Date.now();
+        await ApiLogs.create({ ...apilog });
       }
-
-      const thirtyMins = new Date(Date.now() + 30 * 60 * 1000);
-
-      const forgotPasswordEntry = await ForgotPassword.create({
-        email: userExists.email,
-        expiresAt: thirtyMins,
-      });
-
-      const forgotPasswordLink = `${process.env.APP_URL}/reset-password?id=${forgotPasswordEntry.id}`;
-
-      const mailOptions = {
-        from: `${process.env.TREM_SENDER_EMAIL}`, // Must be a verified email in AWS SES
-        to: userExists.email,
-        subject: "Churchify Forgot Password",
-        text: "Click the link to reset your password",
-        html: `<strong><a href="${forgotPasswordLink}">Click here to reset your password</a></strong>`
-      };
-
-      await sendEmail(mailOptions);
-
-      apilog.resbody = JSON.stringify(forgotPasswordEntry);
-      apilog.reqendtime = Date.now();
-      await ApiLogs.create({ ...apilog });
 
       return ResponseController.success(
         res,
