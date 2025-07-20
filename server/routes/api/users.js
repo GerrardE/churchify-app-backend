@@ -13,5 +13,7 @@ userRouter.post("/auth/signup", trim, users.signup);
 userRouter.post("/auth/signin", trim, users.signin);
 userRouter.post("/roles", verifyToken, userPermission, users.assignrole);
 userRouter.put("/role/reassign", verifyToken, userPermission, users.reassignrole);
+userRouter.post("/forgot-password", trim, users.forgotPassword);
+userRouter.put("/reset-password/:id", trim, users.resetPassword);
 
 export default userRouter;

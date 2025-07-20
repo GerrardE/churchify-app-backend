@@ -162,3 +162,20 @@ resource "aws_security_group" "allow_tls" {
     Name = "${var.resource_tag_name}_allow_tls"
   }
 }
+
+# resource "aws_sesv2_email_identity" "this" {
+#   email_identity = "tremheadquarters@gmail.com"
+# }
+
+# resource "aws_sesv2_email_identity" "this" {
+#   email_identity = "trem.org"
+# }
+
+# resource "aws_sesv2_configuration_set" "this" {
+#   configuration_set_name = "trem.org"
+# }
+
+# resource "aws_sesv2_email_identity" "this" {
+#   email_identity         = "trem.org"
+#   configuration_set_name = aws_sesv2_configuration_set.this.configuration_set_name
+# }
