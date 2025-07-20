@@ -5,13 +5,13 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: Sequelize.UUID,
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      expires_at: {
+      expiresAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },
@@ -20,12 +20,12 @@ module.exports = {
         allowNull: false,
         defaultValue: "NOT_USED",
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.fn("NOW"),
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.fn("NOW"),

@@ -24,14 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "NOT_USED",
       },
-    },
-    {
-      sequelize,
-      modelName: "ForgotPassword",
-      tableName: "forgot_passwords", // Explicit table name to avoid pluralization issues
-      timestamps: true, // Automatically adds createdAt and updatedAt
-      underscored: true, // Converts camelCase to snake_case in DB (optional)
-    }
+    }, {},
   );
 
   return ForgotPassword;
