@@ -22,4 +22,4 @@ const validPassword = (data) => {
   };
 };
 
-export default { validPassword };
+export default validPassword;

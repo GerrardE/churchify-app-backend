@@ -8,9 +8,9 @@ import validSignin from "@validations/signin";
 import validationResponse from "@validations/validationResponse";
 import ResponseController from "@helpers/response";
 import models from "@models";
-import { validEmail } from "@validations/forgotPassword";
-import { validPassword } from "@validations/resetPassword";
-import { sendEmail } from "@helpers/mailer";
+import validEmail from "@validations/forgotPassword";
+import validPassword from "@validations/resetPassword";
+import sendEmail from "@helpers/mailer";
 
 const {
   User, Role, Permission, ApiLogs, Branch, Zone, ForgotPassword

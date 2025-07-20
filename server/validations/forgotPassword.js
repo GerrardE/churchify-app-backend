@@ -22,4 +22,4 @@ const validEmail = (data) => {
   };
 };
 
-export default { validEmail };
+export default validEmail;
