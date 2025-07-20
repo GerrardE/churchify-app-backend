@@ -1,8 +1,6 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("forgot_passwords", {
+    await queryInterface.createTable("ForgotPasswords", {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -35,7 +33,5 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("forgot_passwords");
-  }
+  down: (queryInterface) => queryInterface.dropTable("ForgotPasswords"),
 };
